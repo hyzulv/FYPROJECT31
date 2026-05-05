@@ -610,3 +610,65 @@ function staff_compute_stats(array $orders): array
         'updatedAt' => date('c'),
     ];
 }
+
+function staff_admin_analytics(array $orders): array
+{
+    $today = date('Y-m-d');
+    $weekAgo = date('Y-m-d', strtotime('-6 days'));
+    $statusCounts = [];
+    $tableOrdersToday = 0;
+    $qrOrdersToday = 0;
+    $cancelledToday = 0;
+    $ordersThisWeek = 0;
+    $revenueThisWeek = 0.0;
+
+    foreach ($orders as $order) {
+        $status = (string)($order['status'] ?? 'Unknown');
+        $statusCounts[$status] = ($statusCounts[$status] ?? 0) + 1;
+
+        $placedDate = substr((string)($order['placed'] ?? ''), 0, 10);
+        $channel = (string)($order['channel'] ?? '');
+        $isQrSource = (($order['source'] ?? '') === 'customer_qr');
+        $isTable = stripos($channel, 'table') !== false;
+
+        if ($placedDate >= $weekAgo && $placedDate <= $today && $status !== 'Cancelled') {
+            $ordersThisWeek++;
+            $revenueThisWeek += (float)str_replace(',', '', (string)($order['total'] ?? '0'));
+        }
+        if ($placedDate === $today) {
+            if ($isTable) {
+                $tableOrdersToday++;
+            }
+            if ($isQrSource) {
+                $qrOrdersToday++;
+            }
+            if ($status === 'Cancelled') {
+                $cancelledToday++;
+            }
+        }
+    }
+
+    $staffCount = count(staff_public_staff_list());
+    $menuCount = count(staff_menu_container()['items'] ?? []);
+    $feedbackToday = 0;
+    foreach (staff_feedback_list() as $f) {
+        if (substr((string)($f['created'] ?? ''), 0, 10) === $today) {
+            $feedbackToday++;
+        }
+    }
+
+    return [
+        'kpi' => [
+            'ordersThisWeek' => $ordersThisWeek,
+            'revenueThisWeek' => number_format($revenueThisWeek, 2, '.', ''),
+            'staffAccounts' => $staffCount,
+            'menuItems' => $menuCount,
+            'feedbackToday' => $feedbackToday,
+            'cancelledToday' => $cancelledToday,
+            'tableOrdersToday' => $tableOrdersToday,
+            'qrOrdersToday' => $qrOrdersToday,
+        ],
+        'statusCounts' => $statusCounts,
+        'generatedAt' => date('c'),
+    ];
+}

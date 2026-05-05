@@ -46,6 +46,12 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         .stat-card { background: #1a1a1a; border-radius: 10px; padding: 14px; border-left: 4px solid #c00; }
         .stat-card .label { font-size: .75rem; color: #999; text-transform: uppercase; }
         .stat-card .value { font-size: 1.4rem; font-weight: bold; margin-top: 6px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+        .mini-card { background: #171717; border: 1px solid #2f2f2f; border-radius: 8px; padding: 12px; }
+        .mini-card .k { color: #9a9a9a; font-size: .75rem; text-transform: uppercase; margin-bottom: 4px; }
+        .mini-card .v { color: #fff; font-weight: bold; font-size: 1.05rem; }
+        .status-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+        .status-badge { background: #252525; border: 1px solid #3a3a3a; border-radius: 999px; padding: 6px 10px; font-size: .8rem; color: #ddd; }
         label { display: block; font-size: .8rem; color: #aaa; margin-bottom: 4px; }
         input, textarea, select { width: 100%; max-width: 460px; padding: 10px; border-radius: 6px; border: 1px solid #444; background: #111; color: #fff; margin-bottom: 12px; font-family: inherit; }
         textarea { min-height: 80px; max-width: 100%; }
@@ -98,6 +104,15 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
                 <article class="stat-card"><div class="label">Avg Prep (mins)</div><div class="value" id="statAvgPrep">—</div></article>
             </div>
             <p class="muted">Dashboard is split by role. Admin has extra staff management tools.</p>
+            <div class="card" id="adminAnalyticsCard" style="display:none;">
+                <h2>Display analytics</h2>
+                <div id="adminAnalyticsGrid" class="admin-grid"></div>
+                <p class="muted" id="adminAnalyticsTime" style="margin-top:10px;"></p>
+            </div>
+            <div class="card" id="adminOrderStatsCard" style="display:none;">
+                <h2>Show order stats</h2>
+                <div id="adminStatusBadges" class="status-badges"></div>
+            </div>
         </section>
 
         <section class="panel" id="panel-profile">
@@ -249,7 +264,7 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
 
 <script>
 (function () {
-    var state = { csrf: '', role: '<?php echo addslashes($role); ?>', permissions: [], orders: [], menu: [], feedback: [], staff: [], profile: {}, stats: {} };
+    var state = { csrf: '', role: '<?php echo addslashes($role); ?>', permissions: [], orders: [], menu: [], feedback: [], staff: [], profile: {}, stats: {}, analytics: null };
     var STATUSES = ['New', 'Preparing', 'Ready', 'Served', 'Cancelled'];
     function $(id) { return document.getElementById(id); }
     function has(p) { return state.permissions.indexOf(p) >= 0; }
@@ -293,6 +308,42 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         $('statPending').textContent = state.stats.pendingOrders ?? '—';
         $('statAvgPrep').textContent = state.stats.avgPrepMins ?? '—';
         $('syncText').textContent = 'Updated ' + fmt(state.stats.updatedAt || new Date().toISOString());
+    }
+    function renderAdminAnalytics(){
+        var analyticsCard = $('adminAnalyticsCard');
+        var orderStatsCard = $('adminOrderStatsCard');
+        if (state.role !== 'admin' || !state.analytics) {
+            analyticsCard.style.display = 'none';
+            orderStatsCard.style.display = 'none';
+            return;
+        }
+        analyticsCard.style.display = 'block';
+        orderStatsCard.style.display = 'block';
+
+        var k = state.analytics.kpi || {};
+        $('adminAnalyticsGrid').innerHTML = [
+            ['Orders This Week', k.ordersThisWeek],
+            ['Revenue This Week (RM)', k.revenueThisWeek],
+            ['Staff Accounts', k.staffAccounts],
+            ['Menu Items', k.menuItems],
+            ['Feedback Today', k.feedbackToday],
+            ['Cancelled Today', k.cancelledToday],
+            ['Table Orders Today', k.tableOrdersToday],
+            ['QR Orders Today', k.qrOrdersToday]
+        ].map(function(pair){
+            return '<div class="mini-card"><div class="k">'+esc(pair[0])+'</div><div class="v">'+esc(pair[1] == null ? '0' : pair[1])+'</div></div>';
+        }).join('');
+
+        var statusCounts = state.analytics.statusCounts || {};
+        var statuses = Object.keys(statusCounts);
+        if (!statuses.length) {
+            $('adminStatusBadges').innerHTML = '<span class="muted">No order stats yet.</span>';
+        } else {
+            $('adminStatusBadges').innerHTML = statuses.map(function(name){
+                return '<span class="status-badge">'+esc(name)+': <strong>'+esc(statusCounts[name])+'</strong></span>';
+            }).join('');
+        }
+        $('adminAnalyticsTime').textContent = 'Analytics generated at ' + fmt(state.analytics.generatedAt || state.stats.updatedAt || new Date().toISOString());
     }
     function renderProfile(){
         $('pfName').value = state.profile.displayName || '';
@@ -387,8 +438,9 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         state.staff = data.staff || [];
         state.profile = data.profile || {};
         state.stats = data.stats || {};
+        state.analytics = data.analytics || null;
         setupTabs();
-        renderStats(); renderProfile(); renderOrders(); renderMenu(); renderFeedback(); renderStaff();
+        renderStats(); renderAdminAnalytics(); renderProfile(); renderOrders(); renderMenu(); renderFeedback(); renderStaff();
     }
     function bootstrap(){
         return fetch('staff_api.php?type=bootstrap', {cache:'no-store'})

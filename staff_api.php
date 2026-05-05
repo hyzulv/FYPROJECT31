@@ -31,6 +31,7 @@ if ($method === 'GET') {
     $type = $_GET['type'] ?? '';
     switch ($type) {
         case 'bootstrap':
+            $orders = staff_orders_list();
             echo json_encode([
                 'ok' => true,
                 'csrf' => staff_ensure_csrf(),
@@ -38,11 +39,12 @@ if ($method === 'GET') {
                 'role' => $role,
                 'permissions' => staff_role_permissions($role),
                 'stats' => staff_compute_stats(staff_orders_container()['orders'] ?? []),
-                'orders' => staff_orders_list(),
+                'orders' => $orders,
                 'menu' => staff_menu_container()['items'] ?? [],
                 'feedback' => staff_feedback_list(),
                 'profile' => staff_profile_get($username),
                 'staff' => staff_has_permission($role, 'view.staff') ? staff_public_staff_list() : [],
+                'analytics' => ($role === 'admin') ? staff_admin_analytics($orders) : null,
             ]);
             exit();
         default:
