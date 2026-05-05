@@ -1,28 +1,33 @@
 <?php
-// 1. Start a session to keep the user logged in
 session_start();
 
-// 2. Configuration: Replace these with your actual database or desired credentials
-$valid_username = "admin";
-$valid_password = "password123"; 
+require_once __DIR__ . '/includes/staff_data.php';
+staff_seed_if_missing();
 
 $error_message = "";
 
-// 3. Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim((string)($_POST['username'] ?? ''));
+    $password = (string)($_POST['password'] ?? '');
+    $user = staff_find_user($username);
 
-    // 4. Simple validation logic
-    if ($username === $valid_username && $password === $valid_password) {
-        // Success! Set session variables and redirect
+    if ($user && hash_equals((string)($user['password'] ?? ''), $password)) {
+        $isVerified = !array_key_exists('emailVerified', $user) || !empty($user['emailVerified']);
+        if (!$isVerified) {
+            $token = staff_generate_verify_token();
+            staff_set_user_verify_token($username, $token);
+            $email = trim((string)($user['email'] ?? ''));
+            staff_send_verification_email($email, $username, $token);
+            $_SESSION['pending_verify_user'] = $username;
+            header('Location: verify_email.php');
+            exit();
+        }
         $_SESSION['user'] = $username;
-        header("Location: Homepage.php"); // Redirect to homepage after login
+        $_SESSION['role'] = (string)($user['role'] ?? 'staff');
+        header('Location: dashboard.php');
         exit();
-    } else {
-        // Failure
-        $error_message = "Invalid username or password!";
     }
+    $error_message = "Invalid username or password!";
 }
 ?>
 <!DOCTYPE html>

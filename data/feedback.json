@@ -1,0 +1,19 @@
+{
+    "entries": [
+        {
+            "id": "F-1001",
+            "name": "Farah",
+            "email": "farah@example.com",
+            "message": "Servis cepat, makanan sedap!",
+            "created": "2026-05-05 09:30:00"
+        },
+        {
+            "id": "F-1002",
+            "name": "Daniel",
+            "email": "daniel@example.com",
+            "message": "Portion besar. Parking agak susah waktu lunch.",
+            "created": "2026-05-05 10:12:00"
+        }
+    ],
+    "nextSeq": 1003
+}

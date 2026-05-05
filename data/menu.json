@@ -1,0 +1,29 @@
+{
+    "items": [
+        {
+            "id": "M-001",
+            "name": "Nasi Goreng Pattaya",
+            "category": "Food",
+            "price": "12.90",
+            "description": "Telur lipat, ayam, sayur campur.",
+            "available": true
+        },
+        {
+            "id": "M-002",
+            "name": "Teh Ais",
+            "category": "Drink",
+            "price": "3.50",
+            "description": "",
+            "available": true
+        },
+        {
+            "id": "M-003",
+            "name": "Chicken Chop",
+            "category": "Food",
+            "price": "18.00",
+            "description": "Sos black pepper \/ mushroom.",
+            "available": true
+        }
+    ],
+    "nextSeq": 4
+}
