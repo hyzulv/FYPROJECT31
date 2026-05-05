@@ -1,3 +1,31 @@
+   <?php
+// 1. Start a session to keep the user logged in
+session_start();
+
+// 2. Configuration: Replace these with your actual database or desired credentials
+$valid_username = "admin";
+$valid_password = "password123"; 
+
+$error_message = "";
+
+// 3. Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // 4. Simple validation logic
+    if ($username === $valid_username && $password === $valid_password) {
+        // Success! Set session variables and redirect
+        $_SESSION['user'] = $username;
+        header("Location: dashboard.php"); // Change this to your actual landing page
+        exit();
+    } else {
+        // Failure
+        $error_message = "Invalid username or password!";
+    }
+}
+?>
+   
    <!DOCTYPE html>
 <html>
 <head>
