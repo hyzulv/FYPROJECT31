@@ -226,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="nav-box" onclick="showSection('qr')">QR Code</div>
             <div class="nav-box" onclick="showSection('menu')">Menu</div>
-            <div class="nav-box" onclick="showSection('about')">About Us</div>
+            <a class="nav-box" href="AboutUs.php">About Us</a>
             <div class="nav-box" onclick="showSection('contact')">Contact Us</div>
             <div class="nav-box" onclick="showSection('feedback')">Feedback</div>
         </nav>
@@ -374,6 +374,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Show the selected section
             document.getElementById(sectionId).style.display = 'block';
         }
+
+        // Show About Us section by default when page loads
+        window.onload = function() {
+            showSection('about');
+        };
     </script>
 </body>
 </html>
