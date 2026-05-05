@@ -204,45 +204,29 @@
     </header>
     <main>
         <h1 class="page-title">About Us</h1>
-        <p class="tagline">Our story, our kitchen, and the people who welcome you every day.</p>
+        <p class="tagline">Learn more about Mat Rock and what makes our restaurant special.</p>
 
         <section class="intro-card" aria-labelledby="our-story-heading">
             <h2 id="our-story-heading">Our story</h2>
             <p>
-                Restaurant Name opened its doors with one idea: serve honest food in a warm space where neighbours feel like regulars from day one.
-                What began as a small family kitchen has grown into a gathering place for celebrations, quiet dinners, and everything in between.
+                Mat Rock Ayam Goreng Kunyit Skudai is a local favourite in Skudai, Johor Bahru. We opened with a simple goal: deliver tasty, affordable meals in a friendly atmosphere.
             </p>
             <p>
-                We source fresh ingredients locally when we can, prepare dishes with care, and never rush the details—from our signature recipes to the way we greet you at the door.
+                Our special turmeric fried chicken, served with rice and sambal, has become a go-to meal for students, workers, and families who love authentic Malaysian flavours.
             </p>
         </section>
 
-        <section class="split" aria-labelledby="kitchen-heading">
+        <section class="split" aria-labelledby="about-photo-heading">
             <div class="split-media">
-                <img src="about-kitchen.jpg" alt="Chefs preparing food in the restaurant kitchen">
+                <img src="about-kitchen.jpg" alt="Restaurant team preparing food">
             </div>
             <div class="split-text">
-                <h2 id="kitchen-heading">The kitchen</h2>
+                <h2 id="about-photo-heading">A welcoming place</h2>
                 <p>
-                    Our chefs blend classic comfort with seasonal specials. Each plate is meant to be shared, savoured, and remembered—whether it is a slow-cooked favourite or something new on the menu this month.
+                    We keep our restaurant simple, warm, and inviting. Whether you are stopping in for a quick lunch or dining with friends, we aim to make every meal satisfying.
                 </p>
                 <p>
-                    Have dietary needs? Tell our team and we will do our best to accommodate with clear, friendly guidance.
-                </p>
-            </div>
-        </section>
-
-        <section class="split reverse" aria-labelledby="dining-heading">
-            <div class="split-media">
-                <img src="about-dining.jpg" alt="Guests enjoying a meal in the dining area">
-            </div>
-            <div class="split-text">
-                <h2 id="dining-heading">The dining room</h2>
-                <p>
-                    We designed our space to feel inviting: soft lighting, comfortable seating, and room for both intimate tables and larger groups.
-                </p>
-                <p>
-                    Drop in for lunch, reserve a table for dinner, or ask about private events—we love being part of your milestones.
+                    Our food is made with care, using fresh ingredients and classic recipes that highlight rich, comforting Malaysian tastes.
                 </p>
             </div>
         </section>
@@ -251,24 +235,19 @@
             <h2 id="values-heading">What we stand for</h2>
             <div class="value-grid">
                 <article class="value-item">
-                    <h3>Quality</h3>
-                    <p>Thoughtful recipes, consistent preparation, and attention to every plate that leaves the pass.</p>
+                    <h3>Fresh Flavour</h3>
+                    <p>Every dish is prepared with fresh ingredients and bold seasoning.</p>
                 </article>
                 <article class="value-item">
-                    <h3>Hospitality</h3>
-                    <p>Friendly service that treats every guest like part of our extended restaurant family.</p>
+                    <h3>Friendly Service</h3>
+                    <p>We treat every guest like family and welcome you with warm hospitality.</p>
                 </article>
                 <article class="value-item">
-                    <h3>Community</h3>
-                    <p>Supporting local suppliers and giving back to the neighbourhood that supports us.</p>
+                    <h3>Local Roots</h3>
+                    <p>We serve the community with dishes that feel familiar and satisfying.</p>
                 </article>
             </div>
         </section>
-
-        <aside class="cta-strip">
-            <p style="margin:0;">Questions or ready to visit? Head back to the homepage for our menu, contact details, and feedback form.</p>
-            <p style="margin:12px 0 0;"><a href="Homepage.php">Return to homepage</a></p>
-        </aside>
     </main>
 </body>
 </html>

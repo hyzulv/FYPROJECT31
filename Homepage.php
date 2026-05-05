@@ -210,7 +210,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             line-height: 1.6;
             margin: 10px 0;
         }
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            border: 2px solid #FF0000;
+            margin-bottom: 20px;
+        }
+        .hero-img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            max-height: 420px;
+            border: 2px solid #FF0000;
+        }
+        .hero-text h2 {
+            color: #FF0000;
+            margin-top: 0;
+            font-size: 2.2rem;
+        }
+        .hero-text p {
+            color: #CCCCCC;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+        .hero-button {
+            display: inline-block;
+            background-color: #FF0000;
+            color: #FFFFFF;
+            padding: 12px 26px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hero-button:hover {
+            background-color: #CC0000;
+        }
         @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
             .about-container {
                 grid-template-columns: 1fr;
             }
@@ -226,12 +269,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="nav-box" onclick="showSection('qr')">QR Code</div>
             <div class="nav-box" onclick="showSection('menu')">Menu</div>
-            <a class="nav-box" href="AboutUs.php">About Us</a>
+            <div class="nav-box" onclick="showSection('about')">About Us</div>
             <div class="nav-box" onclick="showSection('contact')">Contact Us</div>
             <div class="nav-box" onclick="showSection('feedback')">Feedback</div>
         </nav>
     </header>
     <div class="content">
+        <section id="about" class="section">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="restaurant-photo.jpg" alt="Mat Rock Restaurant">
+                </div>
+                <div class="about-text">
+                    <h3>About Mat Rock</h3>
+                    <p>Mat Rock Ayam Goreng Kunyit Skudai is a local favourite in Skudai, Johor Bahru, known for serving comforting Malaysian meals at affordable prices.</p>
+                    <p>Our signature turmeric fried chicken is served with fragrant rice and spicy sambal, giving you a delicious taste of home-style dining.</p>
+                    <p>We pride ourselves on friendly service, a warm atmosphere, and dishes that keep customers coming back again and again.</p>
+                </div>
+            </div>
+        </section>
         <section id="qr" class="section">
             <h2>QR Code</h2>
             <p>Scan the QR code here.</p>
@@ -312,31 +368,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </section>
-        <section id="about" class="section">
-            <h2>About Us</h2>
-            <div class="about-container">
-                <div class="about-image">
-                    <!-- Replace "restaurant-photo.jpg" with your actual restaurant image -->
-                    <img src="restaurant-photo.jpg" alt="Mat Rock Restaurant">
-                    <!-- Uncomment the placeholder below if you don't have an image yet -->
-                    <!-- <div class="placeholder">Restaurant Photo</div> -->
-                </div>
-                <div class="about-text">
-                    <h3>Mat Rock Ayam Goreng Kunyit Skudai</h3>
-                    <p><strong>A Popular Local Eatery</strong></p>
-                    <p>Mat Rock is located in the Skudai area of Johor Bahru, known for serving affordable and authentic Malaysian food.</p>
-                    
-                    <p><strong>Signature Dish:</strong> Nasi Ayam Kunyit</p>
-                    <p>Features crispy fried turmeric chicken served with rice and sambal.</p>
-                    
-                    <p><strong>Atmosphere:</strong></p>
-                    <p>The restaurant has a simple, no-frills setting and is often crowded during peak hours, particularly among students and locals looking for a quick and budget-friendly meal.</p>
-                    
-                    <p><strong>Why Choose Us:</strong></p>
-                    <p>While the menu is limited, the food is flavorful and satisfying, making it a go-to spot for those who enjoy casual street-style dining.</p>
-                </div>
-            </div>
-        </section>
         <section id="contact" class="section">
             <h2>Contact Us</h2>
             <div class="contact-container">
@@ -375,7 +406,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById(sectionId).style.display = 'block';
         }
 
-        // Show About Us section by default when page loads
+        // Show About section by default when page loads
         window.onload = function() {
             showSection('about');
         };
