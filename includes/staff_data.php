@@ -262,6 +262,53 @@ function staff_orders_save(array $container): void
     staff_write_json('orders.json', $container);
 }
 
+function staff_find_order(string $id): ?array
+{
+    $container = staff_orders_container();
+    $orders = $container['orders'] ?? [];
+    foreach ($orders as $order) {
+        if (($order['id'] ?? '') === $id) {
+            return $order;
+        }
+    }
+    return null;
+}
+
+function staff_create_customer_order(array $payload): array
+{
+    $container = staff_orders_container();
+    $seq = (int)($container['nextSeq'] ?? 1001);
+    $id = 'ORD-' . $seq;
+    $container['nextSeq'] = $seq + 1;
+
+    $table = trim((string)($payload['table'] ?? ''));
+    $customer = trim((string)($payload['customer'] ?? 'Guest'));
+    $itemsSummary = trim((string)($payload['itemsSummary'] ?? ''));
+    $total = trim((string)($payload['total'] ?? '0.00'));
+    $paymentMethod = trim((string)($payload['paymentMethod'] ?? ''));
+    $note = trim((string)($payload['note'] ?? ''));
+
+    if ($table === '' || $itemsSummary === '') {
+        throw new InvalidArgumentException('Missing table or items');
+    }
+
+    $order = [
+        'id' => $id,
+        'channel' => 'Table ' . strtoupper($table),
+        'customer' => $customer,
+        'items' => $itemsSummary,
+        'status' => 'New',
+        'placed' => date('Y-m-d H:i:s'),
+        'total' => $total,
+        'paymentMethod' => $paymentMethod,
+        'note' => $note,
+        'source' => 'customer_qr',
+    ];
+    $container['orders'][] = $order;
+    staff_orders_save($container);
+    return $order;
+}
+
 function staff_menu_container(): array
 {
     staff_seed_if_missing();
@@ -287,6 +334,39 @@ function staff_feedback_list(): array
         return strcmp($b['created'] ?? '', $a['created'] ?? '');
     });
     return $list;
+}
+
+function staff_create_feedback(array $payload): array
+{
+    $container = staff_feedback_container();
+    $seq = (int)($container['nextSeq'] ?? 1001);
+    $id = 'F-' . $seq;
+    $container['nextSeq'] = $seq + 1;
+
+    $name = trim((string)($payload['name'] ?? 'Guest'));
+    $email = trim((string)($payload['email'] ?? ''));
+    $message = trim((string)($payload['message'] ?? ''));
+
+    if ($message === '') {
+        throw new InvalidArgumentException('Feedback message is required');
+    }
+    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new InvalidArgumentException('Invalid email');
+    }
+
+    $entry = [
+        'id' => $id,
+        'name' => $name === '' ? 'Guest' : $name,
+        'email' => $email,
+        'message' => $message,
+        'created' => date('Y-m-d H:i:s'),
+    ];
+    if (!isset($container['entries']) || !is_array($container['entries'])) {
+        $container['entries'] = [];
+    }
+    $container['entries'][] = $entry;
+    staff_write_json('feedback.json', $container);
+    return $entry;
 }
 
 function staff_profiles_container(): array

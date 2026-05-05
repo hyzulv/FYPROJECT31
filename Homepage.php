@@ -319,9 +319,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </section>
         <section id="qr" class="section">
             <h2>QR Code</h2>
-            <p>Scan the QR code here.</p>
+            <p>Customer scan QR table number guna phone untuk buka menu order page khas.</p>
             <!-- Placeholder for QR code image -->
             <img src="placeholder-qr.png" alt="QR Code" style="width: 200px; height: 200px;">
+            <p style="margin-top:16px;">
+                Demo link (Table T01):
+                <a href="customer_menu.php?table=T01" style="color:#FF6666;font-weight:bold;">Open Customer Menu Page</a>
+            </p>
         </section>
         <section id="menu" class="section">
             <h2>Food/Drink Menu</h2>

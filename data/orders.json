@@ -26,7 +26,19 @@
             "status": "Ready",
             "placed": "2026-05-05 11:52:00",
             "total": "14.00"
+        },
+        {
+            "id": "ORD-1004",
+            "channel": "Table T01",
+            "customer": "daniel caesar",
+            "items": "Ayam Goreng Kunyit + Nasi x1, Teh Ais x1",
+            "status": "New",
+            "placed": "2026-05-05 14:05:23",
+            "total": "13.65",
+            "paymentMethod": "DuitNow QR",
+            "note": "-",
+            "source": "customer_qr"
         }
     ],
-    "nextSeq": 1004
+    "nextSeq": 1005
 }
