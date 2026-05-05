@@ -25,6 +25,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header {
             background-color: #FF0000; /* Red header */
             padding: 20px 0;
+            position: relative;
+        }
+        .auth-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #222222;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .auth-button:hover {
+            background-color: #FFFFFF;
+            color: #FF0000;
+            border-color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .logo {
             text-align: center;
@@ -251,6 +273,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #CC0000;
         }
         @media (max-width: 768px) {
+            .auth-button {
+                position: static;
+                display: block;
+                text-align: center;
+                margin-bottom: 15px;
+            }
             .hero {
                 grid-template-columns: 1fr;
             }
@@ -262,6 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <header>
+        <a href="login.php" class="auth-button">Login / Register</a>
         <div class="logo">
             <img src="restaurant-icon.png" alt="Restaurant Icon">
             <h1>MAT ROCK Restaurant Ordering System</h1>
