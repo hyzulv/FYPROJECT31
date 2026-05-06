@@ -6,7 +6,7 @@
             "customer": "Ahmad",
             "items": "Nasi Goreng ×2, Teh Ais",
             "status": "Preparing",
-            "placed": "2026-05-05 12:05:00",
+            "placed": "2026-05-06 12:05:00",
             "total": "24.50"
         },
         {
@@ -15,7 +15,7 @@
             "customer": "Siti",
             "items": "Burger Set, Fries",
             "status": "New",
-            "placed": "2026-05-05 12:18:00",
+            "placed": "2026-05-06 12:18:00",
             "total": "31.90"
         },
         {
@@ -24,21 +24,9 @@
             "customer": "Walk-in",
             "items": "Laksa ×1",
             "status": "Ready",
-            "placed": "2026-05-05 11:52:00",
+            "placed": "2026-05-06 11:52:00",
             "total": "14.00"
-        },
-        {
-            "id": "ORD-1004",
-            "channel": "Table T01",
-            "customer": "daniel caesar",
-            "items": "Ayam Goreng Kunyit + Nasi x1, Teh Ais x1",
-            "status": "New",
-            "placed": "2026-05-05 14:05:23",
-            "total": "13.65",
-            "paymentMethod": "DuitNow QR",
-            "note": "-",
-            "source": "customer_qr"
         }
     ],
-    "nextSeq": 1005
+    "nextSeq": 1004
 }

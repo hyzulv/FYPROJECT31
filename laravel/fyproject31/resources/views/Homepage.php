@@ -54,8 +54,8 @@ background-color: #d1986a; /* New theme header */
             margin-bottom: 20px;
         }
         .logo img {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
         }
         .logo h1 {
             color: #FFFFFF;
@@ -307,7 +307,7 @@ color: #d1986a; /* Red headings */
     <header>
         <a href="login.php" class="auth-button">Login / Register</a>
         <div class="logo">
-            <img src="restaurant-icon.png" alt="Restaurant Icon">
+            <img src="icon.png" alt="Restaurant Icon">
             <h1>MAT ROCK Restaurant Ordering System</h1>
         </div>
         <nav>

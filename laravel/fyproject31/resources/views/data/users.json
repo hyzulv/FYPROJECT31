@@ -2,13 +2,21 @@
     "users": [
         {
             "username": "admin",
-            "password": "admin123",
-            "role": "admin"
+            "password": "password123",
+            "role": "admin",
+            "email": "admin@restaurant.local",
+            "emailVerified": true,
+            "verifyToken": "",
+            "verifySentAt": ""
         },
         {
             "username": "staff1",
             "password": "staff123",
-            "role": "staff"
+            "role": "staff",
+            "email": "staff1@restaurant.local",
+            "emailVerified": true,
+            "verifyToken": "",
+            "verifySentAt": ""
         }
     ]
 }

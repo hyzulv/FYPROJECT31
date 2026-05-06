@@ -1,10 +1,16 @@
 {
     "profiles": {
         "admin": {
-            "displayName": "Staff Admin",
+            "displayName": "Admin",
             "email": "admin@restaurant.local",
             "phone": "",
-            "notes": "Kitchen lead"
+            "notes": "System administrator"
+        },
+        "staff1": {
+            "displayName": "Staff One",
+            "email": "staff1@restaurant.local",
+            "phone": "",
+            "notes": "Service crew"
         }
     }
 }
