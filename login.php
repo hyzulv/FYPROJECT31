@@ -66,10 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .particle {
+
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(255, 0, 0, 0.6);
+            background: rgba(209, 152, 106, 0.6);
+
             border-radius: 50%;
             animation: float 15s infinite linear;
         }
@@ -119,7 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 0 20px 60px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(255, 255, 255, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(209, 152, 106, 0.2);
+
             animation: slideUp 0.8s ease-out;
         }
 
@@ -144,7 +147,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 80px;
             height: 80px;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, #FF0000, #CC0000);
+            background: linear-gradient(135deg, #d1986a, #b88a5a);
+
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -169,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .login-header h1 {
-            color: #FF0000;
+            color: #d1986a;
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 5px;
@@ -185,7 +189,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         /* Error message */
         .error-message {
-            background: rgba(255, 0, 0, 0.15);
+            background: rgba(209, 152, 106, 0.15);
+
             border: 1px solid rgba(255, 0, 0, 0.4);
             color: #FF6666;
             padding: 12px 16px;
@@ -195,6 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: center;
             animation: shake 0.5s ease-in-out;
             display: <?php echo !empty($error_message) ? 'block' : 'none'; ?>;
+
         }
 
         @keyframes shake {
@@ -216,8 +222,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .input-group label {
             display: block;
-            color: #FF0000;
+            color: #d1986a;
             font-size: 13px;
+
             font-weight: 600;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -241,9 +248,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .input-wrapper input:focus {
-            border-color: #FF0000;
+            border-color: #b88a5a;
+
             background: rgba(43, 43, 43, 1);
-            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.15);
+            box-shadow: 0 0 0 3px rgba(209, 152, 106, 0.15);
+
         }
 
         .input-wrapper input::placeholder {
@@ -287,7 +296,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .submit-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+            background: linear-gradient(135deg, #d1986a 0%, #b88a5a 100%);
+
             color: #FFFFFF;
             border: none;
             border-radius: 10px;
@@ -297,19 +307,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(209, 152, 106, 0.3);
             margin-top: 10px;
+
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, #FF1a1a 0%, #FF0000 100%);
+            background: linear-gradient(135deg, #d1986a 0%, #b88a5a 100%);
+
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(209, 152, 106, 0.4);
+
         }
 
         .submit-btn:active {
             transform: translateY(0);
-            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(209, 152, 106, 0.3);
+
         }
 
         /* Footer */
@@ -326,15 +340,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .login-footer a {
-            color: #FF0000;
+            color: #e6b894;
             text-decoration: none;
+
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .login-footer a:hover {
-            color: #FF6666;
+            color: #e6b894;
         }
+
 
         /* Decorative elements */
         .corner-decoration {
@@ -405,7 +421,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #FF0000, transparent, #FF0000, transparent, #FF0000);
+            background: linear-gradient(45deg, #d1986a, transparent, #d1986a, transparent, #d1986a);
+
             background-size: 400%;
             border-radius: 22px;
             z-index: -1;

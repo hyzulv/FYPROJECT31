@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #FFFFFF; /* White text */
         }
         header {
-            background-color: #FF0000; /* Red header */
+background-color: #d1986a; /* New theme header */
+
             padding: 20px 0;
             position: relative;
         }
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .auth-button:hover {
             background-color: #FFFFFF;
-            color: #FF0000;
+            color: #d1986a;
             border-color: #FFFFFF;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -90,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: none;
         }
         h1 {
-            color: #FF0000; /* Red headings */
+color: #d1986a; /* Red headings */
         }
         p {
             color: #FFFFFF;
@@ -103,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .menu-item {
             background-color: #222222;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
@@ -121,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 10px;
         }
         .menu-item h3 {
-            color: #FF0000;
+            color: #d1986a;
             margin: 10px 0 5px 0;
         }
         .menu-item p {
@@ -133,8 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 30px;
         }
         .menu-category h3 {
-            color: #FF0000;
-            border-bottom: 2px solid #FF0000;
+            color: #d1986a;
+            border-bottom: 2px solid #d1986a;
             padding-bottom: 10px;
         }
         .contact-container {
@@ -143,8 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #1a1a1a;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
         }
+
         .contact-info {
             color: #FFFFFF;
             margin-bottom: 20px;
@@ -154,8 +156,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .contact-form label {
             display: block;
-            color: #FF0000;
+            color: #d1986a;
             margin-top: 15px;
+
             margin-bottom: 5px;
             font-weight: bold;
         }
@@ -165,7 +168,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px;
             margin-bottom: 15px;
             background-color: #333333;
-            border: 1px solid #FF0000;
+            border: 1px solid #d1986a;
+
             color: #FFFFFF;
             border-radius: 5px;
             box-sizing: border-box;
@@ -175,7 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #999999;
         }
         .contact-form button {
-            background-color: #FF0000;
+            background-color: #d1986a;
+
             color: white;
             padding: 12px 30px;
             border: none;
@@ -186,16 +191,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
         }
         .contact-form button:hover {
-            background-color: #CC0000;
+            background-color: #d1986a;
         }
+
         .about-container {
             max-width: 900px;
             margin: 20px auto;
             background-color: #1a1a1a;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
             display: grid;
+
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             align-items: center;
@@ -208,14 +215,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 300px;
             height: auto;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
         }
+
         .about-image .placeholder {
             width: 100%;
             max-width: 300px;
             height: 300px;
             background-color: #333333;
-            border: 2px dashed #FF0000;
+            border: 2px dashed #d1986a;
+
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -224,9 +233,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size: 14px;
         }
         .about-text h3 {
-            color: #FF0000;
+            color: #d1986a;
             margin-top: 0;
         }
+
         .about-text p {
             color: #FFFFFF;
             line-height: 1.6;
@@ -240,7 +250,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             background-color: #1a1a1a;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
+
             margin-bottom: 20px;
         }
         .hero-img {
@@ -248,10 +259,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             object-fit: cover;
             max-height: 420px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
         }
+
         .hero-text h2 {
-            color: #FF0000;
+            color: #d1986a;
+
             margin-top: 0;
             font-size: 2.2rem;
         }
@@ -262,7 +275,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .hero-button {
             display: inline-block;
-            background-color: #FF0000;
+            background-color: #d1986a;
+
             color: #FFFFFF;
             padding: 12px 26px;
             border-radius: 6px;
@@ -270,7 +284,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bold;
         }
         .hero-button:hover {
-            background-color: #CC0000;
+            background-color: #d1986a;
+
         }
         @media (max-width: 768px) {
             .auth-button {
@@ -324,7 +339,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="placeholder-qr.png" alt="QR Code" style="width: 200px; height: 200px;">
             <p style="margin-top:16px;">
                 Demo link (Table T01):
-                <a href="customer_menu.php?table=T01" style="color:#FF6666;font-weight:bold;">Open Customer Menu Page</a>
+<a href="customer_menu.php?table=T01" style="color:#d1986a;font-weight:bold;">Open Customer Menu Page</a>
             </p>
         </section>
         <section id="menu" class="section">

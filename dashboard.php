@@ -18,7 +18,7 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; font-family: Arial, sans-serif; background: #0d0d0d; color: #eee; }
-        .topbar { background: #1a1a1a; border-bottom: 2px solid #c00; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topbar { background: #1a1a1a; border-bottom: 2px solid #d1986a; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .topbar h1 { margin: 0; font-size: 1.2rem; color: #fff; }
         .sub { margin-top: 4px; color: #aaa; font-size: .85rem; }
         .role-chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #2e2e2e; border: 1px solid #505050; color: #fff; font-size: .75rem; margin-left: 8px; }
@@ -26,8 +26,8 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         .pill { color: #9cf; font-size: .82rem; }
         .btn, .btn-sm, a.btn { border: none; border-radius: 6px; font-family: inherit; cursor: pointer; text-decoration: none; display: inline-block; }
         .btn { padding: 9px 14px; font-weight: bold; font-size: .9rem; }
-        .btn-primary { background: #c00; color: #fff; }
-        .btn-primary:hover { background: #900; }
+.btn-primary { background: #d1986a; color: #fff; }
+.btn-primary:hover { background: #b06f52; }
         .btn-muted { background: #333; color: #fff; }
         .btn-muted:hover { background: #444; }
         .btn-logout { background: #2a2a2a; color: #eee; border: 1px solid #444; }
@@ -35,7 +35,8 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         nav.side { background: #141414; border-right: 1px solid #2a2a2a; padding: 16px 0; }
         nav.side button { width: 100%; text-align: left; padding: 12px 18px; border: none; background: transparent; color: #ccc; font-weight: bold; cursor: pointer; }
         nav.side button:hover { background: #1f1f1f; color: #fff; }
-        nav.side button.active { background: #222; color: #fff; border-left: 3px solid #c00; }
+nav.side button.active { background: #222; color: #fff; border-left: 3px solid #d1986a; }
+
         .content { padding: 18px; max-width: 1200px; }
         .panel { display: none; }
         .panel.active { display: block; }
@@ -43,7 +44,7 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
         .card h2 { margin: 0 0 12px; font-size: 1.05rem; color: #fff; }
         .muted { color: #888; font-size: .85rem; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
-        .stat-card { background: #1a1a1a; border-radius: 10px; padding: 14px; border-left: 4px solid #c00; }
+.stat-card { background: #1a1a1a; border-radius: 10px; padding: 14px; border-left: 4px solid #d1986a; }
         .stat-card .label { font-size: .75rem; color: #999; text-transform: uppercase; }
         .stat-card .value { font-size: 1.4rem; font-weight: bold; margin-top: 6px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
@@ -75,7 +76,7 @@ $safeRole = htmlspecialchars(strtoupper($role), ENT_QUOTES, 'UTF-8');
             .layout { grid-template-columns: 1fr; }
             nav.side { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; border-right: none; border-bottom: 1px solid #2a2a2a; }
             nav.side button { width: auto; flex: 1 1 45%; border-left: none !important; border-radius: 6px; }
-            nav.side button.active { border: 1px solid #c00; }
+nav.side button.active { border: 1px solid #d1986a; }
             .row2 { grid-template-columns: 1fr; }
         }
     </style>
