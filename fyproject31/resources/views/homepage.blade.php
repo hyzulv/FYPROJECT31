@@ -290,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <header>
-        <a href="login.php" class="auth-button">Login / Register</a>
+<a href="/login" class="auth-button">Login</a>
         <div class="logo">
             <img src="restaurant-icon.png" alt="Restaurant Icon">
             <h1>MAT ROCK Restaurant Ordering System</h1>
