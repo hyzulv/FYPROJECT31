@@ -234,9 +234,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('feedback');
 
     Route::get('/staff', function () {
-        $staff = User::where('role', 'staff')->orWhere('role', 'admin')->get()->map(function ($u) {
+        $staff = User::whereIn('role', ['staff', 'admin'])->get()->map(function ($u) {
             return [
+                'id' => $u->id,
                 'name' => $u->name,
+                'username' => $u->username,
                 'email' => $u->email,
                 'role' => $u->role,
                 'phone' => $u->phone ?? '+60 12-345 6789',
@@ -250,4 +252,36 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
             'staff' => $staff,
         ]);
     })->name('staff');
+
+    Route::post('/staff/add', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6',
+            'role' => 'required|in:staff,admin',
+            'phone' => 'nullable|string|max:255',
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'phone' => $validated['phone'],
+            'status' => 'active',
+        ]);
+
+        return redirect()->route('admin.staff')->with('success', 'Staff added successfully!');
+    })->name('staff.add');
+
+    Route::delete('/staff/{id}', function ($id) {
+        $user = User::findOrFail($id);
+        if ($user->role === 'admin' && User::where('role', 'admin')->count() <= 1) {
+            return back()->withErrors(['error' => 'Cannot delete the last admin.']);
+        }
+        $user->delete();
+        return redirect()->route('admin.staff')->with('success', 'Staff deleted successfully!');
+    })->name('staff.delete');
 });

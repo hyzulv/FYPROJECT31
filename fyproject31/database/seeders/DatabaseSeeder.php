@@ -14,77 +14,31 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Users
-        User::updateOrCreate(['username' => 'admin'], [
-            'name' => 'Admin User',
-            'email' => 'matrock.admin@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'admin',
-            'phone' => '+60 11-123 4567',
-            'status' => 'active',
-        ]);
+        // Users - using updateOrCreate to sync between databases
+        $users = [
+            ['username' => 'admin', 'name' => 'Admin User', 'email' => 'matrock.admin@gmail.com', 'password' => 'password123', 'role' => 'admin', 'phone' => '+60 11-123 4567', 'status' => 'active'],
+            ['username' => 'ahmad', 'name' => 'Ahmad Faizal', 'email' => 'ahmad.faizal@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 12-345 6789', 'status' => 'active'],
+            ['username' => 'nurul', 'name' => 'Nurul Aisyah', 'email' => 'nurul.aisyah@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 13-456 7890', 'status' => 'active'],
+            ['username' => 'raj', 'name' => 'Raj Kumar', 'email' => 'raj.kumar@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 14-567 8901', 'status' => 'active'],
+            ['username' => 'lim', 'name' => 'Lim Wei Jie', 'email' => 'lim.weijie@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 16-678 9012', 'status' => 'active'],
+            ['username' => 'sarah', 'name' => 'Sarah Tan', 'email' => 'sarah.tan@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 17-789 0123', 'status' => 'inactive'],
+            ['username' => 'zulkifli', 'name' => 'Zulkifli Hassan', 'email' => 'zulkifli.h@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 18-890 1234', 'status' => 'active'],
+            ['username' => 'farah', 'name' => 'Farah Diana', 'email' => 'farah.diana@gmail.com', 'password' => 'password123', 'role' => 'staff', 'phone' => '+60 19-901 2345', 'status' => 'active'],
+        ];
 
-        User::updateOrCreate(['username' => 'ahmad'], [
-            'name' => 'Ahmad Faizal',
-            'email' => 'ahmad.faizal@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 12-345 6789',
-            'status' => 'active',
-        ]);
-
-        User::updateOrCreate(['username' => 'nurul'], [
-            'name' => 'Nurul Aisyah',
-            'email' => 'nurul.aisyah@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 13-456 7890',
-            'status' => 'active',
-        ]);
-
-        User::updateOrCreate(['username' => 'raj'], [
-            'name' => 'Raj Kumar',
-            'email' => 'raj.kumar@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 14-567 8901',
-            'status' => 'active',
-        ]);
-
-        User::updateOrCreate(['username' => 'lim'], [
-            'name' => 'Lim Wei Jie',
-            'email' => 'lim.weijie@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 16-678 9012',
-            'status' => 'active',
-        ]);
-
-        User::updateOrCreate(['username' => 'sarah'], [
-            'name' => 'Sarah Tan',
-            'email' => 'sarah.tan@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 17-789 0123',
-            'status' => 'inactive',
-        ]);
-
-        User::updateOrCreate(['username' => 'zulkifli'], [
-            'name' => 'Zulkifli Hassan',
-            'email' => 'zulkifli.h@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 18-890 1234',
-            'status' => 'active',
-        ]);
-
-        User::updateOrCreate(['username' => 'farah'], [
-            'name' => 'Farah Diana',
-            'email' => 'farah.diana@gmail.com',
-            'password' => Hash::make('password123'),
-            'role' => 'staff',
-            'phone' => '+60 19-901 2345',
-            'status' => 'active',
-        ]);
+        foreach ($users as $userData) {
+            User::updateOrCreate(
+                ['username' => $userData['username']],
+                [
+                    'name' => $userData['name'],
+                    'email' => $userData['email'],
+                    'password' => Hash::make($userData['password']),
+                    'role' => $userData['role'],
+                    'phone' => $userData['phone'],
+                    'status' => $userData['status'],
+                ]
+            );
+        }
 
         // Menu Items - Food
         MenuItem::updateOrCreate(['name' => 'Ayam Goreng Kunyit'], [
