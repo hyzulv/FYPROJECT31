@@ -218,7 +218,7 @@
 
         <section class="split" aria-labelledby="about-photo-heading">
             <div class="split-media">
-                <img src="about-kitchen.jpg" alt="Restaurant team preparing food">
+<img src="../about.png" alt="About our restaurant">
             </div>
             <div class="split-text">
                 <h2 id="about-photo-heading">A welcoming place</h2>

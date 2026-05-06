@@ -307,7 +307,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section id="about" class="section">
             <div class="about-container">
                 <div class="about-image">
-                    <img src="restaurant-photo.jpg" alt="Mat Rock Restaurant">
+                    <img src="../about.png" alt="Mat Rock Restaurant">
                 </div>
                 <div class="about-text">
                     <h3>About Mat Rock</h3>
