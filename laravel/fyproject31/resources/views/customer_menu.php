@@ -16,8 +16,8 @@ $tableSafe = htmlspecialchars($tableRaw, ENT_QUOTES, 'UTF-8');
             --line: #353535;
             --text: #f4f4f4;
             --muted: #b0b0b0;
-            --red: #ff0000;
-            --red-dark: #c70000;
+            --red: #d1986a;
+            --red-dark: #d1986a;
             --ok: #2e7d32;
         }
         * { box-sizing: border-box; }
@@ -107,7 +107,7 @@ $tableSafe = htmlspecialchars($tableRaw, ENT_QUOTES, 'UTF-8');
             gap: 8px;
         }
         .price {
-            color: #ff6d6d;
+            color: #d1986a;
             font-weight: 700;
             font-size: 0.98rem;
         }
@@ -565,7 +565,7 @@ $tableSafe = htmlspecialchars($tableRaw, ENT_QUOTES, 'UTF-8');
 
             if (!message) {
                 result.textContent = "Please enter feedback message first.";
-                result.style.color = "#ff9f9f";
+                result.style.color = "#d1986a";
                 return;
             }
 
@@ -581,7 +581,7 @@ $tableSafe = htmlspecialchars($tableRaw, ENT_QUOTES, 'UTF-8');
                 .then(data => {
                     if (!data.ok) {
                         result.textContent = data.error || "Failed to submit feedback.";
-                        result.style.color = "#ff9f9f";
+                        result.style.color = "#d1986a";
                         return;
                     }
                     result.textContent = "Thank you! Your feedback has been submitted.";
@@ -590,7 +590,7 @@ $tableSafe = htmlspecialchars($tableRaw, ENT_QUOTES, 'UTF-8');
                 })
                 .catch(() => {
                     result.textContent = "Could not connect to server.";
-                    result.style.color = "#ff9f9f";
+                    result.style.color = "#d1986a";
                 });
         }
 
