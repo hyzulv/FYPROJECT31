@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
             $newContent .= "        User::updateOrCreate(['username' => '{$user->username}'], [
             'name' => '{$user->name}',
             'email' => '{$user->email}',
-            'password' => Hash::make('password123'),
+            'password' => '{$user->password}',
             'role' => '{$user->role}',
             'phone' => '{$user->phone}',
             'status' => '{$user->status}',
