@@ -14,6 +14,7 @@ class MenuSeeder extends Seeder
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $items = [
+            // Ala Carte
             [
                 'name' => 'Ayam Goreng Kunyit',
                 'description' => 'Signature turmeric fried chicken with crispy skin, served with rice and sambal',
@@ -46,6 +47,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'udang-goreng-kunyit.jpg',
             ],
+            // Combo Set
             [
                 'name' => 'Combo Set Ayam',
                 'description' => 'Ayam Goreng Kunyit set with rice, drink and sambal',
@@ -78,6 +80,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'combo-sotong.jpg',
             ],
+            // Mix
             [
                 'name' => 'Ayam + Daging Mix',
                 'description' => 'Mix of Ayam Goreng Kunyit and Daging Goreng Kunyit with rice',
@@ -126,6 +129,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'daging-udang-mix.jpg',
             ],
+            // Nasi Lemak
             [
                 'name' => 'Nasi Lemak Biasa',
                 'description' => 'Fragrant pandan basmati coconut rice with sambal, peanut, anchovies and cucumber',
@@ -182,6 +186,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'nasi-lemak-udang-kunyit.jpg',
             ],
+            // Kicap Edition
             [
                 'name' => 'Ayam Kicap',
                 'description' => 'Chicken cooked in sweet soy sauce with aromatic spices',
@@ -198,6 +203,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'daging-kicap.jpg',
             ],
+            // Set Family
             [
                 'name' => 'Set Family',
                 'description' => 'Family set with Ayam, Daging, Sotong, Udang Goreng Kunyit served with rice and sambal for the whole family',
@@ -206,6 +212,7 @@ class MenuSeeder extends Seeder
                 'status' => 'available',
                 'image' => 'set-family.jpg',
             ],
+            // Minuman (Drinks)
             [
                 'name' => 'Milo',
                 'description' => 'Iced Milo chocolate malt drink',
@@ -239,13 +246,14 @@ class MenuSeeder extends Seeder
                 'image' => 'teh-o.jpg',
             ],
             [
-                'name' => 'Air Kosong',
-                'description' => 'Plain water',
+                'name' => 'Ais Kosong',
+                'description' => 'Plain water with ice',
                 'price' => 1.00,
                 'category' => 'minuman',
                 'status' => 'available',
-                'image' => 'air-kosong.jpg',
+                'image' => 'ais-kosong.jpg',
             ],
+            // Food Add-ons (for ala_carte, combo_set, mix, nasi_lemak, kicap, set_family)
             [
                 'name' => 'Telur Mata',
                 'description' => 'Sunny-side-up fried egg',
@@ -253,6 +261,9 @@ class MenuSeeder extends Seeder
                 'category' => 'add_on',
                 'status' => 'available',
                 'image' => 'telur-mata.jpg',
+                'applies_to' => json_encode(['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family']),
+                'selection_type' => 'multiple',
+                'group_name' => null,
             ],
             [
                 'name' => 'Nasi Putih',
@@ -261,14 +272,9 @@ class MenuSeeder extends Seeder
                 'category' => 'add_on',
                 'status' => 'available',
                 'image' => 'nasi-putih.jpg',
-            ],
-            [
-                'name' => 'Nasi Tambah',
-                'description' => 'Extra serving of rice',
-                'price' => 1.00,
-                'category' => 'add_on',
-                'status' => 'available',
-                'image' => 'nasi-tambah.jpg',
+                'applies_to' => json_encode(['ala_carte', 'combo_set', 'mix', 'kicap']),
+                'selection_type' => 'multiple',
+                'group_name' => null,
             ],
             [
                 'name' => 'Sambal Extra',
@@ -277,6 +283,58 @@ class MenuSeeder extends Seeder
                 'category' => 'add_on',
                 'status' => 'available',
                 'image' => 'sambal.jpg',
+                'applies_to' => json_encode(['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family']),
+                'selection_type' => 'multiple',
+                'group_name' => null,
+            ],
+            // Drink Add-ons (for minuman)
+            [
+                'name' => 'Ice',
+                'description' => 'Cold with ice',
+                'price' => 0.50,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'ice.jpg',
+                'applies_to' => json_encode(['minuman']),
+                'selection_type' => 'multiple',
+                'group_name' => null,
+                'exclude_for' => json_encode(['Ais Kosong']),
+            ],
+            [
+                'name' => 'Kurang Manis',
+                'description' => 'Less sweet',
+                'price' => 0.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'kurang-manis.jpg',
+                'applies_to' => json_encode(['minuman']),
+                'selection_type' => 'single',
+                'group_name' => 'Sweetness',
+                'exclude_for' => json_encode(['Ais Kosong']),
+            ],
+            [
+                'name' => 'Normal Manis',
+                'description' => 'Normal sweetness',
+                'price' => 0.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'normal-manis.jpg',
+                'applies_to' => json_encode(['minuman']),
+                'selection_type' => 'single',
+                'group_name' => 'Sweetness',
+                'exclude_for' => json_encode(['Ais Kosong']),
+            ],
+            [
+                'name' => 'Extra Manis',
+                'description' => 'Extra sweet',
+                'price' => 0.50,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'extra-manis.jpg',
+                'applies_to' => json_encode(['minuman']),
+                'selection_type' => 'single',
+                'group_name' => 'Sweetness',
+                'exclude_for' => json_encode(['Ais Kosong']),
             ],
         ];
 
