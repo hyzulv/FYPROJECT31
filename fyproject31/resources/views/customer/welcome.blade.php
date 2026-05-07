@@ -8,13 +8,7 @@
         <div class="glass-overlay">
             <div class="logo-section">
                 <div class="logo-icon">
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="45" stroke="#d1986a" stroke-width="3" fill="rgba(209,152,106,0.1)"/>
-                        <path d="M30 60 Q50 25 70 60" stroke="#d1986a" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M35 60 L65 60" stroke="#d1986a" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M40 65 L60 65" stroke="#d1986a" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="50" cy="38" r="3" fill="#d1986a"/>
-                    </svg>
+                    <img src="{{ asset('restaurant-icon.png') }}" alt="MAT ROCK">
                 </div>
                 <h1 class="restaurant-name">MAT ROCK</h1>
                 <p class="restaurant-tagline">Ayam Goreng Kunyit Skudai</p>

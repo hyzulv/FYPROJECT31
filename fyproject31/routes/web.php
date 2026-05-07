@@ -71,15 +71,49 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         return view('staff.profile', [
             'userName' => $user->name,
             'userRole' => 'staff',
-            'staff' => [
+            'prefix' => 'staff',
+            'profile' => [
                 'name' => $user->name,
+                'username' => $user->username,
                 'email' => $user->email,
                 'role' => $user->role,
-                'phone' => $user->phone ?? '+60 12-345 6789',
-                'join_date' => $user->created_at?->format('F Y') ?? 'January 2024',
+                'phone' => $user->phone,
+                'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2024',
             ],
         ]);
     })->name('profile');
+
+    Route::post('/profile/update', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
+            'phone' => 'nullable|string|max:255',
+        ]);
+
+        auth()->user()->update($validated);
+        return back()->with('success', 'Profile updated successfully!');
+    })->name('profile.update');
+
+    Route::get('/change-password', function () {
+        return view('auth.change-password', [
+            'userName' => auth()->user()->name,
+            'userRole' => 'staff',
+        ]);
+    })->name('change-password');
+
+    Route::post('/change-password', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        if (!\Illuminate\Support\Facades\Hash::check($validated['current_password'], auth()->user()->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
+        return redirect()->route('staff.profile')->with('success', 'Password changed successfully!');
+    })->name('change-password.submit');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
@@ -173,15 +207,49 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         return view('admin.profile', [
             'userName' => $user->name,
             'userRole' => 'admin',
-            'admin' => [
+            'prefix' => 'admin',
+            'profile' => [
                 'name' => $user->name,
+                'username' => $user->username,
                 'email' => $user->email,
                 'role' => $user->role,
-                'phone' => $user->phone ?? '+60 11-123 4567',
-                'join_date' => $user->created_at?->format('F Y') ?? 'January 2023',
+                'phone' => $user->phone,
+                'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2023',
             ],
         ]);
     })->name('profile');
+
+    Route::post('/profile/update', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
+            'phone' => 'nullable|string|max:255',
+        ]);
+
+        auth()->user()->update($validated);
+        return back()->with('success', 'Profile updated successfully!');
+    })->name('profile.update');
+
+    Route::get('/change-password', function () {
+        return view('auth.change-password', [
+            'userName' => auth()->user()->name,
+            'userRole' => 'admin',
+        ]);
+    })->name('change-password');
+
+    Route::post('/change-password', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        if (!\Illuminate\Support\Facades\Hash::check($validated['current_password'], auth()->user()->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
+        return redirect()->route('admin.profile')->with('success', 'Password changed successfully!');
+    })->name('change-password.submit');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
@@ -292,4 +360,40 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         $user->delete();
         return redirect()->route('admin.staff')->with('success', 'Staff deleted successfully!');
     })->name('staff.delete');
+});
+
+// API Routes for Real-time Order Sync
+Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
+    Route::get('/orders/check', function () {
+        static $lastCount = null;
+        $currentCount = Order::count();
+        $lastCount = $lastCount ?? $currentCount;
+        $hasNew = $currentCount > $lastCount;
+        $lastCount = $currentCount;
+
+        $latestOrders = Order::orderBy('created_at', 'desc')->take(10)->get()->map(function ($order) {
+            return [
+                'id' => $order->order_id,
+                'table' => $order->table_number,
+                'items' => $order->items,
+                'total' => number_format($order->total, 2),
+                'status' => $order->status,
+                'time' => $order->created_at?->diffForHumans(),
+            ];
+        });
+
+        return response()->json([
+            'hasNew' => $hasNew,
+            'totalOrders' => $currentCount,
+            'pendingOrders' => Order::where('status', 'pending')->count(),
+            'orders' => $latestOrders,
+        ]);
+    })->name('orders.check');
+
+    Route::post('/orders/{id}/status', function ($id) {
+        $request = request();
+        $order = Order::findOrFail($id);
+        $order->update(['status' => $request->status]);
+        return response()->json(['success' => true]);
+    })->name('orders.update-status');
 });

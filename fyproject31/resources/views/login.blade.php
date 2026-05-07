@@ -130,7 +130,7 @@
                     <label for="username">Username</label>
                     <div class="input-wrapper">
                         <span class="icon">👤</span>
-                        <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Enter your username" required autocomplete="username">
+                        <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Enter your username" required autocomplete="off">
                     </div>
                 </div>
 
@@ -138,13 +138,13 @@
                     <label for="password">Password</label>
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="off">
                     </div>
                 </div>
 
                 <div class="form-options">
                     <label class="remember-me">
-                        <input type="checkbox" name="remember">
+                        <input type="checkbox" id="rememberCheck" name="remember">
                         <span>Remember me</span>
                     </label>
                     <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
@@ -158,5 +158,35 @@
             <a href="/">← Back to Homepage</a>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var usernameInput = document.getElementById('username');
+        var passwordInput = document.getElementById('password');
+        var rememberCheck = document.getElementById('rememberCheck');
+
+        var savedUsername = localStorage.getItem('remember_username');
+        var savedPassword = localStorage.getItem('remember_password');
+        var wasRemembered = localStorage.getItem('remember_me') === 'true';
+
+        if (wasRemembered && savedUsername) {
+            usernameInput.value = savedUsername;
+            passwordInput.value = savedPassword || '';
+            rememberCheck.checked = true;
+        }
+
+        document.querySelector('form').addEventListener('submit', function() {
+            if (rememberCheck.checked) {
+                localStorage.setItem('remember_username', usernameInput.value);
+                localStorage.setItem('remember_password', passwordInput.value);
+                localStorage.setItem('remember_me', 'true');
+            } else {
+                localStorage.removeItem('remember_me');
+                localStorage.removeItem('remember_username');
+                localStorage.removeItem('remember_password');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

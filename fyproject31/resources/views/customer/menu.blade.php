@@ -25,15 +25,15 @@
         <button class="category-btn active" data-category="all">All</button>
         @foreach($categories as $catKey)
             @if(isset($categoryLabels[$catKey]))
-                <button class="category-btn" data-category="{{ $catKey }}">{{ $categoryLabels[$catKey] }}</button>
+                <a href="#{{ $catKey }}" class="category-btn" data-category="{{ $catKey }}">{{ $categoryLabels[$catKey] }}</a>
             @endif
         @endforeach
     </div>
 
-    <div class="menu-content" id="menuContent">
+    <div class="menu-content" id="menuContent" style="scroll-padding-top: 60px;">
         @foreach($categories as $catKey)
             @if(isset($categoryLabels[$catKey]) && $menuItems->has($catKey))
-            <div class="menu-section" data-category="{{ $catKey }}">
+            <div class="menu-section" data-category="{{ $catKey }}" id="{{ $catKey }}">
                 <h2 class="menu-section-title">{{ $categoryLabels[$catKey] }}</h2>
                 <div class="menu-grid">
                     @foreach($menuItems[$catKey] as $item)
@@ -108,24 +108,33 @@ document.addEventListener('DOMContentLoaded', function() {
     filter.addEventListener('click', function(e) {
         var btn = e.target.closest('.category-btn');
         if (!btn) return;
-        e.preventDefault();
-
-        filter.querySelectorAll('.category-btn').forEach(function(b) {
-            b.classList.remove('active');
-        });
-        btn.classList.add('active');
 
         var cat = btn.getAttribute('data-category');
-        var sections = menuContent.querySelectorAll('.menu-section');
 
-        sections.forEach(function(section) {
-            if (cat === 'all' || section.getAttribute('data-category') === cat) {
-                section.style.display = 'block';
-                section.style.animation = 'fadeIn 0.3s ease';
-            } else {
-                section.style.display = 'none';
+        if (cat === 'all') {
+            e.preventDefault();
+            menuContent.scrollTo({ top: 0, behavior: 'smooth' });
+            filter.querySelectorAll('.category-btn').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+        }
+    });
+
+    var sections = menuContent.querySelectorAll('.menu-section');
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                var cat = entry.target.getAttribute('data-category');
+                filter.querySelectorAll('.category-btn').forEach(function(b) {
+                    b.classList.toggle('active', b.getAttribute('data-category') === cat);
+                });
             }
         });
+    }, { root: menuContent, rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function(section) {
+        observer.observe(section);
     });
 });
 

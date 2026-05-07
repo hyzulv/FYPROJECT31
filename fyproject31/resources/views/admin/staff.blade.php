@@ -13,7 +13,7 @@
 
 <div class="data-card">
     <h3>Add New Staff</h3>
-    <form action="{{ route('admin.staff.add') }}" method="POST" style="display: grid; gap: 1rem; max-width: 500px;">
+    <form action="{{ route('admin.staff.add') }}" method="POST" autocomplete="off" style="display: grid; gap: 1rem; max-width: 500px;">
         @csrf
         <div>
             <label>Name</label>
@@ -87,4 +87,12 @@
     <p>After adding/removing staff, run this command to sync with your friend:</p>
     <code style="display: block; background: #f4f4f4; padding: 10px; margin: 10px 0;">php artisan db:sync</code>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    @if(session('success'))
+    document.querySelector('form[action="{{ route('admin.staff.add') }}"]')?.reset();
+    @endif
+});
+</script>
 @endsection

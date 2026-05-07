@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #FFFFFF; /* White text */
         }
         header {
-            background-color: #FF0000; /* Red header */
+            background-color: #d1986a; /* Gold header */
             padding: 20px 0;
             position: relative;
         }
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .auth-button:hover {
             background-color: #FFFFFF;
-            color: #FF0000;
+            color: #d1986a;
             border-color: #FFFFFF;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: none;
         }
         h1 {
-            color: #FF0000; /* Red headings */
+            color: #d1986a; /* Red headings */
         }
         p {
             color: #FFFFFF;
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .menu-item {
             background-color: #222222;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
@@ -113,15 +113,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transform: scale(1.05);
             background-color: #333333;
         }
-        .menu-item img {
+        .menu-item img,
+        .menu-item > div:first-child {
             width: 100%;
             height: 150px;
-            object-fit: cover;
             border-radius: 5px;
             margin-bottom: 10px;
         }
         .menu-item h3 {
-            color: #FF0000;
+            color: #d1986a;
             margin: 10px 0 5px 0;
         }
         .menu-item p {
@@ -133,8 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 30px;
         }
         .menu-category h3 {
-            color: #FF0000;
-            border-bottom: 2px solid #FF0000;
+            color: #d1986a;
+            border-bottom: 2px solid #d1986a;
             padding-bottom: 10px;
         }
         .contact-container {
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #1a1a1a;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
         }
         .contact-info {
             color: #FFFFFF;
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .contact-form label {
             display: block;
-            color: #FF0000;
+            color: #d1986a;
             margin-top: 15px;
             margin-bottom: 5px;
             font-weight: bold;
@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px;
             margin-bottom: 15px;
             background-color: #333333;
-            border: 1px solid #FF0000;
+            border: 1px solid #d1986a;
             color: #FFFFFF;
             border-radius: 5px;
             box-sizing: border-box;
@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #999999;
         }
         .contact-form button {
-            background-color: #FF0000;
+            background-color: #d1986a;
             color: white;
             padding: 12px 30px;
             border: none;
@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
         }
         .contact-form button:hover {
-            background-color: #CC0000;
+            background-color: #b8864e;
         }
         .about-container {
             max-width: 900px;
@@ -194,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #1a1a1a;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -203,28 +203,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .about-image {
             text-align: center;
         }
-        .about-image img {
+        .about-image img,
+        .about-image svg {
             width: 100%;
             max-width: 300px;
             height: auto;
             border-radius: 8px;
-            border: 2px solid #FF0000;
-        }
-        .about-image .placeholder {
-            width: 100%;
-            max-width: 300px;
-            height: 300px;
-            background-color: #333333;
-            border: 2px dashed #FF0000;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999999;
-            font-size: 14px;
+            border: 2px solid #d1986a;
         }
         .about-text h3 {
-            color: #FF0000;
+            color: #d1986a;
             margin-top: 0;
         }
         .about-text p {
@@ -240,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             background-color: #1a1a1a;
             border-radius: 8px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
             margin-bottom: 20px;
         }
         .hero-img {
@@ -248,10 +236,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             object-fit: cover;
             max-height: 420px;
-            border: 2px solid #FF0000;
+            border: 2px solid #d1986a;
         }
         .hero-text h2 {
-            color: #FF0000;
+            color: #d1986a;
             margin-top: 0;
             font-size: 2.2rem;
         }
@@ -262,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .hero-button {
             display: inline-block;
-            background-color: #FF0000;
+            background-color: #d1986a;
             color: #FFFFFF;
             padding: 12px 26px;
             border-radius: 6px;
@@ -270,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bold;
         }
         .hero-button:hover {
-            background-color: #CC0000;
+            background-color: #b8864e;
         }
         @media (max-width: 768px) {
             .auth-button {
@@ -292,7 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
 <a href="/login" class="auth-button">Login</a>
         <div class="logo">
-            <img src="restaurant-icon.png" alt="Restaurant Icon">
+            <img src="{{ asset('restaurant-icon.png') }}" alt="MAT ROCK">
             <h1>MAT ROCK Restaurant Ordering System</h1>
         </div>
         <nav>
@@ -307,7 +295,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section id="about" class="section">
             <div class="about-container">
                 <div class="about-image">
-                    <img src="../about.png" alt="Mat Rock Restaurant">
+                    <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;">
+                        <rect width="300" height="300" fill="#1a1a1a"/>
+                        <circle cx="150" cy="120" r="60" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
+                        <path d="M110 140 Q150 80 190 140" stroke="#d1986a" stroke-width="2" fill="none"/>
+                        <circle cx="150" cy="105" r="5" fill="#d1986a"/>
+                        <text x="150" y="220" text-anchor="middle" fill="#d1986a" font-size="24" font-weight="bold">MAT ROCK</text>
+                        <text x="150" y="250" text-anchor="middle" fill="#999999" font-size="14">Ayam Goreng Kunyit</text>
+                    </svg>
                 </div>
                 <div class="about-text">
                     <h3>About Mat Rock</h3>
@@ -321,10 +316,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2>QR Code</h2>
             <p>Customer scan QR table number guna phone untuk buka menu order page khas.</p>
             <!-- Placeholder for QR code image -->
-            <img src="placeholder-qr.png" alt="QR Code" style="width: 200px; height: 200px;">
+            <div style="text-align:center;padding:20px;">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:200px;background:#222;border-radius:8px;">
+                    <rect x="20" y="20" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
+                    <rect x="130" y="20" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
+                    <rect x="20" y="130" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
+                    <rect x="90" y="90" width="20" height="20" fill="#d1986a"/>
+                    <rect x="130" y="130" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
+                    <rect x="35" y="35" width="20" height="20" fill="#d1986a"/>
+                    <rect x="145" y="35" width="20" height="20" fill="#d1986a"/>
+                    <rect x="35" y="145" width="20" height="20" fill="#d1986a"/>
+                    <rect x="145" y="145" width="20" height="20" fill="#d1986a"/>
+                    <text x="100" y="195" text-anchor="middle" fill="#999" font-size="12">Scan to Order</text>
+                </svg>
+            </div>
             <p style="margin-top:16px;">
                 Demo link (Table T01):
-                <a href="{{ route('customer.welcome') }}" style="color:#FF6666;font-weight:bold;">Open Customer Menu Page</a>
+                <a href="{{ route('customer.welcome') }}" style="color:#d1986a;font-weight:bold;">Open Customer Menu Page</a>
             </p>
         </section>
         <section id="menu" class="section">
@@ -337,28 +345,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="menu-grid">
                     <!-- Food Item 1 -->
                     <div class="menu-item">
-                        <img src="food1.jpg" alt="Food Item 1">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><ellipse cx="30" cy="40" rx="20" ry="8" stroke="#d1986a" stroke-width="2"/><path d="M15 35 Q30 15 45 35" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/></svg>
+                        </div>
                         <h3>Dish Name 1</h3>
                         <p>Brief description of the dish</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Food Item 2 -->
                     <div class="menu-item">
-                        <img src="food2.jpg" alt="Food Item 2">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><ellipse cx="30" cy="40" rx="20" ry="8" stroke="#d1986a" stroke-width="2"/><path d="M15 35 Q30 15 45 35" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/></svg>
+                        </div>
                         <h3>Dish Name 2</h3>
                         <p>Brief description of the dish</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Food Item 3 -->
                     <div class="menu-item">
-                        <img src="food3.jpg" alt="Food Item 3">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><ellipse cx="30" cy="40" rx="20" ry="8" stroke="#d1986a" stroke-width="2"/><path d="M15 35 Q30 15 45 35" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/></svg>
+                        </div>
                         <h3>Dish Name 3</h3>
                         <p>Brief description of the dish</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Food Item 4 -->
                     <div class="menu-item">
-                        <img src="food4.jpg" alt="Food Item 4">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><ellipse cx="30" cy="40" rx="20" ry="8" stroke="#d1986a" stroke-width="2"/><path d="M15 35 Q30 15 45 35" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/></svg>
+                        </div>
                         <h3>Dish Name 4</h3>
                         <p>Brief description of the dish</p>
                         <p><strong>Price: $X.XX</strong></p>
@@ -372,28 +388,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="menu-grid">
                     <!-- Drink Item 1 -->
                     <div class="menu-item">
-                        <img src="drink1.jpg" alt="Drink Item 1">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><path d="M20 15 L20 45 Q20 50 30 50 Q40 50 40 45 L40 15" stroke="#d1986a" stroke-width="2"/><ellipse cx="30" cy="15" rx="10" ry="4" stroke="#d1986a" stroke-width="2"/></svg>
+                        </div>
                         <h3>Drink Name 1</h3>
                         <p>Brief description of the drink</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Drink Item 2 -->
                     <div class="menu-item">
-                        <img src="drink2.jpg" alt="Drink Item 2">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><path d="M20 15 L20 45 Q20 50 30 50 Q40 50 40 45 L40 15" stroke="#d1986a" stroke-width="2"/><ellipse cx="30" cy="15" rx="10" ry="4" stroke="#d1986a" stroke-width="2"/></svg>
+                        </div>
                         <h3>Drink Name 2</h3>
                         <p>Brief description of the drink</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Drink Item 3 -->
                     <div class="menu-item">
-                        <img src="drink3.jpg" alt="Drink Item 3">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><path d="M20 15 L20 45 Q20 50 30 50 Q40 50 40 45 L40 15" stroke="#d1986a" stroke-width="2"/><ellipse cx="30" cy="15" rx="10" ry="4" stroke="#d1986a" stroke-width="2"/></svg>
+                        </div>
                         <h3>Drink Name 3</h3>
                         <p>Brief description of the drink</p>
                         <p><strong>Price: $X.XX</strong></p>
                     </div>
                     <!-- Drink Item 4 -->
                     <div class="menu-item">
-                        <img src="drink4.jpg" alt="Drink Item 4">
+                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><path d="M20 15 L20 45 Q20 50 30 50 Q40 50 40 45 L40 15" stroke="#d1986a" stroke-width="2"/><ellipse cx="30" cy="15" rx="10" ry="4" stroke="#d1986a" stroke-width="2"/></svg>
+                        </div>
                         <h3>Drink Name 4</h3>
                         <p>Brief description of the drink</p>
                         <p><strong>Price: $X.XX</strong></p>
