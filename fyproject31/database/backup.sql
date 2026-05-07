@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: localhost    Database: fyproject31
+-- Host: 127.0.0.1    Database: fyproject31
 -- ------------------------------------------------------
 -- Server version	8.0.42
 
@@ -380,7 +380,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   UNIQUE KEY `users_username_unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +389,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin User','admin','matrock.admin@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48');
+INSERT INTO `users` VALUES (1,'Admin User','admin','matrock.admin@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(9,'Ali alala','Ali','fypkumpulan31@gmail.com','staff','0118222723462','active',NULL,'$2y$12$aKOg0m2dbVZb55RDzzzb/.K.t4aWWSlVnZoDaF1XA8vib1kf0du0a','UqmcqgRSPqjgFnzKxOjpFUZ9MGMQd4RaLA0tSGiFgBc81W83rsGLN8nxe46L','2026-05-06 19:58:48','2026-05-06 21:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -402,4 +402,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-07 11:57:25
+-- Dump completed on 2026-05-07 13:00:00

@@ -169,6 +169,7 @@ async function placeOrder() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
             body: JSON.stringify(data)
@@ -176,15 +177,27 @@ async function placeOrder() {
 
         const result = await response.json();
 
+        if (!response.ok) {
+            console.error('Order error:', result);
+            if (result.errors) {
+                const errorMessages = Object.values(result.errors).flat().join('\n');
+                tableError.textContent = errorMessages;
+            } else {
+                tableError.textContent = result.message || 'Something went wrong. Please try again.';
+            }
+            return;
+        }
+
         if (result.success) {
             window.cartManager.clearCart();
             document.getElementById('modalOrderId').textContent = `Order ${result.order_id}`;
             document.getElementById('successModal').style.display = 'flex';
         } else {
-            tableError.textContent = 'Something went wrong. Please try again.';
+            tableError.textContent = result.message || 'Something went wrong. Please try again.';
         }
     } catch (error) {
-        tableError.textContent = 'Network error. Please check your connection.';
+        console.error('Network error:', error);
+        tableError.textContent = 'Network error: ' + error.message;
     } finally {
         placeOrderBtn.disabled = false;
         btnText.style.display = 'inline';

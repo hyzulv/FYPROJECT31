@@ -112,6 +112,7 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
+        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('staff.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
 
@@ -248,6 +249,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
+        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('admin.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
 

@@ -70,36 +70,28 @@ class DatabaseSeeder extends Seeder
         // Add users
         $users = User::all();
         foreach ($users as $user) {
+            $name = addslashes($user->name);
+            $email = addslashes($user->email);
+            $phone = addslashes($user->phone ?? '');
             $newContent .= "        User::updateOrCreate(['username' => '{$user->username}'], [
-            'name' => '{$user->name}',
-            'email' => '{$user->email}',
+            'name' => '{$name}',
+            'email' => '{$email}',
             'password' => '{$user->password}',
             'role' => '{$user->role}',
-            'phone' => '{$user->phone}',
+            'phone' => '{$phone}',
             'status' => '{$user->status}',
         ]);\n\n";
         }
 
         // Add menu items
-        $newContent .= '        // Menu Items - Food
+        $newContent .= '        // Menu Items
 ';
-        $menuItems = MenuItem::where('category', 'food')->get();
+        $menuItems = MenuItem::all();
         foreach ($menuItems as $item) {
-            $newContent .= "        MenuItem::updateOrCreate(['name' => '{$item->name}'], [
-            'description' => '{$item->description}',
-            'price' => {$item->price},
-            'category' => '{$item->category}',
-            'status' => '{$item->status}',
-        ]);\n\n";
-        }
-
-        // Add drinks
-        $newContent .= '        // Menu Items - Drinks
-';
-        $drinks = MenuItem::where('category', 'drink')->get();
-        foreach ($drinks as $item) {
-            $newContent .= "        MenuItem::updateOrCreate(['name' => '{$item->name}'], [
-            'description' => '{$item->description}',
+            $desc = addslashes($item->description ?? '');
+            $name = addslashes($item->name);
+            $newContent .= "        MenuItem::updateOrCreate(['name' => '{$name}'], [
+            'description' => '{$desc}',
             'price' => {$item->price},
             'category' => '{$item->category}',
             'status' => '{$item->status}',
@@ -111,9 +103,10 @@ class DatabaseSeeder extends Seeder
 ';
         $orders = Order::all();
         foreach ($orders as $order) {
+            $items = addslashes($order->items);
             $newContent .= "        Order::updateOrCreate(['order_id' => '{$order->order_id}'], [
             'table_number' => '{$order->table_number}',
-            'items' => '{$order->items}',
+            'items' => '{$items}',
             'total' => {$order->total},
             'status' => '{$order->status}',
             'order_time' => '{$order->order_time}',
@@ -125,9 +118,11 @@ class DatabaseSeeder extends Seeder
 ';
         $feedbacks = Feedback::all();
         foreach ($feedbacks as $fb) {
-            $newContent .= "        Feedback::updateOrCreate(['customer_name' => '{$fb->customer_name}'], [
+            $message = addslashes($fb->message);
+            $customer = addslashes($fb->customer_name);
+            $newContent .= "        Feedback::updateOrCreate(['customer_name' => '{$customer}'], [
             'rating' => {$fb->rating},
-            'message' => '{$fb->message}',
+            'message' => '{$message}',
             'feedback_date' => '{$fb->feedback_date}',
         ]);\n\n";
         }
@@ -151,16 +146,18 @@ class DatabaseSeeder extends Seeder
         $outputFile = database_path('backup.sql');
 
         $mysqldump = 'mysqldump';
-        if (file_exists('C:\xampp\mysql\bin\mysqldump.exe')) {
-            $mysqldump = 'C:\xampp\mysql\bin\mysqldump.exe';
+        if (file_exists('C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe')) {
+            $mysqldump = '"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe"';
+        } elseif (file_exists('C:\xampp\mysql\bin\mysqldump.exe')) {
+            $mysqldump = '"C:\xampp\mysql\bin\mysqldump.exe"';
         } elseif (file_exists('C:\wamp64\bin\mysql\mysql8.0.30\bin\mysqldump.exe')) {
-            $mysqldump = 'C:\wamp64\bin\mysql\mysql8.0.30\bin\mysqldump.exe';
+            $mysqldump = '"C:\wamp64\bin\mysql\mysql8.0.30\bin\mysqldump.exe"';
         }
 
-        $passwordOption = $dbPassword ? "--password=" . $dbPassword : '';
+        $passwordOption = $dbPassword ? "--password=" . escapeshellarg($dbPassword) : '';
 
         $command = sprintf(
-            '%s --user=%s %s --host=%s %s > %s',
+            '%s --user=%s %s --host=%s %s --result-file=%s',
             $mysqldump,
             escapeshellarg($dbUser),
             $passwordOption ?: '',
