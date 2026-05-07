@@ -12,4 +12,14 @@ class Order extends Model
         'total' => 'decimal:2',
         'order_time' => 'datetime:H:i',
     ];
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function getItemsArrayAttribute()
+    {
+        return json_decode($this->items, true) ?? [];
+    }
 }

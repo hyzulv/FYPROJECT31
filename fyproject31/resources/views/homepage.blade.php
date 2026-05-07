@@ -324,7 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="placeholder-qr.png" alt="QR Code" style="width: 200px; height: 200px;">
             <p style="margin-top:16px;">
                 Demo link (Table T01):
-                <a href="customer_menu.php?table=T01" style="color:#FF6666;font-weight:bold;">Open Customer Menu Page</a>
+                <a href="{{ route('customer.welcome') }}" style="color:#FF6666;font-weight:bold;">Open Customer Menu Page</a>
             </p>
         </section>
         <section id="menu" class="section">

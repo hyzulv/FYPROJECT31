@@ -4,18 +4,25 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CustomerOrderController;
 use App\Models\User;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
 
+// Customer Ordering Routes (No Auth Required)
 Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
-
 Route::get('/homepage', function () {
     return redirect()->route('homepage');
 });
+Route::get('/welcome', [CustomerOrderController::class, 'welcome'])->name('customer.welcome');
+Route::get('/menu', [CustomerOrderController::class, 'menu'])->name('customer.menu');
+Route::get('/cart', [CustomerOrderController::class, 'cart'])->name('customer.cart');
+Route::get('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.checkout');
+Route::post('/order/store', [CustomerOrderController::class, 'storeOrder'])->name('customer.order.store');
+Route::get('/order/success/{orderId}', [CustomerOrderController::class, 'orderSuccess'])->name('customer.order.success');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
