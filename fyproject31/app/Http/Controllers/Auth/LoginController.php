@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,14 @@ class LoginController extends Controller
             'username' => ['required', 'string'],
             'password' => ['required'],
         ]);
+
+        $user = User::where('username', $credentials['username'])->first();
+
+        if (!$user || $user->username !== $credentials['username']) {
+            return back()->withErrors([
+                'username' => 'Invalid username or password.',
+            ])->onlyInput('username');
+        }
 
         if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']], $request->filled('remember'))) {
             $request->session()->regenerate();
