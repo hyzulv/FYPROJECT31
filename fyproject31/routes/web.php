@@ -83,16 +83,23 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         ]);
     })->name('profile');
 
-    Route::post('/profile/update', function (\Illuminate\Http\Request $request) {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
-            'phone' => 'nullable|string|max:255',
-        ]);
+    Route::post('/profile/update-name', function (\Illuminate\Http\Request $request) {
+        $request->validate(['name' => 'required|string|max:255']);
+        auth()->user()->update(['name' => $request->name]);
+        return back()->with('success', 'Name updated successfully!');
+    })->name('profile.update.name');
 
-        auth()->user()->update($validated);
-        return back()->with('success', 'Profile updated successfully!');
-    })->name('profile.update');
+    Route::post('/profile/update-email', function (\Illuminate\Http\Request $request) {
+        $request->validate(['email' => 'required|email|max:255|unique:users,email,' . auth()->id()]);
+        auth()->user()->update(['email' => $request->email]);
+        return back()->with('success', 'Email updated successfully!');
+    })->name('profile.update.email');
+
+    Route::post('/profile/update-phone', function (\Illuminate\Http\Request $request) {
+        $request->validate(['phone' => 'nullable|string|max:255']);
+        auth()->user()->update(['phone' => $request->phone]);
+        return back()->with('success', 'Phone updated successfully!');
+    })->name('profile.update.phone');
 
     Route::get('/change-password', function () {
         return view('auth.change-password', [
@@ -220,16 +227,23 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ]);
     })->name('profile');
 
-    Route::post('/profile/update', function (\Illuminate\Http\Request $request) {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
-            'phone' => 'nullable|string|max:255',
-        ]);
+    Route::post('/profile/update-name', function (\Illuminate\Http\Request $request) {
+        $request->validate(['name' => 'required|string|max:255']);
+        auth()->user()->update(['name' => $request->name]);
+        return back()->with('success', 'Name updated successfully!');
+    })->name('profile.update.name');
 
-        auth()->user()->update($validated);
-        return back()->with('success', 'Profile updated successfully!');
-    })->name('profile.update');
+    Route::post('/profile/update-email', function (\Illuminate\Http\Request $request) {
+        $request->validate(['email' => 'required|email|max:255|unique:users,email,' . auth()->id()]);
+        auth()->user()->update(['email' => $request->email]);
+        return back()->with('success', 'Email updated successfully!');
+    })->name('profile.update.email');
+
+    Route::post('/profile/update-phone', function (\Illuminate\Http\Request $request) {
+        $request->validate(['phone' => 'nullable|string|max:255']);
+        auth()->user()->update(['phone' => $request->phone]);
+        return back()->with('success', 'Phone updated successfully!');
+    })->name('profile.update.phone');
 
     Route::get('/change-password', function () {
         return view('auth.change-password', [
@@ -399,3 +413,5 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
         return response()->json(['success' => true]);
     })->name('orders.update-status');
 });
+
+// Test line

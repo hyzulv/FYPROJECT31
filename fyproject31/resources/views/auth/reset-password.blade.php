@@ -54,6 +54,8 @@
         .form-group label { display: block; color: #d1986a; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
         .input-wrapper { position: relative; }
         .input-wrapper .icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; opacity: 0.6; }
+        .input-wrapper .toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; opacity: 0.6; user-select: none; }
+        .input-wrapper .toggle-password:hover { opacity: 1; }
         .form-group input {
             width: 100%; padding: 14px 15px 14px 45px; background: #2a2a2a;
             border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px;
@@ -116,6 +118,7 @@
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
                         <input type="password" id="password" name="password" placeholder="New password (min 6 characters)" required>
+                        <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" class="toggle-password" onclick="togglePassword('password', 'toggle-password-icon')" style="width: 20px;">
                     </div>
                 </div>
 
@@ -124,6 +127,7 @@
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
                         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" required>
+                        <img src="{{ asset('show_password.png') }}" id="toggle-confirm-icon" class="toggle-password" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="width: 20px;">
                     </div>
                 </div>
 
@@ -135,5 +139,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function togglePassword(inputId, iconId) {
+        var input = document.getElementById(inputId);
+        var icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.src = "{{ asset('hide_password.png') }}";
+        } else {
+            input.type = 'password';
+            icon.src = "{{ asset('show_password.png') }}";
+        }
+    }
+    </script>
 </body>
 </html>
