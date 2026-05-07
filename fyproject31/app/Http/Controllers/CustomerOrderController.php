@@ -20,33 +20,80 @@ class CustomerOrderController extends Controller
         return view('customer.welcome');
     }
 
+    public function itemDetail($id)
+    {
+        $item = MenuItem::where('id', $id)->where('status', 'available')->firstOrFail();
+
+        $addOns = MenuItem::where('category', 'add_on')
+            ->where('status', 'available')
+            ->get()
+            ->map(function ($addOn) {
+                return [
+                    'id' => $addOn->id,
+                    'name' => $addOn->name,
+                    'price' => number_format($addOn->price, 2),
+                    'image' => $addOn->image,
+                ];
+            });
+
+        $itemData = [
+            'id' => $item->id,
+            'name' => $item->name,
+            'description' => $item->description,
+            'price' => number_format($item->price, 2),
+            'category' => $item->category,
+            'image' => $item->image,
+        ];
+
+        return view('customer.item-detail', [
+            'item' => $itemData,
+            'addOns' => $addOns,
+        ]);
+    }
+
     public function menu(Request $request)
     {
-        $query = MenuItem::where('status', 'available');
+        $menuItems = MenuItem::where('status', 'available')
+            ->where('category', '!=', 'add_on')
+            ->orderBy('category')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('category')
+            ->map(function ($items) {
+                return $items->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'description' => $item->description,
+                        'price' => number_format($item->price, 2),
+                        'category' => $item->category,
+                        'image' => $item->image,
+                    ];
+                });
+            });
 
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        $categoryOrder = ['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family', 'minuman'];
+        $categoryLabels = [
+            'ala_carte' => 'Ala Carte',
+            'combo_set' => 'Combo Set',
+            'mix' => 'Mix',
+            'nasi_lemak' => 'Nasi Lemak',
+            'kicap' => 'Kicap Edition',
+            'set_family' => 'Set Family',
+            'minuman' => 'Minuman',
+        ];
+
+        $sortedCategories = [];
+        foreach ($categoryOrder as $cat) {
+            if ($menuItems->has($cat)) {
+                $sortedCategories[] = $cat;
+            }
         }
-
-        $menuItems = $query->get()->map(function ($item) {
-            return [
-                'id' => $item->id,
-                'name' => $item->name,
-                'description' => $item->description,
-                'price' => number_format($item->price, 2),
-                'category' => $item->category,
-                'image' => $item->image,
-            ];
-        });
-
-        $categories = MenuItem::where('status', 'available')
-            ->distinct()
-            ->pluck('category')
-            ->toArray();
 
         return view('customer.menu', [
             'menuItems' => $menuItems,
-            'categories' => $categories,
+            'categories' => $sortedCategories,
+            'categoryLabels' => $categoryLabels,
         ]);
     }
 

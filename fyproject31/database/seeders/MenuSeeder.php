@@ -1,0 +1,287 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\MenuItem;
+
+class MenuSeeder extends Seeder
+{
+    public function run(): void
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        MenuItem::truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $items = [
+            [
+                'name' => 'Ayam Goreng Kunyit',
+                'description' => 'Signature turmeric fried chicken with crispy skin, served with rice and sambal',
+                'price' => 10.90,
+                'category' => 'ala_carte',
+                'status' => 'available',
+                'image' => 'ayam-goreng-kunyit.jpg',
+            ],
+            [
+                'name' => 'Daging Goreng Kunyit',
+                'description' => 'Tender beef stir-fried with turmeric spices, served with rice and sambal',
+                'price' => 13.90,
+                'category' => 'ala_carte',
+                'status' => 'available',
+                'image' => 'daging-goreng-kunyit.jpg',
+            ],
+            [
+                'name' => 'Sotong Goreng Kunyit',
+                'description' => 'Fresh squid cooked in turmeric seasoning, served with rice and sambal',
+                'price' => 15.50,
+                'category' => 'ala_carte',
+                'status' => 'available',
+                'image' => 'sotong-goreng-kunyit.jpg',
+            ],
+            [
+                'name' => 'Udang Goreng Kunyit',
+                'description' => 'Juicy prawns fried with turmeric and spices, served with rice and sambal',
+                'price' => 15.50,
+                'category' => 'ala_carte',
+                'status' => 'available',
+                'image' => 'udang-goreng-kunyit.jpg',
+            ],
+            [
+                'name' => 'Combo Set Ayam',
+                'description' => 'Ayam Goreng Kunyit set with rice, drink and sambal',
+                'price' => 15.00,
+                'category' => 'combo_set',
+                'status' => 'available',
+                'image' => 'combo-ayam.jpg',
+            ],
+            [
+                'name' => 'Combo Set Daging',
+                'description' => 'Daging Goreng Kunyit set with rice, drink and sambal',
+                'price' => 17.00,
+                'category' => 'combo_set',
+                'status' => 'available',
+                'image' => 'combo-daging.jpg',
+            ],
+            [
+                'name' => 'Combo Set Udang',
+                'description' => 'Udang Goreng Kunyit set with rice, drink and sambal',
+                'price' => 19.50,
+                'category' => 'combo_set',
+                'status' => 'available',
+                'image' => 'combo-udang.jpg',
+            ],
+            [
+                'name' => 'Combo Set Sotong',
+                'description' => 'Sotong Goreng Kunyit set with rice, drink and sambal',
+                'price' => 19.50,
+                'category' => 'combo_set',
+                'status' => 'available',
+                'image' => 'combo-sotong.jpg',
+            ],
+            [
+                'name' => 'Ayam + Daging Mix',
+                'description' => 'Mix of Ayam Goreng Kunyit and Daging Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'ayam-daging-mix.jpg',
+            ],
+            [
+                'name' => 'Sotong + Udang Mix',
+                'description' => 'Mix of Sotong Goreng Kunyit and Udang Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'sotong-udang-mix.jpg',
+            ],
+            [
+                'name' => 'Ayam + Udang Mix',
+                'description' => 'Mix of Ayam Goreng Kunyit and Udang Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'ayam-udang-mix.jpg',
+            ],
+            [
+                'name' => 'Ayam + Sotong Mix',
+                'description' => 'Mix of Ayam Goreng Kunyit and Sotong Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'ayam-sotong-mix.jpg',
+            ],
+            [
+                'name' => 'Daging + Sotong Mix',
+                'description' => 'Mix of Daging Goreng Kunyit and Sotong Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'daging-sotong-mix.jpg',
+            ],
+            [
+                'name' => 'Daging + Udang Mix',
+                'description' => 'Mix of Daging Goreng Kunyit and Udang Goreng Kunyit with rice',
+                'price' => 18.90,
+                'category' => 'mix',
+                'status' => 'available',
+                'image' => 'daging-udang-mix.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Biasa',
+                'description' => 'Fragrant pandan basmati coconut rice with sambal, peanut, anchovies and cucumber',
+                'price' => 5.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-biasa.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Telur Mata',
+                'description' => 'Nasi lemak with a sunny-side-up egg, sambal, peanut and anchovies',
+                'price' => 7.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-telur.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Ayam Berempah',
+                'description' => 'Nasi lemak with spiced fried chicken, sambal and sides',
+                'price' => 12.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-ayam-berempah.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Ayam Kunyit',
+                'description' => 'Nasi lemak with our signature turmeric fried chicken and sambal',
+                'price' => 13.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-ayam-kunyit.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Daging Kunyit',
+                'description' => 'Nasi lemak with turmeric beef, sambal and sides',
+                'price' => 15.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-daging-kunyit.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Sotong Kunyit',
+                'description' => 'Nasi lemak with turmeric squid, sambal and sides',
+                'price' => 16.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-sotong-kunyit.jpg',
+            ],
+            [
+                'name' => 'Nasi Lemak Udang Kunyit',
+                'description' => 'Nasi lemak with turmeric prawns, sambal and sides',
+                'price' => 16.00,
+                'category' => 'nasi_lemak',
+                'status' => 'available',
+                'image' => 'nasi-lemak-udang-kunyit.jpg',
+            ],
+            [
+                'name' => 'Ayam Kicap',
+                'description' => 'Chicken cooked in sweet soy sauce with aromatic spices',
+                'price' => 12.00,
+                'category' => 'kicap',
+                'status' => 'available',
+                'image' => 'ayam-kicap.jpg',
+            ],
+            [
+                'name' => 'Daging Kicap',
+                'description' => 'Beef braised in sweet soy sauce with traditional spices',
+                'price' => 14.00,
+                'category' => 'kicap',
+                'status' => 'available',
+                'image' => 'daging-kicap.jpg',
+            ],
+            [
+                'name' => 'Set Family',
+                'description' => 'Family set with Ayam, Daging, Sotong, Udang Goreng Kunyit served with rice and sambal for the whole family',
+                'price' => 55.00,
+                'category' => 'set_family',
+                'status' => 'available',
+                'image' => 'set-family.jpg',
+            ],
+            [
+                'name' => 'Milo',
+                'description' => 'Iced Milo chocolate malt drink',
+                'price' => 4.50,
+                'category' => 'minuman',
+                'status' => 'available',
+                'image' => 'milo.jpg',
+            ],
+            [
+                'name' => 'Nescafe',
+                'description' => 'Iced Nescafe coffee',
+                'price' => 4.50,
+                'category' => 'minuman',
+                'status' => 'available',
+                'image' => 'nescafe.jpg',
+            ],
+            [
+                'name' => 'Teh',
+                'description' => 'Iced Malaysian pulled tea with milk',
+                'price' => 4.50,
+                'category' => 'minuman',
+                'status' => 'available',
+                'image' => 'teh.jpg',
+            ],
+            [
+                'name' => 'Teh O',
+                'description' => 'Iced black tea with sugar',
+                'price' => 3.00,
+                'category' => 'minuman',
+                'status' => 'available',
+                'image' => 'teh-o.jpg',
+            ],
+            [
+                'name' => 'Air Kosong',
+                'description' => 'Plain water',
+                'price' => 1.00,
+                'category' => 'minuman',
+                'status' => 'available',
+                'image' => 'air-kosong.jpg',
+            ],
+            [
+                'name' => 'Telur Mata',
+                'description' => 'Sunny-side-up fried egg',
+                'price' => 2.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'telur-mata.jpg',
+            ],
+            [
+                'name' => 'Nasi Putih',
+                'description' => 'Steamed white rice',
+                'price' => 3.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'nasi-putih.jpg',
+            ],
+            [
+                'name' => 'Nasi Tambah',
+                'description' => 'Extra serving of rice',
+                'price' => 1.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'nasi-tambah.jpg',
+            ],
+            [
+                'name' => 'Sambal Extra',
+                'description' => 'Extra serving of our signature sambal',
+                'price' => 1.00,
+                'category' => 'add_on',
+                'status' => 'available',
+                'image' => 'sambal.jpg',
+            ],
+        ];
+
+        foreach ($items as $item) {
+            MenuItem::create($item);
+        }
+    }
+}

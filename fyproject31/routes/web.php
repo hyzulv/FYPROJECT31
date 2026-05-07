@@ -19,6 +19,7 @@ Route::get('/homepage', function () {
 });
 Route::get('/welcome', [CustomerOrderController::class, 'welcome'])->name('customer.welcome');
 Route::get('/menu', [CustomerOrderController::class, 'menu'])->name('customer.menu');
+Route::get('/item/{id}', [CustomerOrderController::class, 'itemDetail'])->name('customer.item.detail');
 Route::get('/cart', [CustomerOrderController::class, 'cart'])->name('customer.cart');
 Route::get('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.checkout');
 Route::post('/order/store', [CustomerOrderController::class, 'storeOrder'])->name('customer.order.store');

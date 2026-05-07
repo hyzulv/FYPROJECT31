@@ -89,8 +89,10 @@ function renderCheckout() {
     const cart = window.cartManager.getCart();
     const orderItemsEl = document.getElementById('orderItems');
 
+    if (!orderItemsEl) return;
+
     if (cart.length === 0) {
-        window.location.href = '{{ route('customer.menu') }}';
+        window.location.href = "{{ route('customer.menu') }}";
         return;
     }
 
@@ -100,10 +102,23 @@ function renderCheckout() {
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         subtotal += itemTotal;
+
+        let addonsHtml = '';
+        if (item.addons && item.addons.length > 0) {
+            addonsHtml = '<div class="checkout-item-addons">';
+            item.addons.forEach(addon => {
+                addonsHtml += `<span class="addon-tag">+ ${addon.name}</span>`;
+            });
+            addonsHtml += '</div>';
+        }
+
         html += `
             <div class="checkout-item">
-                <div class="checkout-item-info">
-                    <span class="checkout-item-name">${item.name}</span>
+                <div class="checkout-item-main">
+                    <div class="checkout-item-info">
+                        <span class="checkout-item-name">${item.name}</span>
+                        ${addonsHtml}
+                    </div>
                     <span class="checkout-item-qty">x${item.quantity}</span>
                 </div>
                 <span class="checkout-item-price">RM ${itemTotal.toFixed(2)}</span>
@@ -150,7 +165,7 @@ async function placeOrder() {
     };
 
     try {
-        const response = await fetch('{{ route('customer.order.store') }}', {
+        const response = await fetch("{{ route('customer.order.store') }}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -11,7 +11,11 @@
             </svg>
         </button>
         <h1>Your Cart</h1>
-        <div class="cart-header-spacer"></div>
+        <button class="clear-cart-btn" onclick="clearCartAction()" title="Clear Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14"/>
+            </svg>
+        </button>
     </header>
 
     <div class="cart-items" id="cartItems">
@@ -59,6 +63,26 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     renderCartPage();
+    window.onCartUpdate = renderCartPage;
+
+    document.getElementById('cartItems').addEventListener('click', function(e) {
+        const removeBtn = e.target.closest('.remove-btn');
+        if (removeBtn) {
+            const key = removeBtn.getAttribute('data-key');
+            window.cartManager.removeItem(key);
+            return;
+        }
+        const qtyBtn = e.target.closest('.qty-btn');
+        if (qtyBtn) {
+            const key = qtyBtn.getAttribute('data-key');
+            const action = qtyBtn.getAttribute('data-action');
+            if (action === 'increase') {
+                window.cartManager.increaseItem(key);
+            } else {
+                window.cartManager.decreaseItem(key);
+            }
+        }
+    });
 });
 
 function renderCartPage() {
@@ -66,6 +90,8 @@ function renderCartPage() {
     const cartItemsEl = document.getElementById('cartItems');
     const cartEmptyEl = document.getElementById('cartEmpty');
     const cartSummaryEl = document.getElementById('cartSummary');
+
+    if (!cartItemsEl || !cartEmptyEl || !cartSummaryEl) return;
 
     if (cart.length === 0) {
         cartItemsEl.innerHTML = '';
@@ -83,33 +109,39 @@ function renderCartPage() {
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         subtotal += itemTotal;
-        html += `
-            <div class="cart-item" data-id="${item.id}">
-                <div class="cart-item-info">
-                    <h3>${item.name}</h3>
-                    <span class="cart-item-price">RM ${item.price.toFixed(2)}</span>
-                </div>
-                <div class="cart-item-actions">
-                    <button class="qty-btn" onclick="window.cartManager.decreaseItem(${item.id})">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14"/>
-                        </svg>
-                    </button>
-                    <span class="qty-display">${item.quantity}</span>
-                    <button class="qty-btn" onclick="window.cartManager.increaseItem(${item.id})">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 5v14M5 12h14"/>
-                        </svg>
-                    </button>
-                    <button class="remove-btn" onclick="window.cartManager.removeItem(${item.id})">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14zM10 11v6M14 11v6"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="cart-item-total">RM ${itemTotal.toFixed(2)}</div>
-            </div>
-        `;
+
+        let addonsHtml = '';
+        if (item.addons && item.addons.length > 0) {
+            addonsHtml = '<div class="cart-item-addons">';
+            item.addons.forEach(addon => {
+                addonsHtml += '<span class="addon-tag">+ ' + addon.name + '</span>';
+            });
+            addonsHtml += '</div>';
+        }
+
+        html += '<div class="cart-item">';
+        html += '  <div class="cart-item-top">';
+        html += '    <div class="cart-item-info">';
+        html += '      <h3>' + escapeHtml(item.name) + '</h3>';
+        html += '      ' + addonsHtml;
+        html += '    </div>';
+        html += '    <button class="remove-btn" data-key="' + item.key + '" title="Remove">';
+        html += '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+        html += '    </button>';
+        html += '  </div>';
+        html += '  <div class="cart-item-bottom">';
+        html += '    <div class="cart-item-actions">';
+        html += '      <button class="qty-btn" data-key="' + item.key + '" data-action="decrease">';
+        html += '        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>';
+        html += '      </button>';
+        html += '      <span class="qty-display">' + item.quantity + '</span>';
+        html += '      <button class="qty-btn" data-key="' + item.key + '" data-action="increase">';
+        html += '        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>';
+        html += '      </button>';
+        html += '    </div>';
+        html += '    <div class="cart-item-total">RM ' + itemTotal.toFixed(2) + '</div>';
+        html += '  </div>';
+        html += '</div>';
     });
 
     cartItemsEl.innerHTML = html;
@@ -117,9 +149,21 @@ function renderCartPage() {
     const tax = subtotal * 0.06;
     const total = subtotal + tax;
 
-    document.getElementById('subtotalAmount').textContent = `RM ${subtotal.toFixed(2)}`;
-    document.getElementById('taxAmount').textContent = `RM ${tax.toFixed(2)}`;
-    document.getElementById('totalAmount').textContent = `RM ${total.toFixed(2)}`;
+    document.getElementById('subtotalAmount').textContent = 'RM ' + subtotal.toFixed(2);
+    document.getElementById('taxAmount').textContent = 'RM ' + tax.toFixed(2);
+    document.getElementById('totalAmount').textContent = 'RM ' + total.toFixed(2);
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
+function clearCartAction() {
+    if (confirm('Clear all items from cart?')) {
+        window.cartManager.clearCart();
+    }
 }
 </script>
 @endpush
