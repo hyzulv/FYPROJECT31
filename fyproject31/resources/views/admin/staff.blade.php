@@ -29,7 +29,10 @@
         </div>
         <div>
             <label>Password</label>
-            <input type="password" name="password" required minlength="6" style="width: 100%; padding: 8px;">
+            <div style="position: relative;">
+                <input type="password" id="staff_password" name="password" required minlength="6" style="width: 100%; padding: 8px 45px 8px 8px;">
+                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+            </div>
         </div>
         <div>
             <label>Role</label>
@@ -89,6 +92,18 @@
 </div>
 
 <script>
+function togglePassword(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.src = "{{ asset('hide_password.png') }}";
+    } else {
+        input.type = 'password';
+        icon.src = "{{ asset('show_password.png') }}";
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     @if(session('success'))
     document.querySelector('form[action="{{ route('admin.staff.add') }}"]')?.reset();

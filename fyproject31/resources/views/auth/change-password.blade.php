@@ -18,17 +18,26 @@
             @csrf
             <div class="cp-form-group">
                 <label>Current Password</label>
-                <input type="password" name="current_password" placeholder="Enter current password" required>
+                <div style="position: relative;">
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-current-icon" onclick="togglePassword('current_password', 'toggle-current-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                </div>
             </div>
 
             <div class="cp-form-group">
                 <label>New Password</label>
-                <input type="password" name="password" placeholder="Enter new password" minlength="6" required>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" placeholder="Enter new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" onclick="togglePassword('password', 'toggle-password-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                </div>
             </div>
 
             <div class="cp-form-group">
                 <label>Confirm New Password</label>
-                <input type="password" name="password_confirmation" placeholder="Confirm new password" minlength="6" required>
+                <div style="position: relative;">
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-confirm-icon" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                </div>
             </div>
 
             <button type="submit" class="btn-submit">Update Password</button>
@@ -39,4 +48,18 @@
         </div>
     </div>
 </div>
+
+<script>
+function togglePassword(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.src = "{{ asset('hide_password.png') }}";
+    } else {
+        input.type = 'password';
+        icon.src = "{{ asset('show_password.png') }}";
+    }
+}
+</script>
 @endsection
