@@ -284,7 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>MAT ROCK Restaurant Ordering System</h1>
         </div>
         <nav>
-            <div class="nav-box" onclick="showSection('qr')">QR Code</div>
+            <div class="nav-box" onclick="showSection('qr')">Order Now</div>
             <div class="nav-box" onclick="showSection('menu')">Menu</div>
             <div class="nav-box" onclick="showSection('about')">About Us</div>
             <div class="nav-box" onclick="showSection('contact')">Contact Us</div>
@@ -313,26 +313,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
         <section id="qr" class="section">
-            <h2>QR Code</h2>
-            <p>Customer scan QR table number guna phone untuk buka menu order page khas.</p>
-            <!-- Placeholder for QR code image -->
-            <div style="text-align:center;padding:20px;">
-                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:200px;background:#222;border-radius:8px;">
-                    <rect x="20" y="20" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                    <rect x="130" y="20" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                    <rect x="20" y="130" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                    <rect x="90" y="90" width="20" height="20" fill="#d1986a"/>
-                    <rect x="130" y="130" width="50" height="50" rx="5" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                    <rect x="35" y="35" width="20" height="20" fill="#d1986a"/>
-                    <rect x="145" y="35" width="20" height="20" fill="#d1986a"/>
-                    <rect x="35" y="145" width="20" height="20" fill="#d1986a"/>
-                    <rect x="145" y="145" width="20" height="20" fill="#d1986a"/>
-                    <text x="100" y="195" text-anchor="middle" fill="#999" font-size="12">Scan to Order</text>
-                </svg>
-            </div>
-            <p style="margin-top:16px;">
-                Demo link (Table T01):
-                <a href="{{ route('customer.welcome') }}" style="color:#d1986a;font-weight:bold;">Open Customer Menu Page</a>
+            <p style="text-align:center; margin-bottom: 16px;">Tap the link below to view our menu and place your order.</p>
+            <p style="text-align:center;">
+                <a href="{{ route('customer.welcome') }}" style="color:#d1986a;font-weight:bold;font-size:18px;">Open Customer Menu Page</a>
             </p>
         </section>
         <section id="menu" class="section">
