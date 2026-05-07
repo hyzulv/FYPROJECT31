@@ -761,6 +761,22 @@ input {
     padding: 20px;
 }
 
+.addon-group {
+    margin-bottom: 20px;
+}
+
+.addon-group:last-child {
+    margin-bottom: 0;
+}
+
+.addon-group-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-left: 4px;
+}
+
 .item-detail-addons h3,
 .item-detail-quantity h3 {
     font-size: 1rem;
@@ -787,7 +803,8 @@ input {
     transition: all 0.3s ease;
 }
 
-.addon-item input[type="checkbox"] {
+.addon-item input[type="checkbox"],
+.addon-item input[type="radio"] {
     display: none;
 }
 

@@ -45,29 +45,40 @@
         @if($addOns->count() > 0)
         <div class="item-detail-addons">
             <h3>Add-Ons</h3>
-            <div class="addon-list">
-                @foreach($addOns as $addOn)
-                <label class="addon-item">
-                    <input type="checkbox" name="addons[]" value="{{ $addOn['id'] }}" data-id="{{ $addOn['id'] }}" data-name="{{ $addOn['name'] }}" data-price="{{ $addOn['price'] }}" onchange="updateTotal()">
-                    <div class="addon-info">
-                        <div class="addon-image">
-                            @if($addOn['image'])
-                                <img src="{{ asset('images/menu/' . $addOn['image']) }}" alt="{{ $addOn['name'] }}">
+            @foreach($addOns as $addonGroup)
+                <div class="addon-group">
+                    @if($addonGroup['group_name'])
+                        <h4 class="addon-group-title">{{ $addonGroup['group_name'] }}</h4>
+                    @endif
+                    <div class="addon-list">
+                        @foreach($addonGroup['items'] as $addOn)
+                        <label class="addon-item">
+                            @if($addonGroup['selection_type'] === 'single')
+                                <input type="radio" name="addon_group_{{ $addonGroup['group_name'] ?? $addOn['id'] }}" value="{{ $addOn['id'] }}" data-id="{{ $addOn['id'] }}" data-name="{{ $addOn['name'] }}" data-price="{{ $addOn['price'] }}" onchange="updateTotal()">
                             @else
-                                <div class="addon-placeholder">
-                                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="20" cy="20" r="12" stroke="#d1986a" stroke-width="1.5" fill="rgba(209,152,106,0.1)"/>
-                                        <path d="M14 20h12M20 14v12" stroke="#d1986a" stroke-width="1.5" stroke-linecap="round"/>
-                                    </svg>
-                                </div>
+                                <input type="checkbox" name="addons[]" value="{{ $addOn['id'] }}" data-id="{{ $addOn['id'] }}" data-name="{{ $addOn['name'] }}" data-price="{{ $addOn['price'] }}" onchange="updateTotal()">
                             @endif
-                        </div>
-                        <span class="addon-name">{{ $addOn['name'] }}</span>
+                            <div class="addon-info">
+                                <div class="addon-image">
+                                    @if($addOn['image'])
+                                        <img src="{{ asset('images/menu/' . $addOn['image']) }}" alt="{{ $addOn['name'] }}">
+                                    @else
+                                        <div class="addon-placeholder">
+                                            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="20" cy="20" r="12" stroke="#d1986a" stroke-width="1.5" fill="rgba(209,152,106,0.1)"/>
+                                                <path d="M14 20h12M20 14v12" stroke="#d1986a" stroke-width="1.5" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+                                <span class="addon-name">{{ $addOn['name'] }}</span>
+                            </div>
+                            <span class="addon-price">@if($addOn['price'] > 0)+RM {{ $addOn['price'] }}@else &nbsp; @endif</span>
+                        </label>
+                        @endforeach
                     </div>
-                    <span class="addon-price">+RM {{ $addOn['price'] }}</span>
-                </label>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
         @endif
 
@@ -125,6 +136,7 @@ function changeQty(delta) {
 
 function getSelectedAddons() {
     const addons = [];
+
     document.querySelectorAll('input[name="addons[]"]:checked').forEach(cb => {
         addons.push({
             id: parseInt(cb.dataset.id),
@@ -132,6 +144,15 @@ function getSelectedAddons() {
             price: parseFloat(cb.dataset.price)
         });
     });
+
+    document.querySelectorAll('input[type="radio"]:checked').forEach(rb => {
+        addons.push({
+            id: parseInt(rb.dataset.id),
+            name: rb.dataset.name,
+            price: parseFloat(rb.dataset.price)
+        });
+    });
+
     return addons;
 }
 

@@ -27,14 +27,33 @@ class CustomerOrderController extends Controller
         $addOns = MenuItem::where('category', 'add_on')
             ->where('status', 'available')
             ->get()
-            ->map(function ($addOn) {
+            ->filter(function ($addOn) use ($item) {
+                $appliesTo = json_decode($addOn->applies_to, true);
+                if ($appliesTo !== null && !in_array($item->category, $appliesTo)) {
+                    return false;
+                }
+                $excludeFor = json_decode($addOn->exclude_for, true);
+                if ($excludeFor !== null && in_array($item->name, $excludeFor)) {
+                    return false;
+                }
+                return true;
+            })
+            ->groupBy('group_name')
+            ->map(function ($group, $groupName) {
                 return [
-                    'id' => $addOn->id,
-                    'name' => $addOn->name,
-                    'price' => number_format($addOn->price, 2),
-                    'image' => $addOn->image,
+                    'group_name' => $groupName,
+                    'selection_type' => $group->first()->selection_type,
+                    'items' => $group->map(function ($addOn) {
+                        return [
+                            'id' => $addOn->id,
+                            'name' => $addOn->name,
+                            'price' => number_format($addOn->price, 2),
+                            'image' => $addOn->image,
+                        ];
+                    })->values(),
                 ];
-            });
+            })
+            ->values();
 
         $itemData = [
             'id' => $item->id,
