@@ -111,16 +111,40 @@ function updateOrders(data) {
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
             <td><span class="badge badge-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
-            <td>${order.time}</td>
+            <td class="order-time" data-time="${order.time}">${order.time}</td>
         </tr>`;
     });
     tbody.innerHTML = html;
+    updateTimes();
 
     const pending = document.getElementById('statPending');
     pending.style.animation = 'none';
     pending.offsetHeight;
     pending.style.animation = 'flashCard 0.6s ease';
 }
+
+// Update relative times
+function updateTimes() {
+    document.querySelectorAll('.order-time').forEach(td => {
+        const timeStr = td.getAttribute('data-time');
+        if (timeStr) {
+            const date = new Date(timeStr);
+            if (!isNaN(date)) {
+                const now = new Date();
+                const diff = Math.floor((now - date) / 1000);
+                let relative = '';
+                if (diff < 60) relative = 'Just now';
+                else if (diff < 3600) relative = Math.floor(diff/60) + ' min ago';
+                else if (diff < 86400) relative = Math.floor(diff/3600) + ' hr ago';
+                else relative = Math.floor(diff/86400) + ' days ago';
+                td.textContent = relative;
+            }
+        }
+    });
+}
+
+setInterval(updateTimes, 60000);
+updateTimes();
 
 if (!window._orderPolling) {
     window._orderPolling = setInterval(checkNewOrders, 5000);

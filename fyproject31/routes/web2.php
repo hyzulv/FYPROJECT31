@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -122,21 +122,6 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('staff.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
-
-    Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:pending,preparing,ready,completed,cancelled']);
-        $order = Order::where('order_id', $orderId)->firstOrFail();
-        $order->update(['status' => $request->status]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
-        return back()->with('success', 'Order status updated!');
-    })->name('orders.update-status');
-
-    Route::delete('/orders/{orderId}', function ($orderId) {
-        $order = Order::where('order_id', $orderId)->firstOrFail();
-        $order->delete();
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
-        return back()->with('success', 'Order deleted!');
-    })->name('orders.destroy');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
@@ -281,21 +266,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('admin.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
-
-    Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:pending,preparing,ready,completed,cancelled']);
-        $order = Order::where('order_id', $orderId)->firstOrFail();
-        $order->update(['status' => $request->status]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
-        return back()->with('success', 'Order status updated!');
-    })->name('orders.update-status');
-
-    Route::delete('/orders/{orderId}', function ($orderId) {
-        $order = Order::where('order_id', $orderId)->firstOrFail();
-        $order->delete();
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
-        return back()->with('success', 'Order deleted!');
-    })->name('orders.destroy');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
