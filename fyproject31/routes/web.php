@@ -42,18 +42,27 @@ Route::get('/demo', function () {
 Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'pending')->count();
+        $pendingOrders = Order::where('status', 'preparing')->count();
         $completedOrders = Order::where('status', 'completed')->count();
         $totalMenuItems = MenuItem::where('status', 'available')->count();
-        $recentOrders = Order::orderBy('created_at', 'desc')->take(5)->get()->map(function ($order) {
-            return [
-                'id' => $order->order_id,
-                'table' => $order->table_number,
-                'items' => $order->items,
-                'total' => number_format($order->total, 2),
-                'status' => $order->status,
-            ];
-        });
+        $recentOrders = Order::orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($order) {
+                $items = json_decode($order->items, true) ?? [];
+                $itemsText = collect($items)->map(function ($item) {
+                    return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+                })->implode(', ');
+
+                return [
+                    'id' => $order->order_id,
+                    'table' => $order->table_number,
+                    'items' => $itemsText ?: '-',
+                    'total' => number_format($order->total, 2),
+                    'status' => $order->status,
+                    'time' => $order->created_at?->diffForHumans(),
+                ];
+            });
 
         return view('staff.dashboard', [
             'userName' => auth()->user()->name,
@@ -124,29 +133,40 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
     })->name('change-password.submit');
 
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:pending,preparing,ready,completed,cancelled']);
+        $request->validate(['status' => 'required|in:preparing,completed']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->update(['status' => $request->status]);
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         return back()->with('success', 'Order status updated!');
     })->name('orders.update-status');
 
-    Route::delete('/orders/{orderId}', function ($orderId) {
+    Route::delete('/orders/{orderId}', function ($orderId, \Illuminate\Http\Request $request) {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->delete();
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         return back()->with('success', 'Order deleted!');
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
+            $items = json_decode($order->items, true) ?? [];
+            $itemsText = collect($items)->map(function ($item) {
+                return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+            })->implode(', ');
+
             return [
                 'id' => $order->order_id,
                 'table' => $order->table_number,
-                'items' => $order->items,
+                'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
                 'status' => $order->status,
-                'time' => $order->order_time ? date('h:i A', strtotime($order->order_time)) : '-',
+                'time' => $order->created_at?->diffForHumans() ?: '-',
             ];
         });
 
@@ -201,18 +221,27 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'pending')->count();
+        $pendingOrders = Order::where('status', 'preparing')->count();
         $completedOrders = Order::where('status', 'completed')->count();
         $totalStaff = User::where('role', 'staff')->count();
-        $recentOrders = Order::orderBy('created_at', 'desc')->take(5)->get()->map(function ($order) {
-            return [
-                'id' => $order->order_id,
-                'table' => $order->table_number,
-                'items' => $order->items,
-                'total' => number_format($order->total, 2),
-                'status' => $order->status,
-            ];
-        });
+        $recentOrders = Order::orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($order) {
+                $items = json_decode($order->items, true) ?? [];
+                $itemsText = collect($items)->map(function ($item) {
+                    return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+                })->implode(', ');
+
+                return [
+                    'id' => $order->order_id,
+                    'table' => $order->table_number,
+                    'items' => $itemsText ?: '-',
+                    'total' => number_format($order->total, 2),
+                    'status' => $order->status,
+                    'time' => $order->created_at?->diffForHumans(),
+                ];
+            });
 
         return view('admin.dashboard', [
             'userName' => auth()->user()->name,
@@ -283,29 +312,40 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('change-password.submit');
 
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:pending,preparing,ready,completed,cancelled']);
+        $request->validate(['status' => 'required|in:preparing,completed']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->update(['status' => $request->status]);
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         return back()->with('success', 'Order status updated!');
     })->name('orders.update-status');
 
-    Route::delete('/orders/{orderId}', function ($orderId) {
+    Route::delete('/orders/{orderId}', function ($orderId, \Illuminate\Http\Request $request) {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->delete();
         \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         return back()->with('success', 'Order deleted!');
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
         $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
+            $items = json_decode($order->items, true) ?? [];
+            $itemsText = collect($items)->map(function ($item) {
+                return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+            })->implode(', ');
+
             return [
                 'id' => $order->order_id,
                 'table' => $order->table_number,
-                'items' => $order->items,
+                'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
                 'status' => $order->status,
-                'time' => $order->order_time ? date('h:i A', strtotime($order->order_time)) : '-',
+                'time' => $order->created_at?->diffForHumans() ?: '-',
             ];
         });
 
@@ -417,21 +457,31 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
         $hasNew = $currentCount > $lastCount;
         $lastCount = $currentCount;
 
-        $latestOrders = Order::orderBy('created_at', 'desc')->take(10)->get()->map(function ($order) {
-            return [
-                'id' => $order->order_id,
-                'table' => $order->table_number,
-                'items' => $order->items,
-                'total' => number_format($order->total, 2),
-                'status' => $order->status,
-                'time' => $order->created_at?->diffForHumans(),
-            ];
-        });
+        $latestOrders = Order::orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($order) {
+                $items = json_decode($order->items, true) ?? [];
+                $itemsText = collect($items)->map(function ($item) {
+                    return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+                })->implode(', ');
+
+                return [
+                    'id' => $order->order_id,
+                    'table' => $order->table_number,
+                    'items' => $itemsText ?: '-',
+                    'total' => number_format($order->total, 2),
+                    'status' => $order->status,
+                    'time' => $order->created_at?->diffForHumans(),
+                    'timestamp' => $order->created_at?->toISOString(),
+                ];
+            });
 
         return response()->json([
             'hasNew' => $hasNew,
             'totalOrders' => $currentCount,
-            'pendingOrders' => Order::where('status', 'pending')->count(),
+            'pendingOrders' => Order::where('status', 'preparing')->count(),
+            'completedOrders' => Order::where('status', 'completed')->count(),
             'orders' => $latestOrders,
         ]);
     })->name('orders.check');

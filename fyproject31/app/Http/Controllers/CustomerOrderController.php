@@ -143,7 +143,7 @@ class CustomerOrderController extends Controller
             'table_number' => $request->table_number,
             'items' => json_encode($request->items),
             'total' => $request->total,
-            'status' => 'pending',
+            'status' => 'preparing',
             'order_time' => now()->format('H:i:s'),
         ]);
 

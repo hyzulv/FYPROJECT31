@@ -260,7 +260,7 @@ CREATE TABLE `order_items` (
   KEY `order_items_menu_item_id_foreign` (`menu_item_id`),
   CONSTRAINT `order_items_menu_item_id_foreign` FOREIGN KEY (`menu_item_id`) REFERENCES `menu_items` (`id`) ON DELETE CASCADE,
   CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,6 +269,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (1,11,3,1,15.50,15.50,'2026-05-08 02:05:32','2026-05-08 02:05:32');
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,13 +286,13 @@ CREATE TABLE `orders` (
   `table_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `items` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `total` decimal(8,2) NOT NULL,
-  `status` enum('pending','processing','completed','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('preparing','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'preparing',
   `order_time` time DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `orders_order_id_unique` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +301,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'#ORD-001','T05','Nasi Goreng, Teh O',13.00,'pending','10:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'processing','10:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'pending','11:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'processing','11:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(9,'#ORD-009','T09','Ayam Goreng Kunyit, Nasi Lemak',21.00,'cancelled','12:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10');
+INSERT INTO `orders` VALUES (1,'#ORD-001','T05','Nasi Goreng, Teh O',13.00,'completed','10:30:00','2026-05-07 03:57:10','2026-05-08 02:28:50'),(2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'preparing','10:45:00','2026-05-07 03:57:10','2026-05-08 03:02:08'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'preparing','11:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'preparing','11:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(11,'#ORD-SNDO0Y','T10','[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',16.43,'completed','10:05:32','2026-05-08 02:05:32','2026-05-08 03:02:03');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,7 +390,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin User','admin','matrock.admin@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(9,'Ali alala','Ali','fypkumpulan31@gmail.com','staff','0118222723462','active',NULL,'$2y$12$aKOg0m2dbVZb55RDzzzb/.K.t4aWWSlVnZoDaF1XA8vib1kf0du0a','UqmcqgRSPqjgFnzKxOjpFUZ9MGMQd4RaLA0tSGiFgBc81W83rsGLN8nxe46L','2026-05-06 19:58:48','2026-05-06 21:00:00');
+INSERT INTO `users` VALUES (1,'Admin User','admin','matrock.admin@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','xe7Pm2gyeZ6y1gOlTl0WmqlA73uifxSXzc7VGn14QAPt1ZFnBhnJ1KDJEMtQ','2026-05-06 19:56:48','2026-05-06 19:56:48'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(9,'Ali alala','Ali','fypkumpulan31@gmail.com','staff','0118222723462','active',NULL,'$2y$12$aKOg0m2dbVZb55RDzzzb/.K.t4aWWSlVnZoDaF1XA8vib1kf0du0a','bGYrtGQJqonsKUUuHLCOWVj0AHukzTTE6IDkDvCn7f4p741FAWG8007e3B5g','2026-05-06 19:58:48','2026-05-06 21:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -402,4 +403,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-07 13:00:00
+-- Dump completed on 2026-05-08 19:02:08

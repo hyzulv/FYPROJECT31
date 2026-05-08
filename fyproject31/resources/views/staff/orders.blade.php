@@ -20,30 +20,20 @@
         </thead>
         <tbody id="ordersTableBody">
             @foreach($orders as $order)
-            <tr>
-                <td>{{ $order['id] }}</td>
-                <td>{{ $order['table] }}</td>
-                <td>{{ $order['items] }}</td>
-                <td>RM {{ $order['total] }}</td>
+            <tr data-order-id="{{ $order['id'] }}">
+                <td>{{ $order['id'] }}</td>
+                <td>{{ $order['table'] }}</td>
+                <td>{{ $order['items'] }}</td>
+                <td>RM {{ $order['total'] }}</td>
                 <td>
-                    <form action="{{ route($userRole . '.orders.update-status', $order['id]) }}" method="POST" style="margin:0;">
-                        @csrf
-                        <select name="status" onchange="this.form.submit()" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
-                            <option value="pending" {{ $order['status'] == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
-                            <option value="ready" {{ $order['status'] == 'ready' ? 'selected' : '' }}>Ready</option>
-                            <option value="completed" {{ $order['status'] == 'completed' ? 'selected' : '' }}>Completed</option>
-                            <option value="cancelled" {{ $order['status'] == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                        </select>
-                    </form>
+                    <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
+                        <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                        <option value="completed" {{ $order['status'] == 'completed' ? 'selected' : '' }}>Completed</option>
+                    </select>
                 </td>
-                <td class="order-time" data-time="{{ $order['time] }}">{{ $order['time'] }}</td>
+                <td class="order-time" data-time="{{ $order['time'] }}">{{ $order['time'] }}</td>
                 <td>
-                    <form action="{{ route($userRole . '.orders.destroy', $order['id']) }}" method="POST" onsubmit="return confirm('Delete this order?');" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
-                    </form>
+                    <button onclick="deleteOrder('{{ $order['id'] }}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
                 </td>
             </tr>
             @endforeach
@@ -55,6 +45,64 @@
 @push('scripts')
 <script>
 let lastOrderCount = {{ count($orders) }};
+
+function updateOrderStatus(orderId, status) {
+    if (!orderId) return;
+    const encodedId = encodeURIComponent(orderId);
+    fetch(`/staff/orders/${encodedId}/status`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ status: status })
+    })
+    .then(res => {
+        if (!res.ok) {
+            return res.json().then(err => { throw err; });
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Failed to update order status');
+        }
+    })
+    .catch(err => {
+        console.error('Status update error:', err);
+        alert('Error: ' + JSON.stringify(err));
+    });
+}
+
+function deleteOrder(orderId) {
+    if (!orderId) return;
+    if (!confirm('Delete this order?')) return;
+    const encodedId = encodeURIComponent(orderId);
+    fetch(`/staff/orders/${encodedId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ _method: 'DELETE' })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Failed to delete order');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Error deleting order');
+    });
+}
 
 function checkNewOrders() {
     fetch("{{ route('api.orders.check') }}")
@@ -72,37 +120,26 @@ function updateOrders(data) {
     const tbody = document.getElementById('ordersTableBody');
     let html = '';
     data.orders.forEach(order => {
-        html += `<tr>
+        html += `<tr data-order-id="${order.id}">
             <td>${order.id}</td>
             <td>${order.table}</td>
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
             <td>
-                <form action="{{ route($userRole . '.orders.update-status', '') }}/${order.id}" method="POST" style="margin:0;">
-                    @csrf
-                    <select name="status" onchange="this.form.submit()" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
-                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
-                        <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
-                        <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
-                        <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-                    </select>
-                </form>
+                <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
+                    <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                </select>
             </td>
             <td class="order-time" data-time="${order.time}">${order.time}</td>
             <td>
-                <form action="{{ route($userRole . '.orders.destroy', '') }}/${order.id}" method="POST" onsubmit="return confirm('Delete this order?');" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
-                </form>
+                <button onclick="deleteOrder('${order.id}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
             </td>
         </tr>`;
     });
     tbody.innerHTML = html;
 }
 
-// Update relative times every minute
 function updateTimes() {
     document.querySelectorAll('.order-time').forEach(td => {
         const timeStr = td.getAttribute('data-time');

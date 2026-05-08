@@ -17,7 +17,7 @@
     <div class="stat-card" id="statPending">
         <div class="card-icon">⏳</div>
         <div class="card-value" id="pendingOrders">{{ $pendingOrders }}</div>
-        <div class="card-label">Pending Orders</div>
+        <div class="card-label">Preparing Orders</div>
     </div>
     <div class="stat-card">
         <div class="card-icon">✅</div>
@@ -52,7 +52,7 @@
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
                 <td><span class="badge badge-{{ $order['status'] }}">{{ ucfirst($order['status']) }}</span></td>
-                <td>-</td>
+                <td>{{ $order['time'] }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -68,16 +68,21 @@
 @push('scripts')
 <script>
 let lastOrderCount = {{ $totalOrders }};
+let lastStatusHash = '';
 
 function checkNewOrders() {
     fetch("{{ route('api.orders.check') }}")
         .then(res => res.json())
         .then(data => {
+            const currentStatusHash = data.orders.map(o => o.id + o.status).join('|');
             if (data.hasNew) {
                 showNotification(data);
+            }
+            if (data.hasNew || currentStatusHash !== lastStatusHash) {
                 updateOrders(data);
             }
             lastOrderCount = data.totalOrders;
+            lastStatusHash = currentStatusHash;
         })
         .catch(err => console.log('Order check error:', err));
 }
@@ -85,7 +90,7 @@ function checkNewOrders() {
 function showNotification(data) {
     playNotificationSound();
     const notif = document.getElementById('orderNotification');
-    document.getElementById('newOrderInfo').textContent = data.pendingOrders + ' pending orders';
+    document.getElementById('newOrderInfo').textContent = data.pendingOrders + ' preparing orders';
     notif.classList.add('show');
     setTimeout(() => notif.classList.remove('show'), 4000);
 
@@ -111,7 +116,7 @@ function updateOrders(data) {
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
             <td><span class="badge badge-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
-            <td class="order-time" data-time="${order.time}">${order.time}</td>
+            <td class="order-time" data-time="${order.timestamp || order.time}">${order.time}</td>
         </tr>`;
     });
     tbody.innerHTML = html;
@@ -123,7 +128,6 @@ function updateOrders(data) {
     pending.style.animation = 'flashCard 0.6s ease';
 }
 
-// Update relative times
 function updateTimes() {
     document.querySelectorAll('.order-time').forEach(td => {
         const timeStr = td.getAttribute('data-time');
