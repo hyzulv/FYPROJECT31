@@ -1,0 +1,11 @@
+# # =============================================
+# # Remove .php Extension from URLs
+# # Example: file.php → file
+# # =============================================
+
+# RewriteEngine On
+
+# # Internally rewrite clean URL to actual PHP file
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME}.php -f
+# RewriteRule ^(.*)$ $1.php [NC,L]
