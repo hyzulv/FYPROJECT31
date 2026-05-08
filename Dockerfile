@@ -6,9 +6,11 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libonig-dev \
     libzip-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
     nodejs \
     npm \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip
+    && docker-php-ext-install pdo pdo_mysql mbstring zip bcmath curl xml fileinfo
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -30,7 +32,7 @@ RUN echo "APP_NAME=Laravel" > .env && \
     echo "CACHE_STORE=file" >> .env && \
     echo "QUEUE_CONNECTION=sync" >> .env
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-*
 
 RUN php artisan key:generate
 
