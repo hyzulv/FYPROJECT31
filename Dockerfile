@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -32,7 +32,7 @@ RUN echo "APP_NAME=Laravel" > .env && \
     echo "CACHE_STORE=file" >> .env && \
     echo "QUEUE_CONNECTION=sync" >> .env
 
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-*
+RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-*
 
 RUN php artisan key:generate
 
