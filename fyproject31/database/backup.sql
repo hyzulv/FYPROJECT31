@@ -301,7 +301,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'#ORD-001','T05','Nasi Goreng, Teh O',13.00,'completed','10:30:00','2026-05-07 03:57:10','2026-05-08 02:28:50'),(2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'preparing','10:45:00','2026-05-07 03:57:10','2026-05-08 03:02:08'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'preparing','11:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'preparing','11:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(11,'#ORD-SNDO0Y','T10','[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',16.43,'completed','10:05:32','2026-05-08 02:05:32','2026-05-08 03:02:03');
+INSERT INTO `orders` VALUES (2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'preparing','10:45:00','2026-05-07 03:57:10','2026-05-08 03:02:08'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'preparing','11:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'preparing','11:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(11,'#ORD-SNDO0Y','T10','[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',16.43,'preparing','10:05:32','2026-05-08 02:05:32','2026-05-08 03:10:03');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,4 +403,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-08 19:02:08
+-- Dump completed on 2026-05-08 19:10:31

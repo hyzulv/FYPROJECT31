@@ -178,24 +178,11 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
     })->name('orders');
 
     Route::get('/menu', function () {
-        $menuItems = MenuItem::where('status', 'available')->get()->map(function ($item) {
-            return [
-                'name' => $item->name,
-                'description' => $item->description,
-                'price' => number_format($item->price, 2),
-            ];
-        });
-
-        $foods = $menuItems->where('category', 'food');
-        $drinks = $menuItems->where('category', 'drink');
-
+        $menuItems = MenuItem::orderBy('name')->get();
         return view('staff.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'staff',
-            'menu' => [
-                'food' => $foods,
-                'drinks' => $drinks,
-            ],
+            'menuItems' => $menuItems,
         ]);
     })->name('menu');
 
@@ -357,24 +344,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('orders');
 
     Route::get('/menu', function () {
-        $menuItems = MenuItem::where('status', 'available')->get()->map(function ($item) {
-            return [
-                'name' => $item->name,
-                'description' => $item->description,
-                'price' => number_format($item->price, 2),
-            ];
-        });
-
-        $foods = $menuItems->where('category', 'food');
-        $drinks = $menuItems->where('category', 'drink');
-
+        $menuItems = MenuItem::orderBy('name')->get();
         return view('admin.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
-            'menu' => [
-                'food' => $foods,
-                'drinks' => $drinks,
-            ],
+            'menuItems' => $menuItems,
         ]);
     })->name('menu');
 
@@ -448,7 +422,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('staff.delete');
 });
 
-// API Routes for Real-time Order Sync
+// API Routes for Real-time Order Sync & Menu Management
 Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
         static $lastCount = null;
@@ -492,6 +466,46 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
         $order->update(['status' => $request->status]);
         return response()->json(['success' => true]);
     })->name('orders.update-status');
+
+    Route::get('/menu/check', function () {
+        $menuItems = MenuItem::orderBy('name')->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'description' => $item->description,
+                'price' => number_format($item->price, 2),
+                'category' => $item->category,
+                'status' => $item->status,
+                'image' => $item->image,
+            ];
+        });
+        return response()->json(['menu' => $menuItems]);
+    })->name('menu.check');
+
+    Route::post('/menu/add', function () {
+        $request = request();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|string',
+            'status' => 'required|in:available,unavailable',
+        ]);
+        $item = MenuItem::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category' => $request->category,
+            'status' => $request->status,
+        ]);
+        return response()->json(['success' => true, 'item' => $item]);
+    })->name('menu.add');
+
+    Route::delete('/menu/{id}', function ($id) {
+        $item = MenuItem::findOrFail($id);
+        $item->delete();
+        return response()->json(['success' => true]);
+    })->name('menu.delete');
 });
 
 // Test line

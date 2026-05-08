@@ -328,14 +328,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Orders
-        Order::updateOrCreate(['order_id' => '#ORD-001'], [
-            'table_number' => 'T05',
-            'items' => 'Nasi Goreng, Teh O',
-            'total' => 13.00,
-            'status' => 'completed',
-            'order_time' => '2026-05-08 10:30:00',
-        ]);
-
         Order::updateOrCreate(['order_id' => '#ORD-002'], [
             'table_number' => 'T03',
             'items' => 'Ayam Goreng Kunyit',
@@ -404,7 +396,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T10',
             'items' => '[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',
             'total' => 16.43,
-            'status' => 'completed',
+            'status' => 'preparing',
             'order_time' => '2026-05-08 10:05:32',
         ]);
 
