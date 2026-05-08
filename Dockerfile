@@ -18,16 +18,17 @@ COPY fyproject31/ .
 
 RUN touch database/database.sqlite
 
-RUN cp .env.example .env && \
-    php -r "
-        \$env = file_get_contents('.env');
-        \$env = preg_replace('/^APP_ENV=.*/m', 'APP_ENV=production', \$env);
-        \$env = preg_replace('/^APP_DEBUG=.*/m', 'APP_DEBUG=false', \$env);
-        \$env = preg_replace('/^SESSION_DRIVER=.*/m', 'SESSION_DRIVER=file', \$env);
-        \$env = preg_replace('/^CACHE_STORE=.*/m', 'CACHE_STORE=file', \$env);
-        \$env = preg_replace('/^QUEUE_CONNECTION=.*/m', 'QUEUE_CONNECTION=sync', \$env);
-        file_put_contents('.env', \$env);
-    "
+RUN echo "APP_NAME=Laravel" > .env && \
+    echo "APP_ENV=production" >> .env && \
+    echo "APP_KEY=" >> .env && \
+    echo "APP_DEBUG=false" >> .env && \
+    echo "APP_URL=http://localhost" >> .env && \
+    echo "LOG_CHANNEL=stack" >> .env && \
+    echo "LOG_LEVEL=warning" >> .env && \
+    echo "DB_CONNECTION=sqlite" >> .env && \
+    echo "SESSION_DRIVER=file" >> .env && \
+    echo "CACHE_STORE=file" >> .env && \
+    echo "QUEUE_CONNECTION=sync" >> .env
 
 RUN php artisan key:generate
 
