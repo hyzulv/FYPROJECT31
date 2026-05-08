@@ -30,9 +30,9 @@ RUN echo "APP_NAME=Laravel" > .env && \
     echo "CACHE_STORE=file" >> .env && \
     echo "QUEUE_CONNECTION=sync" >> .env
 
-RUN php artisan key:generate
-
 RUN composer install --no-dev --optimize-autoloader
+
+RUN php artisan key:generate
 
 RUN npm install
 
