@@ -16,12 +16,28 @@ WORKDIR /opt/render/project/src
 
 COPY fyproject31/ .
 
+RUN touch database/database.sqlite
+
 RUN cp .env.example .env && \
-    composer install --no-dev --optimize-autoloader && \
-    php artisan key:generate && \
-    npm install && \
-    npm run build && \
-    php artisan storage:link
+    php -r "
+        \$env = file_get_contents('.env');
+        \$env = preg_replace('/^APP_ENV=.*/m', 'APP_ENV=production', \$env);
+        \$env = preg_replace('/^APP_DEBUG=.*/m', 'APP_DEBUG=false', \$env);
+        \$env = preg_replace('/^SESSION_DRIVER=.*/m', 'SESSION_DRIVER=file', \$env);
+        \$env = preg_replace('/^CACHE_STORE=.*/m', 'CACHE_STORE=file', \$env);
+        \$env = preg_replace('/^QUEUE_CONNECTION=.*/m', 'QUEUE_CONNECTION=sync', \$env);
+        file_put_contents('.env', \$env);
+    "
+
+RUN php artisan key:generate
+
+RUN composer install --no-dev --optimize-autoloader
+
+RUN npm install
+
+RUN npm run build
+
+RUN php artisan storage:link
 
 EXPOSE 10000
 
