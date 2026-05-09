@@ -401,14 +401,7 @@
         <section id="about" class="section">
             <div class="about-container">
                 <div class="about-image">
-                    <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;border-radius:8px;">
-                        <rect width="300" height="300" fill="#1a1a1a"/>
-                        <circle cx="150" cy="120" r="60" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
-                        <path d="M110 140 Q150 80 190 140" stroke="#cf2c21" stroke-width="2" fill="none"/>
-                        <circle cx="150" cy="105" r="5" fill="#cf2c21"/>
-                        <text x="150" y="220" text-anchor="middle" fill="#cf2c21" font-size="24" font-weight="bold">MAT ROCK</text>
-                        <text x="150" y="250" text-anchor="middle" fill="#999999" font-size="14">Ayam Goreng Kunyit</text>
-                    </svg>
+                    <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Ayam Goreng Kunyit" style="width:100%;max-width:300px;border-radius:8px;border:2px solid #cf2c21;">
                 </div>
                 <div class="about-text">
                     <h3>About Mat Rock</h3>
@@ -433,9 +426,11 @@
                 <div class="menu-grid">
                     @foreach($foods as $food)
                     <div class="menu-item">
-                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
-                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><ellipse cx="30" cy="40" rx="20" ry="8" stroke="#cf2c21" stroke-width="2"/><path d="M15 35 Q30 15 45 35" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/></svg>
-                        </div>
+                        @if($food->image)
+                            <img src="{{ asset('images/menu/' . $food->image) }}" alt="{{ $food->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @else
+                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @endif
                         <h3>{{ $food->name }}</h3>
                         <p class="menu-desc">{{ $food->description }}</p>
                         <p><strong>Price: RM {{ number_format($food->price, 2) }}</strong></p>
@@ -449,9 +444,11 @@
                 <div class="menu-grid">
                     @foreach($drinks as $drink)
                     <div class="menu-item">
-                        <div style="width:100%;height:150px;background:#333;border-radius:5px;display:flex;align-items:center;justify-content:center;">
-                            <svg viewBox="0 0 60 60" width="50" height="50" fill="none"><path d="M20 15 L20 45 Q20 50 30 50 Q40 50 40 45 L40 15" stroke="#cf2c21" stroke-width="2"/><ellipse cx="30" cy="15" rx="10" ry="4" stroke="#cf2c21" stroke-width="2"/></svg>
-                        </div>
+                        @if($drink->image)
+                            <img src="{{ asset('images/menu/' . $drink->image) }}" alt="{{ $drink->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @else
+                            <img src="{{ asset('images/menu/Udang-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @endif
                         <h3>{{ $drink->name }}</h3>
                         <p class="menu-desc">{{ $drink->description }}</p>
                         <p><strong>Price: RM {{ number_format($drink->price, 2) }}</strong></p>

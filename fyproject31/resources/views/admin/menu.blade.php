@@ -12,6 +12,7 @@
     <table class="data-table">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
@@ -22,6 +23,13 @@
         <tbody id="menuTableBody">
             @foreach($menuItems as $item)
             <tr data-id="{{ $item->id }}">
+                <td>
+                    @if($item->image)
+                        <img src="{{ asset('images/menu/' . $item->image) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                    @else
+                        <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                    @endif
+                </td>
                 <td>{{ $item->name }}</td>
                 <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
                 <td>RM {{ number_format($item->price, 2) }}</td>
@@ -103,7 +111,9 @@ function refreshMenu() {
             const tbody = document.getElementById('menuTableBody');
             let html = '';
             data.menu.forEach(item => {
+                const imgUrl = item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
                 html += `<tr data-id="${item.id}">
+                    <td><img src="${imgUrl}" alt="${item.name}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;"></td>
                     <td>${item.name}</td>
                     <td>${item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
                     <td>RM ${item.price}</td>

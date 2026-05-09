@@ -53,17 +53,9 @@
                                 @else
                                     <div class="placeholder-image">
                                         @if(in_array($catKey, ['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family']))
-                                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <ellipse cx="40" cy="50" rx="28" ry="12" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
-                                                <path d="M25 45 Q40 20 55 45" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
-                                                <circle cx="40" cy="30" r="3" fill="#cf2c21"/>
-                                            </svg>
+                                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
                                         @else
-                                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M30 20 L30 55 Q30 65 40 65 Q50 65 50 55 L50 20" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
-                                                <ellipse cx="40" cy="20" rx="10" ry="4" stroke="#cf2c21" stroke-width="2"/>
-                                                <path d="M35 35 Q40 30 45 35" stroke="#cf2c21" stroke-width="1.5" fill="none"/>
-                                            </svg>
+                                            <img src="{{ asset('images/menu/Udang-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
                                         @endif
                                     </div>
                                 @endif

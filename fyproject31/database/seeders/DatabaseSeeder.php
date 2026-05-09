@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // Users
         User::updateOrCreate(['username' => 'admin'], [
             'name' => 'Admin User',
-            'email' => 'matrock.admin@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'email' => 'fypkumpulan31@gmail.com',
+            'password' => '$2y$12$.89LKOYhY58Oot8Wl0EKTuZDB1j1553UPToY/Wtw61g9/oGgaYeXa',
             'role' => 'admin',
             'phone' => '+60 11-123 4567',
             'status' => 'active',
@@ -88,8 +88,8 @@ class DatabaseSeeder extends Seeder
 
         User::updateOrCreate(['username' => 'Ali'], [
             'name' => 'Ali alala',
-            'email' => 'fypkumpulan31@gmail.com',
-            'password' => '$2y$12$aKOg0m2dbVZb55RDzzzb/.K.t4aWWSlVnZoDaF1XA8vib1kf0du0a',
+            'email' => 'mohamadhaizul16@gmail.com',
+            'password' => '$2y$12$JjHzb31Lw13nghmMRMOCmucjNZH4JvlpYZfnrmrhT1sEQ2jy9cDMG',
             'role' => 'staff',
             'phone' => '0118222723462',
             'status' => 'active',
@@ -292,8 +292,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
-        MenuItem::updateOrCreate(['name' => 'Air Kosong'], [
-            'description' => 'Plain water',
+        MenuItem::updateOrCreate(['name' => 'Ais Kosong'], [
+            'description' => 'Plain water with ice',
             'price' => 1.00,
             'category' => 'minuman',
             'status' => 'available',
@@ -313,13 +313,6 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
-        MenuItem::updateOrCreate(['name' => 'Nasi Tambah'], [
-            'description' => 'Extra serving of rice',
-            'price' => 1.00,
-            'category' => 'add_on',
-            'status' => 'available',
-        ]);
-
         MenuItem::updateOrCreate(['name' => 'Sambal Extra'], [
             'description' => 'Extra serving of our signature sambal',
             'price' => 1.00,
@@ -327,13 +320,49 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
+        MenuItem::updateOrCreate(['name' => 'Ice'], [
+            'description' => 'Cold with ice',
+            'price' => 0.50,
+            'category' => 'add_on',
+            'status' => 'available',
+        ]);
+
+        MenuItem::updateOrCreate(['name' => 'Kurang Manis'], [
+            'description' => 'Less sweet',
+            'price' => 0.00,
+            'category' => 'add_on',
+            'status' => 'available',
+        ]);
+
+        MenuItem::updateOrCreate(['name' => 'Normal Manis'], [
+            'description' => 'Normal sweetness',
+            'price' => 0.00,
+            'category' => 'add_on',
+            'status' => 'available',
+        ]);
+
+        MenuItem::updateOrCreate(['name' => 'Extra Manis'], [
+            'description' => 'Extra sweet',
+            'price' => 0.50,
+            'category' => 'add_on',
+            'status' => 'available',
+        ]);
+
         // Orders
+        Order::updateOrCreate(['order_id' => '#ORD-001'], [
+            'table_number' => 'T05',
+            'items' => 'Nasi Goreng, Teh O',
+            'total' => 13.00,
+            'status' => 'completed',
+            'order_time' => '2026-05-09 10:30:00',
+        ]);
+
         Order::updateOrCreate(['order_id' => '#ORD-002'], [
             'table_number' => 'T03',
             'items' => 'Ayam Goreng Kunyit',
             'total' => 12.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-08 10:45:00',
+            'order_time' => '2026-05-09 10:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-003'], [
@@ -341,7 +370,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Mee Goreng, Kopi O',
             'total' => 14.50,
             'status' => 'completed',
-            'order_time' => '2026-05-08 11:00:00',
+            'order_time' => '2026-05-09 11:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-004'], [
@@ -349,7 +378,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Teh Tarik',
             'total' => 8.50,
             'status' => 'completed',
-            'order_time' => '2026-05-08 11:15:00',
+            'order_time' => '2026-05-09 11:15:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-005'], [
@@ -357,7 +386,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Lemak, Milo',
             'total' => 13.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-08 11:30:00',
+            'order_time' => '2026-05-09 11:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-006'], [
@@ -365,7 +394,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Char Kuey Teow',
             'total' => 10.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-08 11:45:00',
+            'order_time' => '2026-05-09 11:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-007'], [
@@ -373,7 +402,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Goreng, Air Kelapa',
             'total' => 15.00,
             'status' => 'completed',
-            'order_time' => '2026-05-08 12:00:00',
+            'order_time' => '2026-05-09 12:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-008'], [
@@ -381,7 +410,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Mee Goreng, Teh O',
             'total' => 14.00,
             'status' => 'completed',
-            'order_time' => '2026-05-08 12:15:00',
+            'order_time' => '2026-05-09 12:15:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-010'], [
@@ -389,15 +418,39 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Kopi O, Milo',
             'total' => 12.50,
             'status' => 'completed',
-            'order_time' => '2026-05-08 12:45:00',
+            'order_time' => '2026-05-09 12:45:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-SNDO0Y'], [
-            'table_number' => 'T10',
-            'items' => '[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',
-            'total' => 16.43,
+        Order::updateOrCreate(['order_id' => '#ORD-5EZVPF'], [
+            'table_number' => '12',
+            'items' => '[{\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":12,\"quantity\":1},{\"id\":4,\"name\":\"Roti Canai\",\"price\":5,\"quantity\":2}]',
+            'total' => 23.32,
             'status' => 'preparing',
-            'order_time' => '2026-05-08 10:05:32',
+            'order_time' => '2026-05-09 01:36:17',
+        ]);
+
+        Order::updateOrCreate(['order_id' => '#ORD-CLBIYY'], [
+            'table_number' => 'T01',
+            'items' => '[{\"key\":\"29-\",\"id\":29,\"name\":\"Air Kosong\",\"price\":1,\"quantity\":1,\"addons\":[]},{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',
+            'total' => 5.83,
+            'status' => 'preparing',
+            'order_time' => '2026-05-09 04:42:17',
+        ]);
+
+        Order::updateOrCreate(['order_id' => '#ORD-G5IX1O'], [
+            'table_number' => 'A12',
+            'items' => '[{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]},{\"key\":\"27-\",\"id\":27,\"name\":\"Teh\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',
+            'total' => 9.54,
+            'status' => 'preparing',
+            'order_time' => '2026-05-09 04:43:00',
+        ]);
+
+        Order::updateOrCreate(['order_id' => '#ORD-PCNJ0G'], [
+            'table_number' => 'T05',
+            'items' => '[{\"key\":\"2-30\",\"id\":2,\"name\":\"Daging Goreng Kunyit\",\"price\":15.9,\"quantity\":1,\"addons\":[{\"id\":30,\"name\":\"Telur Mata\",\"price\":2}]},{\"key\":\"27-33\",\"id\":27,\"name\":\"Teh\",\"price\":5,\"quantity\":1,\"addons\":[{\"id\":33,\"name\":\"Ice\",\"price\":0.5}]}]',
+            'total' => 22.15,
+            'status' => 'preparing',
+            'order_time' => '2026-05-09 07:13:05',
         ]);
 
         // Feedback

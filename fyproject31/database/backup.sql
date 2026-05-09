@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: fyproject31
 -- ------------------------------------------------------
--- Server version	8.0.42
+-- Server version	9.7.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '09d8b61a-4951-11f1-8889-005056c00001:1-859';
 
 --
 -- Table structure for table `cache`
@@ -25,9 +33,8 @@ DROP TABLE IF EXISTS `cache`;
 CREATE TABLE `cache` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` bigint NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_expiration_index` (`expiration`)
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,9 +57,8 @@ DROP TABLE IF EXISTS `cache_locks`;
 CREATE TABLE `cache_locks` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` bigint NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_locks_expiration_index` (`expiration`)
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +125,7 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-INSERT INTO `feedback` VALUES (1,'Ahmad Razali',5,'Ayam goreng kunyit sangat sedap! Sambal yang diberikan juga memang terbaik. Akan datang lagi.','2026-05-03','2026-05-07 03:57:10','2026-05-07 03:57:10'),(2,'Siti Nurhaliza',4,'Makanan enak dan harga berpatutan. Cuma servis agak lambat sedikit pada waktu puncak.','2026-05-02','2026-05-07 03:57:10','2026-05-07 03:57:10'),(3,'Lee Wei Ming',5,'Nasi lemak dia memang power! Sambal pedas just nice. Portion pun besar. Recommended!','2026-05-01','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'Priya Nair',3,'Roti canai okay tapi could be better. Teh tarik dia memang kaw. Overall okay lah.','2026-04-30','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'Hafiz Ibrahim',5,'Tempat makan terbaik di Skudai! Harga murah, makanan sedap, servis bagus. Five stars!','2026-04-28','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'Tan Mei Ling',4,'Char kuey teow sangat sedap, macam Penang punya! Milo dia pun pekat. Good value for money.','2026-04-25','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'Muhammad Irfan',4,'Mee goreng dia memang lain dari yang lain. Sedap! Cuma parking agak susah sikit waktu lunch.','2026-04-22','2026-05-07 03:57:10','2026-05-07 03:57:10');
+INSERT INTO `feedback` VALUES (1,'Ahmad Razali',5,'Ayam goreng kunyit sangat sedap! Sambal yang diberikan juga memang terbaik. Akan datang lagi.','2026-05-03','2026-05-06 14:03:01','2026-05-06 14:03:01'),(2,'Siti Nurhaliza',4,'Makanan enak dan harga berpatutan. Cuma servis agak lambat sedikit pada waktu puncak.','2026-05-02','2026-05-06 14:03:01','2026-05-06 14:03:01'),(3,'Lee Wei Ming',5,'Nasi lemak dia memang power! Sambal pedas just nice. Portion pun besar. Recommended!','2026-05-01','2026-05-06 14:03:01','2026-05-06 14:03:01'),(4,'Priya Nair',3,'Roti canai okay tapi could be better. Teh tarik dia memang kaw. Overall okay lah.','2026-04-30','2026-05-06 14:03:01','2026-05-06 14:03:01'),(5,'Hafiz Ibrahim',5,'Tempat makan terbaik di Skudai! Harga murah, makanan sedap, servis bagus. Five stars!','2026-04-28','2026-05-06 14:03:01','2026-05-06 14:03:01'),(6,'Tan Mei Ling',4,'Char kuey teow sangat sedap, macam Penang punya! Milo dia pun pekat. Good value for money.','2026-04-25','2026-05-06 14:03:01','2026-05-06 21:04:13'),(7,'Muhammad Irfan',4,'Mee goreng dia memang lain dari yang lain. Sedap! Cuma parking agak susah sikit waktu lunch.','2026-04-22','2026-05-06 14:03:01','2026-05-06 14:03:01');
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +171,7 @@ CREATE TABLE `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` smallint unsigned NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
   `created_at` int unsigned NOT NULL,
@@ -196,12 +202,16 @@ CREATE TABLE `menu_items` (
   `description` text COLLATE utf8mb4_unicode_ci,
   `price` decimal(8,2) NOT NULL,
   `category` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `applies_to` json DEFAULT NULL,
+  `selection_type` enum('single','multiple') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'multiple',
+  `group_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exclude_for` json DEFAULT NULL,
   `status` enum('available','unavailable') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'available',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +220,7 @@ CREATE TABLE `menu_items` (
 
 LOCK TABLES `menu_items` WRITE;
 /*!40000 ALTER TABLE `menu_items` DISABLE KEYS */;
-INSERT INTO `menu_items` VALUES (1,'Ayam Goreng Kunyit','Signature turmeric fried chicken with crispy skin, served with rice and sambal',10.90,'ala_carte','available','ayam-goreng-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(2,'Daging Goreng Kunyit','Tender beef stir-fried with turmeric spices, served with rice and sambal',13.90,'ala_carte','available','daging-goreng-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(3,'Sotong Goreng Kunyit','Fresh squid cooked in turmeric seasoning, served with rice and sambal',15.50,'ala_carte','available','sotong-goreng-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(4,'Udang Goreng Kunyit','Juicy prawns fried with turmeric and spices, served with rice and sambal',15.50,'ala_carte','available','udang-goreng-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(5,'Combo Set Ayam','Ayam Goreng Kunyit set with rice, drink and sambal',15.00,'combo_set','available','combo-ayam.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(6,'Combo Set Daging','Daging Goreng Kunyit set with rice, drink and sambal',17.00,'combo_set','available','combo-daging.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(7,'Combo Set Udang','Udang Goreng Kunyit set with rice, drink and sambal',19.50,'combo_set','available','combo-udang.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(8,'Combo Set Sotong','Sotong Goreng Kunyit set with rice, drink and sambal',19.50,'combo_set','available','combo-sotong.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(9,'Ayam + Daging Mix','Mix of Ayam Goreng Kunyit and Daging Goreng Kunyit with rice',18.90,'mix','available','ayam-daging-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(10,'Sotong + Udang Mix','Mix of Sotong Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix','available','sotong-udang-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(11,'Ayam + Udang Mix','Mix of Ayam Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix','available','ayam-udang-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(12,'Ayam + Sotong Mix','Mix of Ayam Goreng Kunyit and Sotong Goreng Kunyit with rice',18.90,'mix','available','ayam-sotong-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(13,'Daging + Sotong Mix','Mix of Daging Goreng Kunyit and Sotong Goreng Kunyit with rice',18.90,'mix','available','daging-sotong-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(14,'Daging + Udang Mix','Mix of Daging Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix','available','daging-udang-mix.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(15,'Nasi Lemak Biasa','Fragrant pandan basmati coconut rice with sambal, peanut, anchovies and cucumber',5.00,'nasi_lemak','available','nasi-lemak-biasa.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(16,'Nasi Lemak Telur Mata','Nasi lemak with a sunny-side-up egg, sambal, peanut and anchovies',7.00,'nasi_lemak','available','nasi-lemak-telur.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(17,'Nasi Lemak Ayam Berempah','Nasi lemak with spiced fried chicken, sambal and sides',12.00,'nasi_lemak','available','nasi-lemak-ayam-berempah.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(18,'Nasi Lemak Ayam Kunyit','Nasi lemak with our signature turmeric fried chicken and sambal',13.00,'nasi_lemak','available','nasi-lemak-ayam-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(19,'Nasi Lemak Daging Kunyit','Nasi lemak with turmeric beef, sambal and sides',15.00,'nasi_lemak','available','nasi-lemak-daging-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(20,'Nasi Lemak Sotong Kunyit','Nasi lemak with turmeric squid, sambal and sides',16.00,'nasi_lemak','available','nasi-lemak-sotong-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(21,'Nasi Lemak Udang Kunyit','Nasi lemak with turmeric prawns, sambal and sides',16.00,'nasi_lemak','available','nasi-lemak-udang-kunyit.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(22,'Ayam Kicap','Chicken cooked in sweet soy sauce with aromatic spices',12.00,'kicap','available','ayam-kicap.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(23,'Daging Kicap','Beef braised in sweet soy sauce with traditional spices',14.00,'kicap','available','daging-kicap.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(24,'Set Family','Family set with Ayam, Daging, Sotong, Udang Goreng Kunyit served with rice and sambal for the whole family',55.00,'set_family','available','set-family.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(25,'Milo','Iced Milo chocolate malt drink',4.50,'minuman','available','milo.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(26,'Nescafe','Iced Nescafe coffee',4.50,'minuman','available','nescafe.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(27,'Teh','Iced Malaysian pulled tea with milk',4.50,'minuman','available','teh.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(28,'Teh O','Iced black tea with sugar',3.00,'minuman','available','teh-o.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(29,'Air Kosong','Plain water',1.00,'minuman','available','air-kosong.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(30,'Telur Mata','Sunny-side-up fried egg',2.00,'add_on','available','telur-mata.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(31,'Nasi Putih','Steamed white rice',3.00,'add_on','available','nasi-putih.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(32,'Nasi Tambah','Extra serving of rice',1.00,'add_on','available','nasi-tambah.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26'),(33,'Sambal Extra','Extra serving of our signature sambal',1.00,'add_on','available','sambal.jpg','2026-05-06 19:43:26','2026-05-06 19:43:26');
+INSERT INTO `menu_items` VALUES (1,'Ayam Goreng Kunyit','Signature turmeric fried chicken with crispy skin, served with rice and sambal',10.90,'ala_carte',NULL,'multiple',NULL,NULL,'available','ayam-goreng-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(2,'Daging Goreng Kunyit','Tender beef stir-fried with turmeric spices, served with rice and sambal',13.90,'ala_carte',NULL,'multiple',NULL,NULL,'available','daging-goreng-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(3,'Sotong Goreng Kunyit','Fresh squid cooked in turmeric seasoning, served with rice and sambal',15.50,'ala_carte',NULL,'multiple',NULL,NULL,'available','sotong-goreng-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(4,'Udang Goreng Kunyit','Juicy prawns fried with turmeric and spices, served with rice and sambal',15.50,'ala_carte',NULL,'multiple',NULL,NULL,'available','udang-goreng-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(5,'Combo Set Ayam','Ayam Goreng Kunyit set with rice, drink and sambal',15.00,'combo_set',NULL,'multiple',NULL,NULL,'available','combo-ayam.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(6,'Combo Set Daging','Daging Goreng Kunyit set with rice, drink and sambal',17.00,'combo_set',NULL,'multiple',NULL,NULL,'available','combo-daging.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(7,'Combo Set Udang','Udang Goreng Kunyit set with rice, drink and sambal',19.50,'combo_set',NULL,'multiple',NULL,NULL,'available','combo-udang.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(8,'Combo Set Sotong','Sotong Goreng Kunyit set with rice, drink and sambal',19.50,'combo_set',NULL,'multiple',NULL,NULL,'available','combo-sotong.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(9,'Ayam + Daging Mix','Mix of Ayam Goreng Kunyit and Daging Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','ayam-daging-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(10,'Sotong + Udang Mix','Mix of Sotong Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','sotong-udang-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(11,'Ayam + Udang Mix','Mix of Ayam Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','ayam-udang-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(12,'Ayam + Sotong Mix','Mix of Ayam Goreng Kunyit and Sotong Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','ayam-sotong-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(13,'Daging + Sotong Mix','Mix of Daging Goreng Kunyit and Sotong Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','daging-sotong-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(14,'Daging + Udang Mix','Mix of Daging Goreng Kunyit and Udang Goreng Kunyit with rice',18.90,'mix',NULL,'multiple',NULL,NULL,'available','daging-udang-mix.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(15,'Nasi Lemak Biasa','Fragrant pandan basmati coconut rice with sambal, peanut, anchovies and cucumber',5.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-biasa.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(16,'Nasi Lemak Telur Mata','Nasi lemak with a sunny-side-up egg, sambal, peanut and anchovies',7.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-telur.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(17,'Nasi Lemak Ayam Berempah','Nasi lemak with spiced fried chicken, sambal and sides',12.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-ayam-berempah.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(18,'Nasi Lemak Ayam Kunyit','Nasi lemak with our signature turmeric fried chicken and sambal',13.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-ayam-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(19,'Nasi Lemak Daging Kunyit','Nasi lemak with turmeric beef, sambal and sides',15.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-daging-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(20,'Nasi Lemak Sotong Kunyit','Nasi lemak with turmeric squid, sambal and sides',16.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-sotong-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(21,'Nasi Lemak Udang Kunyit','Nasi lemak with turmeric prawns, sambal and sides',16.00,'nasi_lemak',NULL,'multiple',NULL,NULL,'available','nasi-lemak-udang-kunyit.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(22,'Ayam Kicap','Chicken cooked in sweet soy sauce with aromatic spices',12.00,'kicap',NULL,'multiple',NULL,NULL,'available','ayam-kicap.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(23,'Daging Kicap','Beef braised in sweet soy sauce with traditional spices',14.00,'kicap',NULL,'multiple',NULL,NULL,'available','daging-kicap.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(24,'Set Family','Family set with Ayam, Daging, Sotong, Udang Goreng Kunyit served with rice and sambal for the whole family',55.00,'set_family',NULL,'multiple',NULL,NULL,'available','set-family.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(25,'Milo','Iced Milo chocolate malt drink',4.50,'minuman',NULL,'multiple',NULL,NULL,'available','milo.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(26,'Nescafe','Iced Nescafe coffee',4.50,'minuman',NULL,'multiple',NULL,NULL,'available','nescafe.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(27,'Teh','Iced Malaysian pulled tea with milk',4.50,'minuman',NULL,'multiple',NULL,NULL,'available','teh.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(28,'Teh O','Iced black tea with sugar',3.00,'minuman',NULL,'multiple',NULL,NULL,'available','teh-o.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(29,'Ais Kosong','Plain water with ice',1.00,'minuman',NULL,'multiple',NULL,NULL,'available','ais-kosong.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(30,'Telur Mata','Sunny-side-up fried egg',2.00,'add_on','[\"ala_carte\", \"combo_set\", \"mix\", \"nasi_lemak\", \"kicap\", \"set_family\"]','multiple',NULL,NULL,'available','telur-mata.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(31,'Nasi Putih','Steamed white rice',3.00,'add_on','[\"ala_carte\", \"combo_set\", \"mix\", \"kicap\"]','multiple',NULL,NULL,'available','nasi-putih.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(32,'Sambal Extra','Extra serving of our signature sambal',1.00,'add_on','[\"ala_carte\", \"combo_set\", \"mix\", \"nasi_lemak\", \"kicap\", \"set_family\"]','multiple',NULL,NULL,'available','sambal.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(33,'Ice','Cold with ice',0.50,'add_on','[\"minuman\"]','multiple',NULL,'[\"Ais Kosong\"]','available','ice.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(34,'Kurang Manis','Less sweet',0.00,'add_on','[\"minuman\"]','single','Sweetness','[\"Ais Kosong\"]','available','kurang-manis.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(35,'Normal Manis','Normal sweetness',0.00,'add_on','[\"minuman\"]','single','Sweetness','[\"Ais Kosong\"]','available','normal-manis.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30'),(36,'Extra Manis','Extra sweet',0.50,'add_on','[\"minuman\"]','single','Sweetness','[\"Ais Kosong\"]','available','extra-manis.jpg','2026-05-07 00:51:30','2026-05-07 00:51:30');
 /*!40000 ALTER TABLE `menu_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +236,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +245,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2026_05_06_000000_add_role_to_users_table',1),(5,'2026_05_06_000001_add_username_to_users_table',1),(6,'2026_05_06_000002_create_menu_items_table',1),(7,'2026_05_06_000003_create_orders_table',1),(8,'2026_05_06_000004_create_feedback_table',1),(9,'2026_05_07_000001_add_image_to_menu_items_table',1),(10,'2026_05_07_000002_create_order_items_table',1),(11,'2026_05_07_000003_change_menu_items_category_to_string',1);
+INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2026_05_06_000000_add_role_to_users_table',1),(5,'2026_05_06_000001_add_username_to_users_table',1),(6,'2026_05_06_000002_create_menu_items_table',1),(7,'2026_05_06_000003_create_orders_table',1),(8,'2026_05_06_000004_create_feedback_table',1),(9,'2026_05_07_000001_add_image_to_menu_items_table',2),(10,'2026_05_07_000002_create_order_items_table',2),(11,'2026_05_07_000003_change_menu_items_category_to_string',3),(12,'2026_05_07_000004_add_addon_fields_to_menu_items_table',4),(13,'2026_05_07_000005_add_exclude_for_to_menu_items_table',5);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +270,7 @@ CREATE TABLE `order_items` (
   KEY `order_items_menu_item_id_foreign` (`menu_item_id`),
   CONSTRAINT `order_items_menu_item_id_foreign` FOREIGN KEY (`menu_item_id`) REFERENCES `menu_items` (`id`) ON DELETE CASCADE,
   CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +279,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (1,11,3,1,15.50,15.50,'2026-05-08 02:05:32','2026-05-08 02:05:32');
+INSERT INTO `order_items` VALUES (1,11,1,1,12.00,12.00,'2026-05-06 17:36:17','2026-05-06 17:36:17'),(2,11,4,2,5.00,10.00,'2026-05-06 17:36:17','2026-05-06 17:36:17'),(3,12,29,1,1.00,1.00,'2026-05-06 20:42:17','2026-05-06 20:42:17'),(4,12,26,1,4.50,4.50,'2026-05-06 20:42:17','2026-05-06 20:42:17'),(5,13,26,1,4.50,4.50,'2026-05-06 20:43:00','2026-05-06 20:43:00'),(6,13,27,1,4.50,4.50,'2026-05-06 20:43:00','2026-05-06 20:43:00'),(7,14,2,1,15.90,15.90,'2026-05-07 23:13:05','2026-05-07 23:13:05'),(8,14,27,1,5.00,5.00,'2026-05-07 23:13:05','2026-05-07 23:13:05');
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,7 +302,7 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `orders_order_id_unique` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +311,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'preparing','10:45:00','2026-05-07 03:57:10','2026-05-08 03:02:08'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'preparing','11:30:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'preparing','11:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-07 03:57:10','2026-05-07 03:57:10'),(11,'#ORD-SNDO0Y','T10','[{\"key\":\"3-\",\"id\":3,\"name\":\"Sotong Goreng Kunyit\",\"price\":15.5,\"quantity\":1,\"addons\":[]}]',16.43,'preparing','10:05:32','2026-05-08 02:05:32','2026-05-08 03:10:03');
+INSERT INTO `orders` VALUES (1,'#ORD-001','T05','Nasi Goreng, Teh O',13.00,'completed','10:30:00','2026-05-06 14:03:01','2026-05-08 03:41:52'),(2,'#ORD-002','T03','Ayam Goreng Kunyit',12.00,'preparing','10:45:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(3,'#ORD-003','T01','Mee Goreng, Kopi O',14.50,'completed','11:00:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(4,'#ORD-004','T08','Roti Canai, Teh Tarik',8.50,'completed','11:15:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(5,'#ORD-005','T02','Nasi Lemak, Milo',13.00,'preparing','11:30:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(6,'#ORD-006','T06','Char Kuey Teow',10.00,'preparing','11:45:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(7,'#ORD-007','T04','Nasi Goreng, Air Kelapa',15.00,'completed','12:00:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(8,'#ORD-008','T07','Mee Goreng, Teh O',14.00,'completed','12:15:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(10,'#ORD-010','T10','Roti Canai, Kopi O, Milo',12.50,'completed','12:45:00','2026-05-06 14:03:01','2026-05-06 14:03:01'),(11,'#ORD-5EZVPF','12','[{\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":12,\"quantity\":1},{\"id\":4,\"name\":\"Roti Canai\",\"price\":5,\"quantity\":2}]',23.32,'preparing','01:36:17','2026-05-06 17:36:17','2026-05-06 17:36:17'),(12,'#ORD-CLBIYY','T01','[{\"key\":\"29-\",\"id\":29,\"name\":\"Air Kosong\",\"price\":1,\"quantity\":1,\"addons\":[]},{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',5.83,'preparing','04:42:17','2026-05-06 20:42:17','2026-05-06 20:42:17'),(13,'#ORD-G5IX1O','A12','[{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]},{\"key\":\"27-\",\"id\":27,\"name\":\"Teh\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',9.54,'preparing','04:43:00','2026-05-06 20:43:00','2026-05-06 20:43:00'),(14,'#ORD-PCNJ0G','T05','[{\"key\":\"2-30\",\"id\":2,\"name\":\"Daging Goreng Kunyit\",\"price\":15.9,\"quantity\":1,\"addons\":[{\"id\":30,\"name\":\"Telur Mata\",\"price\":2}]},{\"key\":\"27-33\",\"id\":27,\"name\":\"Teh\",\"price\":5,\"quantity\":1,\"addons\":[{\"id\":33,\"name\":\"Ice\",\"price\":0.5}]}]',22.15,'preparing','07:13:05','2026-05-07 23:13:05','2026-05-08 03:41:37');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,6 +365,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES ('fW4Jsnq1bHzaWjxRDXxumFc5IiUKQd8vpgKJEbZw',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJwYk9RQ1AwdTVDZmYwdEEwSUFoVE82Qk1lcFUxdWR0RThnVWc2ZEh5IiwiX2ZsYXNoIjp7Im9sZCI6W10sIm5ldyI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL21lbnUiLCJyb3V0ZSI6ImN1c3RvbWVyLm1lbnUifX0=',1778249674),('R64EemUsCk9awAkWoIPnVQ1vHvjTqzbJAsjrUrXh',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJXWmlsT2tqM1hRNjl1QzI1NXVSaEE3SzFyQmVrSVlYSlFBb3pQNkFuIiwiX2ZsYXNoIjp7Im9sZCI6W10sIm5ldyI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL2xvZ2luIiwicm91dGUiOiJsb2dpbiJ9fQ==',1778248899),('spR5kwWCfoIvhFMMqx1KYC53nKTIybAGH3NQQGC8',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.119.0 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36','eyJfdG9rZW4iOiJnRTlTRDdIR2dFeVJPYUxoRnVGMXlrMzdObnZPMXBNMGJKcnVLaXV6IiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwicm91dGUiOiJob21lcGFnZSJ9LCJfZmxhc2giOnsib2xkIjpbXSwibmV3IjpbXX19',1778247009),('u8q1qRouJVL90FsZ094vDRQvBbgBRSjf5NQKUaG2',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJxclRVbkg2VTFUbzNEV2xNNHBtYzF0V1kzVE44MzQ5cGhnOGRpQlM5IiwidXJsIjp7ImludGVuZGVkIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL3N0YWZmXC9kYXNoYm9hcmQifSwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC93ZWxjb21lIiwicm91dGUiOiJjdXN0b21lci53ZWxjb21lIn0sIl9mbGFzaCI6eyJvbGQiOltdLCJuZXciOltdfX0=',1778289839),('uwgPHiGZsVPB8jzPiVXqd47BvEvp7vRUAzOULUlD',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.119.0 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36','eyJfdG9rZW4iOiJNRlU4R0JldVNCZmo5c0ZJRzJyNWxkcnlMZTY4d1ZrSHdZclBuZE1lIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwicm91dGUiOiJob21lcGFnZSJ9LCJfZmxhc2giOnsib2xkIjpbXSwibmV3IjpbXX19',1778289623);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,11 +381,11 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'staff',
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -390,9 +401,10 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin User','admin','matrock.admin@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','xe7Pm2gyeZ6y1gOlTl0WmqlA73uifxSXzc7VGn14QAPt1ZFnBhnJ1KDJEMtQ','2026-05-06 19:56:48','2026-05-06 19:56:48'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',NULL,'2026-05-06 19:56:48','2026-05-06 19:56:48'),(9,'Ali alala','Ali','fypkumpulan31@gmail.com','staff','0118222723462','active',NULL,'$2y$12$aKOg0m2dbVZb55RDzzzb/.K.t4aWWSlVnZoDaF1XA8vib1kf0du0a','bGYrtGQJqonsKUUuHLCOWVj0AHukzTTE6IDkDvCn7f4p741FAWG8007e3B5g','2026-05-06 19:58:48','2026-05-06 21:00:00');
+INSERT INTO `users` VALUES (1,'Admin User','admin','fypkumpulan31@gmail.com',NULL,'$2y$12$.89LKOYhY58Oot8Wl0EKTuZDB1j1553UPToY/Wtw61g9/oGgaYeXa','admin','+60 11-123 4567','active','AmZUUiU6zZr3hjL5kDTJRUPYAFXNkjeAPaBjt04blkcqFluITgEX0GZLouB0','2026-05-06 14:03:01','2026-05-08 21:26:05'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 12-345 6789','active','8tUm2kW4N56EFpTdfplIJmQdXcaRD3DBRhzl6GrbOtCEpNVXANhiHNG7j4do','2026-05-06 14:03:01','2026-05-06 21:04:13'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 13-456 7890','active',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(4,'Raj Kumar','raj','raj.kumar@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 14-567 8901','active',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 16-678 9012','active',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 17-789 0123','inactive',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 18-890 1234','active',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(8,'Farah Diana','farah','farah.diana@gmail.com',NULL,'$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa','staff','+60 19-901 2345','active',NULL,'2026-05-06 14:03:01','2026-05-06 21:04:13'),(9,'Ali alala','Ali','mohamadhaizul16@gmail.com',NULL,'$2y$12$JjHzb31Lw13nghmMRMOCmucjNZH4JvlpYZfnrmrhT1sEQ2jy9cDMG','staff','0118222723462','active','51Si6UmCROFtF6Bc3ItZFhbALBrN5rhR7mIg0ypAZfuuJIVfY5WnmcBBA3Fa','2026-05-06 07:42:32','2026-05-08 21:40:05');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -403,4 +415,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-08 19:10:31
+-- Dump completed on 2026-05-09 13:40:06
