@@ -412,6 +412,9 @@
             </div>
         </section>
         <section id="qr" class="section">
+            <div style="text-align:center; margin-bottom: 20px;">
+                <img src="{{ asset('images/menu/MAT ROCK.png') }}" alt="MAT ROCK" style="max-width:300px;width:100%;border-radius:8px;border:2px solid #cf2c21;">
+            </div>
             <p style="text-align:center; margin-bottom: 16px;">Tap the link below to view our menu and place your order.</p>
             <p style="text-align:center;">
                 <a href="{{ route('customer.welcome') }}" style="color:#cf2c21;font-weight:bold;font-size:18px;">Open Customer Menu Page</a>

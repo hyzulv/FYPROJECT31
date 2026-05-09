@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'admin'], [
             'name' => 'Admin User',
             'email' => 'fypkumpulan31@gmail.com',
-            'password' => '$2y$12$.89LKOYhY58Oot8Wl0EKTuZDB1j1553UPToY/Wtw61g9/oGgaYeXa',
+            'password' => '$2y$12$h075wo3V1O8qp34jeyJSbu49et4S0dM.5zzNMS4FMXhAoNk68CUtu',
             'role' => 'admin',
             'phone' => '+60 11-123 4567',
             'status' => 'active',
