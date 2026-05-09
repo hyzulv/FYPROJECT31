@@ -48,7 +48,10 @@
                     <div class="menu-item-card">
                         <a href="{{ route('customer.item.detail', $item['id']) }}" class="menu-item-image-link">
                             <div class="menu-item-image">
-                                @if($item['image'])
+                                @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item['name']); @endphp
+                                @if($imgFile)
+                                    <img src="{{ asset('images/' . $imgFile) }}" alt="{{ $item['name'] }}" loading="lazy">
+                                @elseif($item['image'])
                                     <img src="{{ asset('images/menu/' . $item['image']) }}" alt="{{ $item['name'] }}" loading="lazy">
                                 @else
                                     <div class="placeholder-image">

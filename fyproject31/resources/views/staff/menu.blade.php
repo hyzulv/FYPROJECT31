@@ -24,7 +24,10 @@
             @foreach($menuItems as $item)
             <tr data-id="{{ $item->id }}">
                 <td>
-                    @if($item->image)
+                    @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name); @endphp
+                    @if($imgFile)
+                        <img src="{{ asset('images/' . $imgFile) }}" alt="{{ $item->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                    @elseif($item->image)
                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
                     @else
                         <span style="color: #666;">No Image</span>
@@ -116,8 +119,8 @@ function refreshMenu() {
             const tbody = document.getElementById('menuTableBody');
             let html = '';
             data.menu.forEach(item => {
-                html += `<tr data-id="${item.id}">
-                    <td>${item.image ? `<img src="/storage/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">` : '<span style="color: #666;">No Image</span>'}</td>
+                    html += `<tr data-id="${item.id}">
+                    <td>${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">` : item.image ? `<img src="/storage/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">` : '<span style="color: #666;">No Image</span>'}</td>
                     <td>${item.name}</td>
                     <td>${item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
                     <td>RM ${item.price}</td>
