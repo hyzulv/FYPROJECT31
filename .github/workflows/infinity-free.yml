@@ -1,5 +1,6 @@
 name: Deploy to matrockrestaurant.wuaze.com
 
+# Run manually or on push to the main branch
 on:
   workflow_dispatch:
   push:
@@ -8,39 +9,21 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Deploy to matrockrestaurant.wuaze.com
+    name: Deploy to matrockrestaurant.wuaze.com
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Clone the latest code from GitHub
       - name: Get latest code
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-
-      - name: Install Composer dependencies
-        working-directory: fyproject31
-        run: composer install --no-dev --optimize-autoloader --no-interaction
-
-      - name: Build assets
-        working-directory: fyproject31
-        run: |
-          npm ci
-          npm run build
-
-      - name: Sync files via FTP
+      # Step 2: Upload code via FTP
+      - name: Deploy to InfinityFree via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /htdocs/
-          local-dir: ./fyproject31/
-          exclude: |
-            .git/**
-            .github/**
-            node_modules/**
-            vendor/**
-            .env
+          server-dir: /matrockrestaurant.wuaze.com/htdocs/  # For addon domains
+          timeout: 86400000
+          log-level: standard
