@@ -97,14 +97,14 @@ function submitAddMenu(e) {
 function deleteMenuItem(id, name) {
     if (!confirm(`Delete "${name}"?`)) return;
     fetch(`/api/menu/${id}`, {
-        method: 'POST',
-        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
-        body: JSON.stringify({ _method: 'DELETE' })
+        method: 'DELETE',
+        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
     })
     .then(res => res.json())
     .then(res => {
         if (res.success) refreshMenu();
-    });
+    })
+    .catch(() => refreshMenu());
 }
 
 function refreshMenu() {

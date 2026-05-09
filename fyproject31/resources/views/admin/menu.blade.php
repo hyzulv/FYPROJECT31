@@ -94,14 +94,14 @@ function submitAddMenu(e) {
 function deleteMenuItem(id, name) {
     if (!confirm(`Delete "${name}"?`)) return;
     fetch(`/api/menu/${id}`, {
-        method: 'POST',
-        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
-        body: JSON.stringify({ _method: 'DELETE' })
+        method: 'DELETE',
+        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
     })
     .then(res => res.json())
     .then(res => {
         if (res.success) refreshMenu();
-    });
+    })
+    .catch(() => refreshMenu());
 }
 
 function refreshMenu() {
@@ -111,7 +111,7 @@ function refreshMenu() {
             const tbody = document.getElementById('menuTableBody');
             let html = '';
             data.menu.forEach(item => {
-                const imgUrl = item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
+                const imgUrl = item.image_url ? item.image_url : item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
                 html += `<tr data-id="${item.id}">
                     <td><img src="${imgUrl}" alt="${item.name}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;"></td>
                     <td>${item.name}</td>
