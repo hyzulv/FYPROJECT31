@@ -442,6 +442,7 @@ input {
 
 .menu-section {
     margin-bottom: 8px;
+    scroll-margin-top: 72px;
 }
 
 .menu-section-title {

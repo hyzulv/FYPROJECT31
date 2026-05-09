@@ -1,19 +1,10 @@
 <?php
-$server = "sql131.infinityfree.com";
-$username = "if0_38003918";
-$password = "";  // Add your database password here
-$dbname = "if0_38003918_abtestdb007";
+$dbPath = __DIR__ . '/../../database/database.sqlite';
 
-// Create connection using MySQLi
-$conn = mysqli_connect($server, $username, $password, $dbname);
-
-// Check connection
-if(!$conn) {
-    die("Connection Failed: " . mysqli_connect_error());
+try {
+    $conn = new PDO("sqlite:$dbPath");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection Failed: " . $e->getMessage());
 }
-
-// Optional: Set charset to avoid encoding issues
-mysqli_set_charset($conn, "utf8");
-
-// Your code continues here...
 ?>

@@ -125,7 +125,7 @@ const itemName = '{{ addslashes($item['name']) }}';
 let quantity = 1;
 
 document.addEventListener('DOMContentLoaded', function() {
-    updateCartDisplay();
+    window.cartManager.updateCartDisplay();
 });
 
 function changeQty(delta) {
