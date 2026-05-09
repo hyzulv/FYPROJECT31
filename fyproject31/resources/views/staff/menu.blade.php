@@ -12,6 +12,7 @@
     <table class="data-table">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
@@ -22,6 +23,13 @@
         <tbody id="menuTableBody">
             @foreach($menuItems as $item)
             <tr data-id="{{ $item->id }}">
+                <td>
+                    @if($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                    @else
+                        <span style="color: #666;">No Image</span>
+                    @endif
+                </td>
                 <td>{{ $item->name }}</td>
                 <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
                 <td>RM {{ number_format($item->price, 2) }}</td>
@@ -38,7 +46,7 @@
 <div id="addMenuModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background: #1a1a1a; padding: 24px; border-radius: 12px; width: 90%; max-width: 400px;">
         <h3 style="margin-bottom: 16px; color: #cf2c21;">Add Menu Item</h3>
-        <form id="addMenuForm" onsubmit="submitAddMenu(event)">
+        <form id="addMenuForm" onsubmit="submitAddMenu(event)" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Item Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
             <textarea name="description" placeholder="Description" rows="2" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;"></textarea>
             <input type="number" name="price" step="0.01" min="0" placeholder="Price (RM)" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
@@ -48,6 +56,11 @@
                 <option value="mix">Mix</option>
                 <option value="food">Food</option>
                 <option value="drink">Drink</option>
+            </select>
+            <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
+            <select name="status" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
             </select>
             <div style="display: flex; gap: 10px;">
                 <button type="button" onclick="closeAddModal()" style="flex: 1; padding: 10px; background: #333; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Cancel</button>
@@ -104,6 +117,7 @@ function refreshMenu() {
             let html = '';
             data.menu.forEach(item => {
                 html += `<tr data-id="${item.id}">
+                    <td>${item.image ? `<img src="/storage/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">` : '<span style="color: #666;">No Image</span>'}</td>
                     <td>${item.name}</td>
                     <td>${item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
                     <td>RM ${item.price}</td>

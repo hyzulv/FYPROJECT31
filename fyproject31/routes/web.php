@@ -519,13 +519,21 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
             'price' => 'required|numeric|min:0',
             'category' => 'required|string',
             'status' => 'required|in:available,unavailable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('menu_images', 'public');
+        }
+
         $item = MenuItem::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'category' => $request->category,
             'status' => $request->status,
+            'image' => $imagePath,
         ]);
         return response()->json(['success' => true, 'item' => $item]);
     })->name('menu.add');

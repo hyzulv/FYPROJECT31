@@ -86,6 +86,15 @@ class UsersTableSeeder extends Seeder
                 'phone' => '+60 19-901 2345',
                 'status' => 'active',
             ],
+            [
+                'name' => 'Ali',
+                'username' => 'Ali',
+                'email' => 'ali@staff.com',
+                'password' => '$2y$12$UU8WpQrdj0lG4UQbiWdYUuhF.wmICeFn1.ubwdAAYEoI5kDOmD7xy',
+                'role' => 'staff',
+                'phone' => null,
+                'status' => 'active',
+            ],
         ];
 
         foreach ($users as $user) {
