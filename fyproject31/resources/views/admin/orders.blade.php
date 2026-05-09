@@ -26,7 +26,7 @@
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
                 <td>
-                    <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
+                    <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(207, 44, 33, 0.3); border-radius: 6px; font-size: 0.85rem;">
                         <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
                         <option value="completed" {{ $order['status'] == 'completed' ? 'selected' : '' }}>Completed</option>
                     </select>
@@ -127,7 +127,7 @@ function updateOrders(data) {
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
             <td>
-                <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 6px; font-size: 0.85rem;">
+                <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #2a2a2a; color: #fff; border: 1px solid rgba(207, 44, 33, 0.3); border-radius: 6px; font-size: 0.85rem;">
                     <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
                     <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
                 </select>

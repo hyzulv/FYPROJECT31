@@ -9,7 +9,9 @@ class MenuSeeder extends Seeder
 {
     public function run(): void
     {
-        MenuItem::truncate();
+        if (\App\Models\MenuItem::count() > 0) {
+            return;
+        }
 
         $items = [
             // Ala Carte

@@ -5,11 +5,19 @@
 @section('content')
 <div class="menu-container">
     <header class="menu-header">
-        <button class="back-btn" onclick="window.history.back()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-        </button>
+        <div class="menu-header-left">
+            <button class="back-btn" onclick="window.history.back()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="home-btn" onclick="window.location.href='{{ route('homepage') }}'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12l9-9 9 9"/>
+                    <path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/>
+                </svg>
+            </button>
+        </div>
         <h1>Our Menu</h1>
         <button class="cart-btn" onclick="window.location.href='{{ route('customer.cart') }}'">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -25,7 +33,7 @@
         <button class="category-btn active" data-category="all">All</button>
         @foreach($categories as $catKey)
             @if(isset($categoryLabels[$catKey]))
-                <a href="#{{ $catKey }}" class="category-btn" data-category="{{ $catKey }}">{{ $categoryLabels[$catKey] }}</a>
+                <button class="category-btn" data-category="{{ $catKey }}">{{ $categoryLabels[$catKey] }}</button>
             @endif
         @endforeach
     </div>
@@ -46,15 +54,15 @@
                                     <div class="placeholder-image">
                                         @if(in_array($catKey, ['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family']))
                                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <ellipse cx="40" cy="50" rx="28" ry="12" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                                                <path d="M25 45 Q40 20 55 45" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                                                <circle cx="40" cy="30" r="3" fill="#d1986a"/>
+                                                <ellipse cx="40" cy="50" rx="28" ry="12" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                                                <path d="M25 45 Q40 20 55 45" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                                                <circle cx="40" cy="30" r="3" fill="#cf2c21"/>
                                             </svg>
                                         @else
                                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M30 20 L30 55 Q30 65 40 65 Q50 65 50 55 L50 20" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                                                <ellipse cx="40" cy="20" rx="10" ry="4" stroke="#d1986a" stroke-width="2"/>
-                                                <path d="M35 35 Q40 30 45 35" stroke="#d1986a" stroke-width="1.5" fill="none"/>
+                                                <path d="M30 20 L30 55 Q30 65 40 65 Q50 65 50 55 L50 20" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                                                <ellipse cx="40" cy="20" rx="10" ry="4" stroke="#cf2c21" stroke-width="2"/>
+                                                <path d="M35 35 Q40 30 45 35" stroke="#cf2c21" stroke-width="1.5" fill="none"/>
                                             </svg>
                                         @endif
                                     </div>
@@ -111,31 +119,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var cat = btn.getAttribute('data-category');
 
-        if (cat === 'all') {
-            e.preventDefault();
+        filter.querySelectorAll('.category-btn').forEach(function(b) {
+            b.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        var targetSection = document.getElementById(cat);
+        if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
             menuContent.scrollTo({ top: 0, behavior: 'smooth' });
-            filter.querySelectorAll('.category-btn').forEach(function(b) {
-                b.classList.remove('active');
-            });
-            btn.classList.add('active');
         }
     });
 
-    var sections = menuContent.querySelectorAll('.menu-section');
-    var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                var cat = entry.target.getAttribute('data-category');
-                filter.querySelectorAll('.category-btn').forEach(function(b) {
-                    b.classList.toggle('active', b.getAttribute('data-category') === cat);
-                });
+    function updateActiveOnScroll() {
+        var sections = menuContent.querySelectorAll('.menu-section');
+        var scrollCenter = menuContent.scrollTop + menuContent.clientHeight / 2;
+        var activeCat = 'all';
+
+        sections.forEach(function(section) {
+            var offsetTop = section.offsetTop;
+            var offsetBottom = offsetTop + section.offsetHeight;
+            if (scrollCenter >= offsetTop && scrollCenter < offsetBottom) {
+                activeCat = section.getAttribute('data-category');
             }
         });
-    }, { root: menuContent, rootMargin: '-10% 0px -70% 0px', threshold: 0 });
 
-    sections.forEach(function(section) {
-        observer.observe(section);
-    });
+        filter.querySelectorAll('.category-btn').forEach(function(b) {
+            b.classList.toggle('active', b.getAttribute('data-category') === activeCat);
+        });
+    }
+
+    menuContent.addEventListener('scroll', updateActiveOnScroll);
+    setTimeout(updateActiveOnScroll, 100);
 });
 
 function addToCart(btn) {

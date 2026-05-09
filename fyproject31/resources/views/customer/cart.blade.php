@@ -24,10 +24,10 @@
     <div class="cart-empty" id="cartEmpty" style="display: none;">
         <div class="empty-icon">
             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="30" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                <path d="M25 35h30l-3 20H28l-3-20z" stroke="#d1986a" stroke-width="2" fill="none"/>
-                <circle cx="35" cy="45" r="2" fill="#d1986a"/>
-                <circle cx="45" cy="45" r="2" fill="#d1986a"/>
+                <circle cx="40" cy="40" r="30" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                <path d="M25 35h30l-3 20H28l-3-20z" stroke="#cf2c21" stroke-width="2" fill="none"/>
+                <circle cx="35" cy="45" r="2" fill="#cf2c21"/>
+                <circle cx="45" cy="45" r="2" fill="#cf2c21"/>
             </svg>
         </div>
         <h3>Your cart is empty</h3>

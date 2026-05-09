@@ -33,7 +33,7 @@
         }
 
         .logo h1 {
-            color: #d1986a;
+            color: #cf2c21;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
@@ -44,7 +44,7 @@
         }
 
         .selection-title {
-            color: #d1986a;
+            color: #cf2c21;
             font-size: 1.5rem;
             margin-bottom: 40px;
         }
@@ -59,7 +59,7 @@
 
         .role-card {
             background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            border: 2px solid rgba(209, 152, 106, 0.3);
+            border: 2px solid rgba(207, 44, 33, 0.3);
             border-radius: 16px;
             padding: 40px 30px;
             text-decoration: none;
@@ -71,8 +71,8 @@
 
         .role-card:hover {
             transform: translateY(-10px);
-            border-color: #d1986a;
-            box-shadow: 0 15px 40px rgba(209, 152, 106, 0.2);
+            border-color: #cf2c21;
+            box-shadow: 0 15px 40px rgba(207, 44, 33, 0.2);
         }
 
         .role-icon {
@@ -81,7 +81,7 @@
         }
 
         .role-card h2 {
-            color: #d1986a;
+            color: #cf2c21;
             font-size: 1.5rem;
             margin-bottom: 15px;
         }
@@ -93,7 +93,7 @@
 
         .role-card .btn {
             margin-top: 25px;
-            background: #d1986a;
+            background: #cf2c21;
             color: #000;
             padding: 12px 30px;
             border-radius: 8px;

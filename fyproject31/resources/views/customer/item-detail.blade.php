@@ -28,9 +28,9 @@
             @else
                 <div class="placeholder-image-large">
                     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="60" cy="75" rx="42" ry="18" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                        <path d="M38 68 Q60 30 82 68" stroke="#d1986a" stroke-width="2" fill="rgba(209,152,106,0.1)"/>
-                        <circle cx="60" cy="45" r="4" fill="#d1986a"/>
+                        <ellipse cx="60" cy="75" rx="42" ry="18" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                        <path d="M38 68 Q60 30 82 68" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.1)"/>
+                        <circle cx="60" cy="45" r="4" fill="#cf2c21"/>
                     </svg>
                 </div>
             @endif
@@ -65,8 +65,8 @@
                                     @else
                                         <div class="addon-placeholder">
                                             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="20" cy="20" r="12" stroke="#d1986a" stroke-width="1.5" fill="rgba(209,152,106,0.1)"/>
-                                                <path d="M14 20h12M20 14v12" stroke="#d1986a" stroke-width="1.5" stroke-linecap="round"/>
+                                                <circle cx="20" cy="20" r="12" stroke="#cf2c21" stroke-width="1.5" fill="rgba(207,44,33,0.1)"/>
+                                                <path d="M14 20h12M20 14v12" stroke="#cf2c21" stroke-width="1.5" stroke-linecap="round"/>
                                             </svg>
                                         </div>
                                     @endif

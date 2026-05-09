@@ -22,9 +22,9 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background:
-                radial-gradient(circle at 20% 50%, rgba(209, 152, 106, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(209, 152, 106, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(209, 152, 106, 0.06) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(207, 44, 33, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(207, 44, 33, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(207, 44, 33, 0.06) 0%, transparent 50%);
             z-index: 0;
         }
         .container {
@@ -37,46 +37,46 @@
         }
         .card {
             background: linear-gradient(145deg, #1a1a1a, #111111);
-            border: 1px solid rgba(209, 152, 106, 0.3);
+            border: 1px solid rgba(207, 44, 33, 0.3);
             border-radius: 20px; padding: 40px 35px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         .header { text-align: center; margin-bottom: 30px; }
         .logo {
             width: 70px; height: 70px;
-            background: linear-gradient(135deg, #d1986a, #b8834f);
+            background: linear-gradient(135deg, #cf2c21, #a8231a);
             border-radius: 50%; display: flex; align-items: center;
             justify-content: center; margin: 0 auto 15px; font-size: 2rem;
         }
-        .header h1 { color: #d1986a; font-size: 1.5rem; margin-bottom: 8px; }
+        .header h1 { color: #cf2c21; font-size: 1.5rem; margin-bottom: 8px; }
         .header p { color: #888; font-size: 0.9rem; }
         .form-group { margin-bottom: 22px; }
-        .form-group label { display: block; color: #d1986a; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+        .form-group label { display: block; color: #cf2c21; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
         .input-wrapper { position: relative; }
         .input-wrapper .icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; opacity: 0.6; }
         .form-group input {
             width: 100%; padding: 14px 15px 14px 45px; background: #2a2a2a;
-            border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px;
+            border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px;
             color: #ffffff; font-size: 1rem; transition: all 0.3s ease;
         }
         .form-group input::placeholder { color: #666; }
         .form-group input:focus {
-            outline: none; border-color: #d1986a; background: #333333;
-            box-shadow: 0 0 0 3px rgba(209, 152, 106, 0.1);
+            outline: none; border-color: #cf2c21; background: #333333;
+            box-shadow: 0 0 0 3px rgba(207, 44, 33, 0.1);
         }
         .btn {
             width: 100%; padding: 14px;
-            background: linear-gradient(135deg, #d1986a, #b8834f);
+            background: linear-gradient(135deg, #cf2c21, #a8231a);
             border: none; border-radius: 10px; color: #000000;
             font-size: 1.05rem; font-weight: 700; cursor: pointer;
             transition: all 0.3s ease; letter-spacing: 0.5px;
         }
         .btn:hover {
-            background: linear-gradient(135deg, #e0a97c, #d1986a);
-            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(209, 152, 106, 0.3);
+            background: linear-gradient(135deg, #dc362a, #cf2c21);
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(207, 44, 33, 0.3);
         }
         .back-link { display: block; text-align: center; margin-top: 20px; }
-        .back-link a { color: #d1986a; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease; }
+        .back-link a { color: #cf2c21; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease; }
         .back-link a:hover { color: #ffffff; }
         .error-message {
             background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.3);
@@ -87,7 +87,7 @@
             color: #28a745; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; text-align: center;
         }
         .info-box {
-            background: rgba(209, 152, 106, 0.05); border: 1px solid rgba(209, 152, 106, 0.15);
+            background: rgba(207, 44, 33, 0.05); border: 1px solid rgba(207, 44, 33, 0.15);
             border-radius: 10px; padding: 15px; margin-bottom: 25px;
         }
         .info-box p { color: #aaa; font-size: 0.85rem; line-height: 1.5; }

@@ -7,8 +7,8 @@
     <div class="success-card">
         <div class="success-icon-large">
             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="#d1986a" stroke-width="3" fill="rgba(209,152,106,0.1)"/>
-                <path d="M30 50l12 12 24-24" stroke="#d1986a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="50" cy="50" r="45" stroke="#cf2c21" stroke-width="3" fill="rgba(207,44,33,0.1)"/>
+                <path d="M30 50l12 12 24-24" stroke="#cf2c21" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <h1>Order Confirmed!</h1>

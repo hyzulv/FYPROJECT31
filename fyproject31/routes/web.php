@@ -12,7 +12,17 @@ use App\Models\Feedback;
 
 // Customer Ordering Routes (No Auth Required)
 Route::get('/', function () {
-    return view('homepage');
+    $foods = \App\Models\MenuItem::where('status', 'available')
+        ->whereIn('category', ['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family'])
+        ->inRandomOrder()
+        ->take(4)
+        ->get();
+    $drinks = \App\Models\MenuItem::where('status', 'available')
+        ->where('category', 'minuman')
+        ->inRandomOrder()
+        ->take(4)
+        ->get();
+    return view('homepage', ['foods' => $foods, 'drinks' => $drinks]);
 })->name('homepage');
 Route::get('/homepage', function () {
     return redirect()->route('homepage');
@@ -37,6 +47,25 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name(
 Route::get('/demo', function () {
     return view('demo');
 })->name('demo');
+
+Route::post('/contact', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
+
+    try {
+        \Illuminate\Support\Facades\Mail::to(env('MAIL_USERNAME'))->send(new \App\Mail\ContactMail(
+            $validated['name'],
+            $validated['email'],
+            $validated['message']
+        ));
+        return back()->with('contact_success', 'Thank you! Your message has been sent successfully.');
+    } catch (\Exception $e) {
+        return back()->with('contact_error', 'Sorry, failed to send message. Please try again later.');
+    }
+})->name('contact.send');
 
 // Staff Routes
 Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {

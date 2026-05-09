@@ -19,24 +19,24 @@
             <div class="cp-form-group">
                 <label>Current Password</label>
                 <div style="position: relative;">
-                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
-                    <img src="{{ asset('show_password.png') }}" id="toggle-current-icon" onclick="togglePassword('current_password', 'toggle-current-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-current-icon" onclick="togglePassword('current_password', 'toggle-current-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px; filter: brightness(0) invert(1);">
                 </div>
             </div>
 
             <div class="cp-form-group">
                 <label>New Password</label>
                 <div style="position: relative;">
-                    <input type="password" id="password" name="password" placeholder="Enter new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
-                    <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" onclick="togglePassword('password', 'toggle-password-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                    <input type="password" id="password" name="password" placeholder="Enter new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" onclick="togglePassword('password', 'toggle-password-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px; filter: brightness(0) invert(1);">
                 </div>
             </div>
 
             <div class="cp-form-group">
                 <label>Confirm New Password</label>
                 <div style="position: relative;">
-                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
-                    <img src="{{ asset('show_password.png') }}" id="toggle-confirm-icon" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" minlength="6" required style="width: 100%; padding: 14px 45px 14px 15px; background: #2a2a2a; border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px; color: #ffffff; font-size: 1rem;">
+                    <img src="{{ asset('show_password.png') }}" id="toggle-confirm-icon" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px; filter: brightness(0) invert(1);">
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
         </form>
 
         <div style="text-align: center; margin-top: 20px;">
-            <a href="{{ route($userRole . '.profile') }}" style="color: #d1986a; text-decoration: none; font-size: 0.9rem;">← Back to Profile</a>
+            <a href="{{ route($userRole . '.profile') }}" style="color: #cf2c21; text-decoration: none; font-size: 0.9rem;">← Back to Profile</a>
         </div>
     </div>
 </div>

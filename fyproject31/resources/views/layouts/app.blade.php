@@ -8,8 +8,8 @@
     <style>
         :root {
             --primary-black: #000000;
-            --secondary-gold: #d1986a;
-            --gold-hover: #b8834f;
+            --secondary-red: #cf2c21;
+            --red-hover: #a8231a;
             --dark-gray: #1a1a1a;
             --medium-gray: #2a2a2a;
             --light-gray: #3a3a3a;
@@ -31,7 +31,7 @@
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, var(--dark-gray) 0%, var(--primary-black) 100%);
-            border-right: 1px solid var(--secondary-gold);
+            border-right: 1px solid var(--secondary-red);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -41,12 +41,12 @@
 
         .sidebar-header {
             padding: 20px;
-            border-bottom: 1px solid rgba(209, 152, 106, 0.3);
+            border-bottom: 1px solid rgba(207, 44, 33, 0.3);
             text-align: center;
         }
 
         .sidebar-header h2 {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             font-size: 1.3rem;
             margin-bottom: 5px;
         }
@@ -77,8 +77,8 @@
 
         .sidebar-menu a:hover,
         .sidebar-menu a.active {
-            background: rgba(209, 152, 106, 0.15);
-            color: var(--secondary-gold);
+            background: rgba(207, 44, 33, 0.15);
+            color: var(--secondary-red);
         }
 
         .sidebar-menu a .icon {
@@ -100,7 +100,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(209, 152, 106, 0.3);
+            border-bottom: 1px solid rgba(207, 44, 33, 0.3);
             position: sticky;
             top: 0;
             z-index: 999;
@@ -115,14 +115,14 @@
             display: none;
             background: none;
             border: none;
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             font-size: 1.5rem;
             cursor: pointer;
             margin-right: 15px;
         }
 
         .navbar-title {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             font-size: 1.2rem;
             font-weight: 600;
         }
@@ -143,7 +143,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--secondary-gold);
+            background: var(--secondary-red);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -164,7 +164,7 @@
 
         .stat-card {
             background: linear-gradient(145deg, var(--dark-gray), var(--medium-gray));
-            border: 1px solid rgba(209, 152, 106, 0.2);
+            border: 1px solid rgba(207, 44, 33, 0.2);
             border-radius: 12px;
             padding: 25px;
             transition: all 0.3s ease;
@@ -172,13 +172,13 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: var(--secondary-gold);
-            box-shadow: 0 10px 30px rgba(209, 152, 106, 0.15);
+            border-color: var(--secondary-red);
+            box-shadow: 0 10px 30px rgba(207, 44, 33, 0.15);
         }
 
         .stat-card .card-icon {
             font-size: 2rem;
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             margin-bottom: 15px;
         }
 
@@ -196,14 +196,14 @@
 
         .data-card {
             background: var(--dark-gray);
-            border: 1px solid rgba(209, 152, 106, 0.2);
+            border: 1px solid rgba(207, 44, 33, 0.2);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 20px;
         }
 
         .data-card h3 {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             margin-bottom: 20px;
             font-size: 1.2rem;
         }
@@ -217,17 +217,17 @@
         .data-table td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid rgba(209, 152, 106, 0.1);
+            border-bottom: 1px solid rgba(207, 44, 33, 0.1);
         }
 
         .data-table th {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             font-weight: 600;
-            background: rgba(209, 152, 106, 0.05);
+            background: rgba(207, 44, 33, 0.05);
         }
 
         .data-table tr:hover {
-            background: rgba(209, 152, 106, 0.05);
+            background: rgba(207, 44, 33, 0.05);
         }
 
         .badge {
@@ -254,8 +254,8 @@
         }
 
         .badge-admin {
-            background: rgba(209, 152, 106, 0.3);
-            color: var(--secondary-gold);
+            background: rgba(207, 44, 33, 0.3);
+            color: var(--secondary-red);
         }
 
         .badge-staff {
@@ -293,7 +293,7 @@
             width: 80px;
             height: 80px;
             border-radius: 10px;
-            background: var(--secondary-gold);
+            background: var(--secondary-red);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -311,7 +311,7 @@
         }
 
         .menu-item-info .price {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             font-weight: 600;
             font-size: 1.1rem;
             margin-top: 8px;
@@ -322,7 +322,7 @@
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid var(--secondary-gold);
+            border-left: 4px solid var(--secondary-red);
             transition: all 0.3s ease;
         }
 
@@ -342,7 +342,7 @@
         }
 
         .feedback-rating {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
         }
 
         .feedback-text {
@@ -352,7 +352,7 @@
 
         .profile-card {
             background: var(--dark-gray);
-            border: 1px solid rgba(209, 152, 106, 0.3);
+            border: 1px solid rgba(207, 44, 33, 0.3);
             border-radius: 12px;
             padding: 30px;
             max-width: 500px;
@@ -362,7 +362,7 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: var(--secondary-gold);
+            background: var(--secondary-red);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -376,7 +376,7 @@
         }
 
         .profile-info h3 {
-            color: var(--secondary-gold);
+            color: var(--secondary-red);
             margin-bottom: 15px;
         }
 
@@ -384,7 +384,7 @@
             display: flex;
             justify-content: space-between;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(209, 152, 106, 0.1);
+            border-bottom: 1px solid rgba(207, 44, 33, 0.1);
         }
 
         .profile-detail:last-child {
@@ -447,29 +447,29 @@
         .profile-left { position: sticky; top: 100px; }
         .profile-card-full {
             background: linear-gradient(145deg, var(--dark-gray), var(--medium-gray));
-            border: 1px solid rgba(209, 152, 106, 0.2);
+            border: 1px solid rgba(207, 44, 33, 0.2);
             border-radius: 16px; padding: 40px 30px; text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
         .profile-avatar-large {
             width: 120px; height: 120px; border-radius: 50%;
-            background: linear-gradient(135deg, #d1986a, #b8834f);
+            background: linear-gradient(135deg, #cf2c21, #a8231a);
             display: flex; align-items: center; justify-content: center;
             font-size: 3rem; color: #000; font-weight: bold;
             margin: 0 auto 20px;
-            box-shadow: 0 8px 25px rgba(209, 152, 106, 0.3);
+            box-shadow: 0 8px 25px rgba(207, 44, 33, 0.3);
         }
         .profile-name { color: #fff; font-size: 1.5rem; margin-bottom: 8px; }
         .profile-role-badge {
             display: inline-block; padding: 6px 18px; border-radius: 20px;
-            background: rgba(209, 152, 106, 0.2); color: var(--secondary-gold);
+            background: rgba(207, 44, 33, 0.2); color: var(--secondary-red);
             font-size: 0.85rem; font-weight: 600; margin-bottom: 25px;
         }
         .profile-details-grid { display: grid; gap: 18px; text-align: left; margin-top: 25px; }
         .detail-item {
             display: flex; align-items: center; gap: 14px;
             padding: 14px 18px; background: rgba(255,255,255,0.03);
-            border-radius: 10px; border: 1px solid rgba(209, 152, 106, 0.08);
+            border-radius: 10px; border: 1px solid rgba(207, 44, 33, 0.08);
         }
         .detail-icon { font-size: 1.3rem; }
         .detail-text { display: flex; flex-direction: column; }
@@ -479,48 +479,48 @@
 
         /* Edit Card */
         .edit-card, .security-card {
-            background: var(--dark-gray); border: 1px solid rgba(209, 152, 106, 0.2);
+            background: var(--dark-gray); border: 1px solid rgba(207, 44, 33, 0.2);
             border-radius: 14px; padding: 30px; margin-bottom: 20px;
         }
         .edit-card h3, .security-card h3 {
-            color: var(--secondary-gold); font-size: 1.2rem; margin-bottom: 20px;
+            color: var(--secondary-red); font-size: 1.2rem; margin-bottom: 20px;
         }
         .edit-form-group { margin-bottom: 20px; }
         .edit-form-group label {
-            display: block; color: #d1986a; font-size: 0.85rem; font-weight: 600;
+            display: block; color: #cf2c21; font-size: 0.85rem; font-weight: 600;
             margin-bottom: 8px;
         }
         .edit-form-group input {
             width: 100%; padding: 12px 15px; background: #2a2a2a;
-            border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px;
+            border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px;
             color: #fff; font-size: 0.95rem; transition: all 0.3s ease;
         }
         .edit-form-group input:focus {
-            outline: none; border-color: #d1986a;
-            box-shadow: 0 0 0 3px rgba(209, 152, 106, 0.1);
+            outline: none; border-color: #cf2c21;
+            box-shadow: 0 0 0 3px rgba(207, 44, 33, 0.1);
         }
         .btn-save {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #d1986a, #b8834f);
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #cf2c21, #a8231a);
             border: none; border-radius: 10px; color: #000; font-size: 1rem;
             font-weight: 700; cursor: pointer; transition: all 0.3s ease;
         }
         .btn-save:hover {
-            background: linear-gradient(135deg, #e0a97c, #d1986a);
-            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(209, 152, 106, 0.3);
+            background: linear-gradient(135deg, #dc362a, #cf2c21);
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(207, 44, 33, 0.3);
         }
 
         /* Security Card */
         .security-card p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
         .btn-change-password {
             display: inline-flex; align-items: center; gap: 10px;
-            padding: 12px 24px; background: rgba(209, 152, 106, 0.1);
-            border: 1px solid rgba(209, 152, 106, 0.3); border-radius: 10px;
-            color: var(--secondary-gold); text-decoration: none; font-size: 0.95rem;
+            padding: 12px 24px; background: rgba(207, 44, 33, 0.1);
+            border: 1px solid rgba(207, 44, 33, 0.3); border-radius: 10px;
+            color: var(--secondary-red); text-decoration: none; font-size: 0.95rem;
             font-weight: 600; transition: all 0.3s ease;
         }
         .btn-change-password:hover {
-            background: rgba(209, 152, 106, 0.2);
-            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(209, 152, 106, 0.2);
+            background: rgba(207, 44, 33, 0.2);
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(207, 44, 33, 0.2);
         }
 
         /* Alerts */
@@ -531,30 +531,30 @@
         /* Change Password Page */
         .change-password-container { max-width: 500px; }
         .change-password-card {
-            background: var(--dark-gray); border: 1px solid rgba(209, 152, 106, 0.2);
+            background: var(--dark-gray); border: 1px solid rgba(207, 44, 33, 0.2);
             border-radius: 16px; padding: 40px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
-        .change-password-card h2 { color: var(--secondary-gold); margin-bottom: 8px; text-align: center; }
+        .change-password-card h2 { color: var(--secondary-red); margin-bottom: 8px; text-align: center; }
         .change-password-card .subtitle { color: #888; text-align: center; margin-bottom: 30px; font-size: 0.9rem; }
         .cp-form-group { margin-bottom: 22px; }
-        .cp-form-group label { display: block; color: #d1986a; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+        .cp-form-group label { display: block; color: #cf2c21; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
         .cp-form-group input {
             width: 100%; padding: 12px 15px; background: #2a2a2a;
-            border: 1px solid rgba(209, 152, 106, 0.2); border-radius: 10px;
+            border: 1px solid rgba(207, 44, 33, 0.2); border-radius: 10px;
             color: #fff; font-size: 0.95rem; transition: all 0.3s ease;
         }
         .cp-form-group input:focus {
-            outline: none; border-color: #d1986a;
-            box-shadow: 0 0 0 3px rgba(209, 152, 106, 0.1);
+            outline: none; border-color: #cf2c21;
+            box-shadow: 0 0 0 3px rgba(207, 44, 33, 0.1);
         }
         .btn-submit {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #d1986a, #b8834f);
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #cf2c21, #a8231a);
             border: none; border-radius: 10px; color: #000; font-size: 1rem;
             font-weight: 700; cursor: pointer; transition: all 0.3s ease; margin-top: 10px;
         }
         .btn-submit:hover {
-            background: linear-gradient(135deg, #e0a97c, #d1986a);
-            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(209, 152, 106, 0.3);
+            background: linear-gradient(135deg, #dc362a, #cf2c21);
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(207, 44, 33, 0.3);
         }
 
         /* Real-time indicator */
@@ -565,7 +565,7 @@
         /* Notification toast */
         .notification-toast {
             position: fixed; top: 20px; right: 20px; z-index: 9999;
-            background: var(--dark-gray); border: 1px solid rgba(209, 152, 106, 0.3);
+            background: var(--dark-gray); border: 1px solid rgba(207, 44, 33, 0.3);
             border-radius: 12px; padding: 16px 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex; align-items: center; gap: 12px; min-width: 300px;
             transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -573,9 +573,9 @@
         .notification-toast.show { transform: translateX(0); }
         .notification-toast .toast-icon { font-size: 1.5rem; }
         .notification-toast .toast-text { color: #fff; font-size: 0.9rem; }
-        .notification-toast .toast-text strong { color: var(--secondary-gold); }
+        .notification-toast .toast-text strong { color: var(--secondary-red); }
 
-        @keyframes flashCard { 0%, 100% { border-color: rgba(209, 152, 106, 0.2); } 50% { border-color: #d1986a; box-shadow: 0 0 20px rgba(209, 152, 106, 0.4); } }
+        @keyframes flashCard { 0%, 100% { border-color: rgba(207, 44, 33, 0.2); } 50% { border-color: #cf2c21; box-shadow: 0 0 20px rgba(207, 44, 33, 0.4); } }
 
         @media (max-width: 768px) {
             .profile-layout { grid-template-columns: 1fr; }
@@ -605,7 +605,7 @@
                 </div>
                 <form action="{{ route('logout') }}" method="POST" style="margin: 0;" id="logoutForm">
                     @csrf
-                    <button type="submit" style="background: none; border: 1px solid rgba(209, 152, 106, 0.3); color: #d1986a; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(209,152,106,0.1)'" onmouseout="this.style.background='none'">Logout</button>
+                    <button type="submit" style="background: none; border: 1px solid rgba(207, 44, 33, 0.3); color: #cf2c21; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(207,44,33,0.1)'" onmouseout="this.style.background='none'">Logout</button>
                 </form>
             </div>
         </nav>
@@ -624,10 +624,6 @@
         document.getElementById('logoutForm')?.addEventListener('submit', function(e) {
             if (!confirm('Are you sure you want to logout?')) {
                 e.preventDefault();
-            } else {
-                localStorage.removeItem('remember_me');
-                localStorage.removeItem('remember_username');
-                localStorage.removeItem('remember_password');
             }
         });
 

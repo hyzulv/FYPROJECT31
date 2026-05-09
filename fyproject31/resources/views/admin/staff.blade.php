@@ -31,7 +31,7 @@
             <label>Password</label>
             <div style="position: relative;">
                 <input type="password" id="staff_password" name="password" required minlength="6" style="width: 100%; padding: 8px 45px 8px 8px;">
-                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px; filter: brightness(0) invert(1);">
             </div>
         </div>
         <div>
@@ -45,7 +45,7 @@
             <label>Phone</label>
             <input type="text" name="phone" style="width: 100%; padding: 8px;">
         </div>
-        <button type="submit" style="padding: 10px 20px; background: #d1986a; color: white; border: none; cursor: pointer;">Add Staff</button>
+        <button type="submit" style="padding: 10px 20px; background: #cf2c21; color: white; border: none; cursor: pointer;">Add Staff</button>
     </form>
 </div>
 

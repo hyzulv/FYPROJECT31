@@ -1,8 +1,8 @@
 :root {
-    --primary: #d1986a;
-    --primary-light: #e8c4a0;
-    --primary-dark: #b87d4f;
-    --primary-glow: rgba(209, 152, 106, 0.3);
+    --primary: #cf2c21;
+    --primary-light: #1a0a08;
+    --primary-dark: #a8231a;
+    --primary-glow: rgba(207, 44, 33, 0.3);
     --black: #000000;
     --dark-bg: #0a0a0a;
     --dark-card: #141414;
@@ -14,7 +14,7 @@
     --success: #4ade80;
     --error: #ef4444;
     --glass-bg: rgba(20, 20, 20, 0.7);
-    --glass-border: rgba(209, 152, 106, 0.2);
+    --glass-border: rgba(207, 44, 33, 0.2);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     --font-family: 'Poppins', sans-serif;
 }
@@ -116,8 +116,8 @@ input {
 }
 
 .logo-icon {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin: 0 auto 20px;
     animation: pulse 3s ease-in-out infinite;
 }
@@ -181,7 +181,7 @@ input {
 
 .qr-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(209, 152, 106, 0.2);
+    box-shadow: 0 12px 40px rgba(207, 44, 33, 0.2);
 }
 
 .qr-icon {
@@ -331,13 +331,19 @@ input {
     border-bottom: 1px solid var(--dark-border);
 }
 
+.menu-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .menu-header h1 {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--primary);
 }
 
-.back-btn, .cart-btn {
+.back-btn, .home-btn, .cart-btn {
     width: 40px;
     height: 40px;
     display: flex;
@@ -349,13 +355,13 @@ input {
     transition: all 0.3s ease;
 }
 
-.back-btn svg, .cart-btn svg {
+.back-btn svg, .home-btn svg, .cart-btn svg {
     width: 20px;
     height: 20px;
     stroke: var(--text-primary);
 }
 
-.back-btn:hover, .cart-btn:hover {
+.back-btn:hover, .home-btn:hover, .cart-btn:hover {
     border-color: var(--primary);
     background: var(--dark-card-hover);
 }
@@ -489,7 +495,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--dark-card), rgba(209, 152, 106, 0.05));
+    background: linear-gradient(135deg, var(--dark-card), rgba(207, 44, 33, 0.05));
 }
 
 .placeholder-image svg {
@@ -561,7 +567,7 @@ input {
 }
 
 .add-to-cart-btn:hover {
-    background: rgba(209, 152, 106, 0.1);
+    background: rgba(207, 44, 33, 0.1);
 }
 
 .add-to-cart-btn.added {
@@ -751,7 +757,7 @@ input {
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--primary);
-    background: rgba(209, 152, 106, 0.1);
+    background: rgba(207, 44, 33, 0.1);
     padding: 8px 16px;
     border-radius: 10px;
     border: 1px solid var(--glass-border);
@@ -810,7 +816,7 @@ input {
 
 .addon-item:has(input:checked) {
     border-color: var(--primary);
-    background: rgba(209, 152, 106, 0.08);
+    background: rgba(207, 44, 33, 0.08);
 }
 
 .addon-item:has(input:checked) .addon-checkbox {
@@ -951,7 +957,7 @@ input {
 }
 
 .btn-add-cart:hover {
-    background: rgba(209, 152, 106, 0.1);
+    background: rgba(207, 44, 33, 0.1);
 }
 
 .btn-add-cart.added {
@@ -1149,8 +1155,8 @@ input {
     font-size: 0.7rem;
     font-weight: 500;
     color: var(--primary);
-    background: rgba(209, 152, 106, 0.1);
-    border: 1px solid rgba(209, 152, 106, 0.2);
+    background: rgba(207, 44, 33, 0.1);
+    border: 1px solid rgba(207, 44, 33, 0.2);
     padding: 2px 8px;
     border-radius: 6px;
 }

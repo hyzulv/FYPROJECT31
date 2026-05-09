@@ -7,7 +7,7 @@
 <div class="data-card">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h3 style="margin: 0;">Menu Items</h3>
-        <button onclick="openAddModal()" class="btn-primary" style="padding: 8px 16px; background: #d1986a; color: #1a1a1a; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add Item</button>
+        <button onclick="openAddModal()" class="btn-primary" style="padding: 8px 16px; background: #cf2c21; color: #1a1a1a; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add Item</button>
     </div>
     <table class="data-table">
         <thead>
@@ -37,12 +37,12 @@
 
 <div id="addMenuModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background: #1a1a1a; padding: 24px; border-radius: 12px; width: 90%; max-width: 400px;">
-        <h3 style="margin-bottom: 16px; color: #d1986a;">Add Menu Item</h3>
+        <h3 style="margin-bottom: 16px; color: #cf2c21;">Add Menu Item</h3>
         <form id="addMenuForm" onsubmit="submitAddMenu(event)">
-            <input type="text" name="name" placeholder="Item Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(209,152,106,0.3); border-radius: 6px; color: #fff;">
-            <textarea name="description" placeholder="Description" rows="2" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(209,152,106,0.3); border-radius: 6px; color: #fff;"></textarea>
-            <input type="number" name="price" step="0.01" min="0" placeholder="Price (RM)" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(209,152,106,0.3); border-radius: 6px; color: #fff;">
-            <select name="category" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(209,152,106,0.3); border-radius: 6px; color: #fff;">
+            <input type="text" name="name" placeholder="Item Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
+            <textarea name="description" placeholder="Description" rows="2" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;"></textarea>
+            <input type="number" name="price" step="0.01" min="0" placeholder="Price (RM)" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
+            <select name="category" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #2a2a2a; border: 1px solid rgba(207,44,33,0.3); border-radius: 6px; color: #fff;">
                 <option value="ala_carte">Ala Carte</option>
                 <option value="combo_set">Combo Set</option>
                 <option value="mix">Mix</option>
@@ -51,7 +51,7 @@
             </select>
             <div style="display: flex; gap: 10px;">
                 <button type="button" onclick="closeAddModal()" style="flex: 1; padding: 10px; background: #333; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Cancel</button>
-                <button type="submit" style="flex: 1; padding: 10px; background: #d1986a; color: #1a1a1a; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Add</button>
+                <button type="submit" style="flex: 1; padding: 10px; background: #cf2c21; color: #1a1a1a; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Add</button>
             </div>
         </form>
     </div>
