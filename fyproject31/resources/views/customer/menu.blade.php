@@ -48,14 +48,17 @@
                     <div class="menu-item-card">
                         <a href="{{ route('customer.item.detail', $item['id']) }}" class="menu-item-image-link">
                             <div class="menu-item-image">
-                                @if($item['image'])
+                                @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item['name']); @endphp
+                                @if($imgFile)
+                                    <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item['name'] }}" loading="lazy">
+                                @elseif($item['image'])
                                     <img src="{{ asset('images/menu/' . $item['image']) }}" alt="{{ $item['name'] }}" loading="lazy">
                                 @else
                                     <div class="placeholder-image">
                                         @if(in_array($catKey, ['ala_carte', 'combo_set', 'mix', 'nasi_lemak', 'kicap', 'set_family']))
                                             <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
                                         @else
-                                            <img src="{{ asset('images/menu/Udang-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+                                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
                                         @endif
                                     </div>
                                 @endif

@@ -498,6 +498,7 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
 
     Route::get('/menu/check', function () {
         $menuItems = MenuItem::orderBy('name')->get()->map(function ($item) {
+            $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name);
             return [
                 'id' => $item->id,
                 'name' => $item->name,
@@ -506,6 +507,7 @@ Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
                 'category' => $item->category,
                 'status' => $item->status,
                 'image' => $item->image,
+                'image_url' => $imgFile ? asset('images/menu/' . $imgFile) : null,
             ];
         });
         return response()->json(['menu' => $menuItems]);

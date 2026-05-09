@@ -425,8 +425,11 @@
                 <h3>Foods</h3>
                 <div class="menu-grid">
                     @foreach($foods as $food)
+                    @php $foodImg = \App\Helpers\MenuImageHelper::getImageFilename($food->name); @endphp
                     <div class="menu-item">
-                        @if($food->image)
+                        @if($foodImg)
+                            <img src="{{ asset('images/menu/' . $foodImg) }}" alt="{{ $food->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @elseif($food->image)
                             <img src="{{ asset('images/menu/' . $food->image) }}" alt="{{ $food->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
                         @else
                             <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
@@ -443,11 +446,14 @@
                 <h3>Drinks</h3>
                 <div class="menu-grid">
                     @foreach($drinks as $drink)
+                    @php $drinkImg = \App\Helpers\MenuImageHelper::getImageFilename($drink->name); @endphp
                     <div class="menu-item">
-                        @if($drink->image)
+                        @if($drinkImg)
+                            <img src="{{ asset('images/menu/' . $drinkImg) }}" alt="{{ $drink->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                        @elseif($drink->image)
                             <img src="{{ asset('images/menu/' . $drink->image) }}" alt="{{ $drink->name }}" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
                         @else
-                            <img src="{{ asset('images/menu/Udang-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
+                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Drink" style="width:100%;height:150px;border-radius:5px;object-fit:cover;margin-bottom:10px;">
                         @endif
                         <h3>{{ $drink->name }}</h3>
                         <p class="menu-desc">{{ $drink->description }}</p>

@@ -23,7 +23,10 @@
 
     <div class="item-detail-content">
         <div class="item-detail-image">
-            @if($item['image'])
+            @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item['name']); @endphp
+            @if($imgFile)
+                <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item['name'] }}">
+            @elseif($item['image'])
                 <img src="{{ asset('images/menu/' . $item['image']) }}" alt="{{ $item['name'] }}">
             @else
                 <div class="placeholder-image-large">
@@ -56,11 +59,14 @@
                             @endif
                             <div class="addon-info">
                                 <div class="addon-image">
-                                    @if($addOn['image'])
+                                    @php $addOnImg = \App\Helpers\MenuImageHelper::getImageFilename($addOn['name']); @endphp
+                                    @if($addOnImg)
+                                        <img src="{{ asset('images/menu/' . $addOnImg) }}" alt="{{ $addOn['name'] }}">
+                                    @elseif($addOn['image'])
                                         <img src="{{ asset('images/menu/' . $addOn['image']) }}" alt="{{ $addOn['name'] }}">
                                     @else
                                         <div class="addon-placeholder">
-                                            <img src="{{ asset('images/menu/Sotong-goreng-kunyit.jpg') }}" alt="Add-on" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+                                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Add-on" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
                                         </div>
                                     @endif
                                 </div>
