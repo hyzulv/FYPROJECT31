@@ -1,4 +1,4 @@
-name: Deploy to InfinityFree
+name: Deploy to matrockrestaurant.wuaze.com
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy via FTP
+    name: Deploy Deploy to matrockrestaurant.wuaze.com
     runs-on: ubuntu-latest
 
     steps:
