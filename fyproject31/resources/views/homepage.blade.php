@@ -11,44 +11,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000000;
-            color: #FFFFFF;
-        }
-        header {
-            background-color: #d1986a;
-            padding: 20px 0;
-            position: relative;
-        }
-        .auth-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            background-color: #FFFFFF;
             color: #222222;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .auth-button:hover {
-            color: #000000;
-            text-decoration: underline;
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            width: 150px;
-            height: 150px;
-        }
-        .logo h1 {
-            color: #FFFFFF;
-            margin: 10px 0;
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            text-transform: uppercase;
         }
         nav {
             max-width: 1200px;
@@ -66,13 +30,13 @@
             border-radius: 16px;
             font-weight: 700;
             font-size: 1rem;
-            color: #fff;
+            color: #222222;
             cursor: pointer;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+            background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
         }
         .nav-btn::before {
             content: '';
@@ -80,7 +44,7 @@
             inset: 0;
             border-radius: 16px;
             padding: 2px;
-            background: linear-gradient(135deg, #cf2c21, #a8231a, #cf2c21);
+            background: linear-gradient(135deg, #420C09, #300806, #420C09);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -92,8 +56,8 @@
         }
         .nav-btn:hover {
             transform: translateY(-5px) scale(1.03);
-            background: linear-gradient(145deg, #333333, #222222);
-            box-shadow: 0 12px 35px rgba(207, 44, 33, 0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 12px 35px rgba(66, 12, 9, 0.25), inset 0 1px 0 rgba(255,255,255,0.8);
         }
         .nav-btn:active {
             transform: translateY(0) scale(0.98);
@@ -110,7 +74,7 @@
             }
         }
         header {
-            background-color: #cf2c21; /* Red header */
+            background-color: #420C09; /* Red header */
             padding: 20px 0;
             position: relative;
         }
@@ -118,13 +82,13 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            color: #222222;
+            color: #FFFFFF;
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
         }
         .auth-button:hover {
-            color: #000000;
+            color: #FFDDDD;
             text-decoration: underline;
         }
         .logo {
@@ -134,6 +98,8 @@
         .logo img {
             width: 150px;
             height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
         }
         .logo h1 {
             color: #FFFFFF;
@@ -149,17 +115,17 @@
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #111111;
+            background-color: #FFFFFF;
             border-radius: 8px;
         }
         .section {
             display: none;
         }
         h1 {
-            color: #cf2c21; /* Red headings */
+            color: #420C09; /* Red headings */
         }
         p {
-            color: #FFFFFF;
+            color: #333333;
         }
         .menu-grid {
             display: grid;
@@ -168,8 +134,8 @@
             margin-top: 20px;
         }
         .menu-item {
-            background-color: #222222;
-            border: 2px solid #cf2c21;
+            background-color: #fafafa;
+            border: 2px solid #420C09;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
@@ -177,7 +143,7 @@
         }
         .menu-item:hover {
             transform: scale(1.05);
-            background-color: #333333;
+            background-color: #f0f0f0;
         }
         .menu-item img,
         .menu-item > div:first-child {
@@ -188,13 +154,13 @@
             flex-shrink: 0;
         }
         .menu-item h3 {
-            color: #cf2c21;
+            color: #420C09;
             margin: 10px 0 5px 0;
             flex-shrink: 0;
         }
         .menu-item p {
             font-size: 14px;
-            color: #CCCCCC;
+            color: #555555;
             margin: 5px 0;
             flex-shrink: 0;
         }
@@ -205,34 +171,34 @@
             margin-top: 30px;
         }
         .menu-category h3 {
-            color: #cf2c21;
-            border-bottom: 2px solid #cf2c21;
+            color: #420C09;
+            border-bottom: 2px solid #420C09;
             padding-bottom: 10px;
         }
         .contact-container {
             max-width: 700px;
             margin: 20px auto;
-            background-color: #1a1a1a;
+            background-color: #fafafa;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #cf2c21;
+            border: 2px solid #420C09;
         }
         .contact-info {
-            color: #FFFFFF;
+            color: #333333;
             margin-bottom: 20px;
         }
         .contact-info p {
             margin: 10px 0;
         }
         .contact-info a {
-            color: #cf2c21;
+            color: #420C09;
             text-decoration: none;
         }
         .contact-info a:hover {
             text-decoration: underline;
         }
         .contact-link {
-            color: #cf2c21 !important;
+            color: #420C09 !important;
             text-decoration: none !important;
         }
         .contact-link:hover {
@@ -246,18 +212,18 @@
             line-height: 1.6;
         }
         .branch-phone {
-            color: #cf2c21;
+            color: #420C09;
             font-weight: bold;
             margin-top: 8px !important;
         }
         .branch-divider {
             height: 1px;
-            background: rgba(207, 44, 33, 0.3);
+            background: rgba(66, 12, 9, 0.3);
             margin: 20px 0;
         }
         .contact-form label {
             display: block;
-            color: #cf2c21;
+            color: #420C09;
             margin-top: 15px;
             margin-bottom: 5px;
             font-weight: bold;
@@ -267,18 +233,18 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            background-color: #333333;
-            border: 1px solid #cf2c21;
-            color: #FFFFFF;
+            background-color: #FFFFFF;
+            border: 1px solid #420C09;
+            color: #222222;
             border-radius: 5px;
             box-sizing: border-box;
         }
         .contact-form input::placeholder,
         .contact-form textarea::placeholder {
-            color: #999999;
+            color: #AAAAAA;
         }
         .contact-form button {
-            background-color: #cf2c21;
+            background-color: #420C09;
             color: white;
             padding: 12px 30px;
             border: none;
@@ -289,7 +255,7 @@
             width: 100%;
         }
         .contact-form button:hover {
-            background-color: #a8231a;
+            background-color: #300806;
         }
         .contact-alert {
             padding: 12px; border-radius: 5px; margin-bottom: 15px; text-align: center;
@@ -297,10 +263,10 @@
         .about-container {
             max-width: 900px;
             margin: 20px auto;
-            background-color: #1a1a1a;
+            background-color: #fafafa;
             padding: 20px;
             border-radius: 8px;
-            border: 2px solid #cf2c21;
+            border: 2px solid #420C09;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -311,18 +277,18 @@
         }
         .about-image img,
         .about-image svg {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            border-radius: 8px;
-            border: 2px solid #cf2c21;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #420C09;
         }
         .about-text h3 {
-            color: #cf2c21;
+            color: #420C09;
             margin-top: 0;
         }
         .about-text p {
-            color: #FFFFFF;
+            color: #333333;
             line-height: 1.6;
             margin: 10px 0;
         }
@@ -332,9 +298,9 @@
             gap: 30px;
             align-items: center;
             padding: 20px;
-            background-color: #1a1a1a;
+            background-color: #fafafa;
             border-radius: 8px;
-            border: 2px solid #cf2c21;
+            border: 2px solid #420C09;
             margin-bottom: 20px;
         }
         .hero-img {
@@ -342,21 +308,21 @@
             border-radius: 8px;
             object-fit: cover;
             max-height: 420px;
-            border: 2px solid #cf2c21;
+            border: 2px solid #420C09;
         }
         .hero-text h2 {
-            color: #cf2c21;
+            color: #420C09;
             margin-top: 0;
             font-size: 2.2rem;
         }
         .hero-text p {
-            color: #CCCCCC;
+            color: #555555;
             line-height: 1.7;
             margin: 20px 0;
         }
         .hero-button {
             display: inline-block;
-            background-color: #cf2c21;
+            background-color: #420C09;
             color: #FFFFFF;
             padding: 12px 26px;
             border-radius: 6px;
@@ -364,7 +330,68 @@
             font-weight: bold;
         }
         .hero-button:hover {
-            background-color: #b8864e;
+            background-color: #300806;
+        }
+        .site-footer {
+            background-color: #420C09;
+            color: #FFFFFF;
+            padding: 40px 20px 20px;
+            margin-top: 40px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .footer-col h4 {
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .footer-col p,
+        .footer-col a {
+            color: #CCCCCC;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+        }
+        .footer-col a:hover {
+            color: #FFFFFF;
+        }
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        .footer-social a:hover {
+            background-color: rgba(255,255,255,0.25);
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999999;
         }
         @media (max-width: 768px) {
             .auth-button {
@@ -379,6 +406,13 @@
             .about-container {
                 grid-template-columns: 1fr;
             }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-social {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -386,7 +420,7 @@
     <header>
 <a href="/login" class="auth-button">Staff / Admin Login</a>
         <div class="logo">
-            <img src="{{ asset('restaurant-icon.png') }}" alt="MAT ROCK">
+            <img src="{{ asset('logo.jpg') }}" alt="MAT ROCK">
             <h1>MAT ROCK RESTAURANT ORDERING SYSTEM</h1>
         </div>
         <nav class="flex-wrap px-2" style="gap: 12px;">
@@ -401,7 +435,7 @@
         <section id="about" class="section">
             <div class="about-container">
                 <div class="about-image">
-                    <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Ayam Goreng Kunyit" style="width:100%;max-width:300px;border-radius:8px;border:2px solid #cf2c21;">
+                    <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Ayam Goreng Kunyit" style="width:250px;height:250px;object-fit:cover;border-radius:50%;border:2px solid #420C09;">
                 </div>
                 <div class="about-text">
                     <h3>About Mat Rock</h3>
@@ -410,14 +444,15 @@
                     <p>We pride ourselves on friendly service, a warm atmosphere, and dishes that keep customers coming back again and again.</p>
                 </div>
             </div>
+
         </section>
         <section id="qr" class="section">
             <div style="text-align:center; margin-bottom: 20px;">
-                <img src="{{ asset('images/menu/MAT ROCK.png') }}" alt="MAT ROCK" style="max-width:300px;width:100%;border-radius:8px;border:2px solid #cf2c21;">
+                <img src="{{ asset('images/menu/MAT ROCK.png') }}" alt="MAT ROCK" style="max-width:300px;width:100%;border-radius:8px;border:2px solid #420C09;">
             </div>
             <p style="text-align:center; margin-bottom: 16px;">Tap the link below to view our menu and place your order.</p>
             <p style="text-align:center;">
-                <a href="{{ route('customer.welcome') }}" style="color:#cf2c21;font-weight:bold;font-size:18px;">Open Customer Menu Page</a>
+                <a href="{{ route('customer.welcome') }}" style="color:#420C09;font-weight:bold;font-size:18px;">Open Customer Menu Page</a>
             </p>
         </section>
         <section id="menu" class="section">
@@ -479,7 +514,7 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Kuala Lumpur - Kampung Pandan</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Kuala Lumpur - Kampung Pandan</h3>
                         <p>No. 15, Jalan Kampung Pandan,<br>Maluri, 55100 Kuala Lumpur</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kampung+Pandan+Kuala+Lumpur" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -488,7 +523,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Kuala Lumpur - Cheras</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Kuala Lumpur - Cheras</h3>
                         <p>7, Jalan Dwitasik, Dataran Dwitasik,<br>56000 Kuala Lumpur</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Cheras+Kuala+Lumpur" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -497,7 +532,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Selangor - Kota Damansara</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Kota Damansara</h3>
                         <p>9-1, Jalan PJU 5/12, Dataran Sunway,<br>47810 Petaling Jaya, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kota+Damansara+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -506,7 +541,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Selangor - Shah Alam</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Shah Alam</h3>
                         <p>15, Jalan Plumbum R7/R, Seksyen 7,<br>40000 Shah Alam, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Shah+Alam+Seksyen+7" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -515,7 +550,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Selangor - Klang</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Klang</h3>
                         <p>No. 52A, Lorong Batu Nilam 1B,<br>Bandar Bukit Tinggi 1, 41200 Klang, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Klang+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -524,7 +559,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Selangor - Cyberjaya</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Cyberjaya</h3>
                         <p>Unit C-01, Container Avenue, Block 3513,<br>Jalan Teknokrat 5, 63000 Cyberjaya, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Cyberjaya+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -533,7 +568,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Perak - Ipoh</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Perak - Ipoh</h3>
                         <p>54, Regat Sri Cempaka, Taman Cempaka,<br>31400 Ipoh, Perak</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Ipoh+Perak" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -542,7 +577,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Pahang - Gambang</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Pahang - Gambang</h3>
                         <p>A11, Jalan Bandar Gambang 1,<br>Bandar Gambang, 26300 Gambang, Pahang</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Gambang+Pahang" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -551,7 +586,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Terengganu - Kemaman</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Terengganu - Kemaman</h3>
                         <p>Jalan Chukai Utama, Kampung Pengkalan Pandan,<br>24000 Chukai, Terengganu</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kemaman+Terengganu" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -560,7 +595,7 @@
                     <div class="branch-divider"></div>
 
                     <div class="branch">
-                        <h3 style="color: #cf2c21; margin-bottom: 5px;">Johor - Skudai</h3>
+                        <h3 style="color: #420C09; margin-bottom: 5px;">Johor - Skudai</h3>
                         <p>No. 22, Jalan Impian Emas 1, Taman Impian Emas,<br>Skudai, 81300 Johor Bahru, Johor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Skudai+Johor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
                         <p class="branch-phone">Phone: +60 16-660 7314</p>
@@ -602,9 +637,15 @@
             document.getElementById(sectionId).style.display = 'block';
         }
 
-        // Show About section by default when page loads
+        // Show Contact section if success/error message exists, else show About
         window.onload = function() {
-            showSection('about');
+            var contactSection = document.getElementById('contact');
+            var hasAlert = contactSection && contactSection.querySelector('div[style*="rgba(40, 167, 69"], div[style*="rgba(220, 53, 69"]');
+            if (hasAlert) {
+                showSection('contact');
+            } else {
+                showSection('about');
+            }
         };
 
         // Equalize menu item heights
@@ -630,5 +671,30 @@
         window.addEventListener('load', equalizeMenuHeights);
         window.addEventListener('resize', equalizeMenuHeights);
     </script>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>MAT ROCK</h4>
+                <p>Mat Rock Ayam Goreng Kunyit Skudai is a local favourite in Skudai, Johor Bahru, known for serving comforting Malaysian meals at affordable prices.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Phone: +60 16-660 7314</p>
+                <p>Email: fypkumpulan31@gmail.com</p>
+                <p>WhatsApp: +60 16-660 7314</p>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <p>Stay connected on social media</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/matrocksunway" target="_blank" aria-label="Facebook">f</a>
+                    <a href="https://www.instagram.com/officialmatrock?igsh=MWVibzR5NnlubmticQ%3D%3D" target="_blank" aria-label="Instagram"><img src="{{ asset('ig-logo.png') }}" alt="Instagram" style="width:24px;height:24px;"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; {{ date('Y') }} Mat Rock Restaurant. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>
