@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -25,5 +26,19 @@ class User extends Authenticatable
     public function getAuthIdentifierName()
     {
         return 'username';
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $mailer = $this->role === 'admin' ? 'smtp' : 'staff_smtp';
+
+        Mail::mailer($mailer)->send('emails.password-reset', [
+            'token' => $token,
+            'email' => $this->email,
+            'user' => $this,
+        ], function ($message) {
+            $message->to($this->email)
+                ->subject('Reset Your Password');
+        });
     }
 }

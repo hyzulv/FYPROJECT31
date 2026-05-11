@@ -49,6 +49,16 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        'staff_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_STAFF_HOST', env('MAIL_HOST', '127.0.0.1')),
+            'port' => env('MAIL_STAFF_PORT', env('MAIL_PORT', 2525)),
+            'username' => env('MAIL_STAFF_USERNAME'),
+            'password' => env('MAIL_STAFF_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
