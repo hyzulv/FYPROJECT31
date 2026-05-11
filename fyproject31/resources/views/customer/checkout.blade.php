@@ -62,8 +62,8 @@
     <div class="modal-content">
         <div class="success-icon">
             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="35" stroke="#cf2c21" stroke-width="3" fill="rgba(207,44,33,0.1)"/>
-                <path d="M25 40l10 10 20-20" stroke="#cf2c21" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="40" cy="40" r="35" stroke="#420C09" stroke-width="3" fill="rgba(66,12,9,0.1)"/>
+                <path d="M25 40l10 10 20-20" stroke="#420C09" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <h2>Order Placed!</h2>

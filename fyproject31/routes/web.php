@@ -56,7 +56,8 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
     ]);
 
     try {
-        \Illuminate\Support\Facades\Mail::to(env('MAIL_USERNAME'))->send(new \App\Mail\ContactMail(
+        $adminEmail = User::where('role', 'admin')->value('email');
+        \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactMail(
             $validated['name'],
             $validated['email'],
             $validated['message']

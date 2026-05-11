@@ -23,8 +23,8 @@
                 <div class="qr-card">
                     <div class="qr-icon">
                         <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="40" cy="40" r="30" stroke="#cf2c21" stroke-width="2" fill="rgba(207,44,33,0.05)"/>
-                            <path d="M28 40h24M40 28v24" stroke="#cf2c21" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="40" cy="40" r="30" stroke="#420C09" stroke-width="2" fill="rgba(66,12,9,0.05)"/>
+                            <path d="M28 40h24M40 28v24" stroke="#420C09" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </div>
                     <h3>Ready to Order?</h3>
@@ -43,7 +43,7 @@
     <div class="features-section">
         <div class="feature-card">
             <div class="feature-icon">
-                <svg viewBox="0 0 48 48" fill="none" stroke="#cf2c21" stroke-width="2">
+                <svg viewBox="0 0 48 48" fill="none" stroke="#420C09" stroke-width="2">
                     <circle cx="24" cy="24" r="20"/>
                     <path d="M24 14v10l7 7"/>
                 </svg>
@@ -53,7 +53,7 @@
         </div>
         <div class="feature-card">
             <div class="feature-icon">
-                <svg viewBox="0 0 48 48" fill="none" stroke="#cf2c21" stroke-width="2">
+                <svg viewBox="0 0 48 48" fill="none" stroke="#420C09" stroke-width="2">
                     <path d="M24 4l6 12h14l-11 8 4 14-13-9-13 9 4-14L4 16h14z"/>
                 </svg>
             </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="feature-card">
             <div class="feature-icon">
-                <svg viewBox="0 0 48 48" fill="none" stroke="#cf2c21" stroke-width="2">
+                <svg viewBox="0 0 48 48" fill="none" stroke="#420C09" stroke-width="2">
                     <path d="M24 44c11 0 20-9 20-20S35 4 24 4 4 13 4 24s9 20 20 20z"/>
                     <path d="M16 24l6 6 12-12"/>
                 </svg>
