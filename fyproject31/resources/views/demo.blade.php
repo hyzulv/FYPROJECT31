@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-            color: #ffffff;
+            background: #FFFFFF;
+            color: #222222;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -33,18 +33,18 @@
         }
 
         .logo h1 {
-            color: #cf2c21;
+            color: #420C09;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
 
         .logo p {
-            color: #888;
+            color: #666;
             font-size: 1.1rem;
         }
 
         .selection-title {
-            color: #cf2c21;
+            color: #420C09;
             font-size: 1.5rem;
             margin-bottom: 40px;
         }
@@ -58,8 +58,8 @@
         }
 
         .role-card {
-            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            border: 2px solid rgba(207, 44, 33, 0.3);
+            background: #fafafa;
+            border: 2px solid #420C09;
             border-radius: 16px;
             padding: 40px 30px;
             text-decoration: none;
@@ -71,8 +71,8 @@
 
         .role-card:hover {
             transform: translateY(-10px);
-            border-color: #cf2c21;
-            box-shadow: 0 15px 40px rgba(207, 44, 33, 0.2);
+            border-color: #420C09;
+            box-shadow: 0 15px 40px rgba(66, 12, 9, 0.15);
         }
 
         .role-icon {
@@ -81,20 +81,20 @@
         }
 
         .role-card h2 {
-            color: #cf2c21;
+            color: #420C09;
             font-size: 1.5rem;
             margin-bottom: 15px;
         }
 
         .role-card p {
-            color: #aaa;
+            color: #666;
             line-height: 1.6;
         }
 
         .role-card .btn {
             margin-top: 25px;
-            background: #cf2c21;
-            color: #000;
+            background: #420C09;
+            color: #fff;
             padding: 12px 30px;
             border-radius: 8px;
             font-weight: 600;
@@ -102,7 +102,7 @@
         }
 
         .role-card:hover .btn {
-            background: #fff;
+            background: #300806;
         }
 
         @media (max-width: 640px) {

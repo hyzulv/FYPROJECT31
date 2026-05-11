@@ -16,36 +16,36 @@
     <form action="{{ route('admin.staff.add') }}" method="POST" autocomplete="off" style="display: grid; gap: 1rem; max-width: 500px;">
         @csrf
         <div>
-            <label>Name</label>
-            <input type="text" name="name" required style="width: 100%; padding: 8px;">
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Name</label>
+            <input type="text" name="name" required style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
         </div>
         <div>
-            <label>Username</label>
-            <input type="text" name="username" required style="width: 100%; padding: 8px;">
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Username</label>
+            <input type="text" name="username" required style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
         </div>
         <div>
-            <label>Email</label>
-            <input type="email" name="email" required style="width: 100%; padding: 8px;">
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Email</label>
+            <input type="email" name="email" required style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
         </div>
         <div>
-            <label>Password</label>
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Password</label>
             <div style="position: relative;">
-                <input type="password" id="staff_password" name="password" required minlength="6" style="width: 100%; padding: 8px 45px 8px 8px;">
-                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px; filter: brightness(0) invert(1);">
+                <input type="password" id="staff_password" name="password" required minlength="6" style="width: 100%; padding: 12px 45px 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
+                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
             </div>
         </div>
         <div>
-            <label>Role</label>
-            <select name="role" required style="width: 100%; padding: 8px;">
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Role</label>
+            <select name="role" required style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem;">
                 <option value="staff">Staff</option>
                 <option value="admin">Admin</option>
             </select>
         </div>
         <div>
-            <label>Phone</label>
-            <input type="text" name="phone" style="width: 100%; padding: 8px;">
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Phone</label>
+            <input type="text" name="phone" style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
         </div>
-        <button type="submit" style="padding: 10px 20px; background: #cf2c21; color: white; border: none; cursor: pointer;">Add Staff</button>
+        <button type="submit" style="padding: 12px 24px; background: #420C09; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">Add Staff</button>
     </form>
 </div>
 
