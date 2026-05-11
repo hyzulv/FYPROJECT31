@@ -1,39 +1,6 @@
 <?php
 
-/*
- * BSD 3-Clause License
- *
- * Copyright (c) 2001-2023, Sebastian Bergmann
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 declare(strict_types=1);
-
 /*
  * This file is part of PHPUnit.
  *
@@ -47,9 +14,6 @@ namespace PHPUnit\Logging\JUnit;
 
 use DOMDocument;
 use DOMElement;
-use Pest\Logging\Converter;
-use Pest\Support\Container;
-use Pest\TestSuite;
 use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\EventFacadeIsSealedException;
@@ -63,7 +27,6 @@ use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\MarkedIncomplete;
 use PHPUnit\Event\Test\PreparationStarted;
 use PHPUnit\Event\Test\Prepared;
-use PHPUnit\Event\Test\PrintedUnexpectedOutput;
 use PHPUnit\Event\Test\Skipped;
 use PHPUnit\Event\TestSuite\Started;
 use PHPUnit\Event\UnknownSubscriberTypeException;
@@ -78,15 +41,13 @@ use function str_replace;
 use function trim;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class JunitXmlLogger
 {
     private readonly Printer $printer;
 
-    private readonly Converter $converter; // pest-added
+    private readonly \Pest\Logging\Converter $converter; // pest-added
 
     private DOMDocument $document;
 
@@ -98,32 +59,32 @@ final class JunitXmlLogger
     private array $testSuites = [];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteTests = [0];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteAssertions = [0];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteErrors = [0];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteFailures = [0];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteSkipped = [0];
 
     /**
-     * @var array<int,int>
+     * @psalm-var array<int,int>
      */
     private array $testSuiteTimes = [0];
 
@@ -144,7 +105,7 @@ final class JunitXmlLogger
     public function __construct(Printer $printer, Facade $facade)
     {
         $this->printer = $printer;
-        $this->converter = new Converter(Container::getInstance()->get(TestSuite::class)->rootPath); // pest-added
+        $this->converter = new \Pest\Logging\Converter(\Pest\Support\Container::getInstance()->get(\Pest\TestSuite::class)->rootPath); // pest-added
 
         $this->registerSubscribers($facade);
         $this->createDocument();
@@ -152,7 +113,7 @@ final class JunitXmlLogger
 
     public function flush(): void
     {
-        $this->printer->print($this->document->saveXML() ?: '');
+        $this->printer->print($this->document->saveXML());
 
         $this->printer->flush();
     }
@@ -234,26 +195,20 @@ final class JunitXmlLogger
         $this->createTestCase($event);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testPreparationFailed(): void
     {
         $this->preparationFailed = true;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testPrepared(): void
     {
         $this->prepared = true;
-    }
-
-    public function testPrintedUnexpectedOutput(PrintedUnexpectedOutput $event): void
-    {
-        assert($this->currentTestCase !== null);
-
-        $systemOut = $this->document->createElement(
-            'system-out',
-            Xml::prepareString($event->output()),
-        );
-
-        $this->currentTestCase->appendChild($systemOut);
     }
 
     /**
@@ -261,7 +216,7 @@ final class JunitXmlLogger
      */
     public function testFinished(Finished $event): void
     {
-        if (! $this->prepared || $this->preparationFailed) {
+        if ($this->preparationFailed) {
             return;
         }
 
@@ -350,7 +305,6 @@ final class JunitXmlLogger
             new TestPreparationStartedSubscriber($this),
             new TestPreparationFailedSubscriber($this),
             new TestPreparedSubscriber($this),
-            new TestPrintedUnexpectedOutputSubscriber($this),
             new TestFinishedSubscriber($this),
             new TestErroredSubscriber($this),
             new TestFailedSubscriber($this),
@@ -478,7 +432,7 @@ final class JunitXmlLogger
     /**
      * @throws InvalidArgumentException
      *
-     * @phpstan-assert !null $this->currentTestCase
+     * @psalm-assert !null $this->currentTestCase
      */
     private function createTestCase(Errored|Failed|MarkedIncomplete|PreparationStarted|Prepared|Skipped $event): void
     {
@@ -493,7 +447,7 @@ final class JunitXmlLogger
         if ($test->isTestMethod()) {
             assert($test instanceof TestMethod);
 
-            // $testCase->setAttribute('line', (string) $test->line()); // pest-removed
+            //$testCase->setAttribute('line', (string) $test->line()); // pest-removed
             $className = $this->converter->getTrimmedTestClassName($test); // pest-added
             $testCase->setAttribute('class', $className); // pest-changed
             $testCase->setAttribute('classname', str_replace('\\', '.', $className)); // pest-changed

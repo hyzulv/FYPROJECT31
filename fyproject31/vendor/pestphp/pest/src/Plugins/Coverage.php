@@ -17,13 +17,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Coverage implements AddsOutput, HandlesArguments
 {
-    private const string COVERAGE_OPTION = 'coverage';
+    /**
+     * @var string
+     */
+    private const COVERAGE_OPTION = 'coverage';
 
-    private const string MIN_OPTION = 'min';
-
-    private const string EXACTLY_OPTION = 'exactly';
-
-    private const string ONLY_COVERED_OPTION = 'only-covered';
+    /**
+     * @var string
+     */
+    private const MIN_OPTION = 'min';
 
     /**
      * Whether it should show the coverage or not.
@@ -31,24 +33,9 @@ final class Coverage implements AddsOutput, HandlesArguments
     public bool $coverage = false;
 
     /**
-     * Whether it should show the coverage or not.
-     */
-    public bool $compact = false;
-
-    /**
      * The minimum coverage.
      */
     public float $coverageMin = 0.0;
-
-    /**
-     * The exactly coverage.
-     */
-    public ?float $coverageExactly = null;
-
-    /**
-     * Whether it should show only covered files.
-     */
-    public bool $showOnlyCovered = false;
 
     /**
      * Creates a new Plugin instance.
@@ -64,7 +51,7 @@ final class Coverage implements AddsOutput, HandlesArguments
     public function handleArguments(array $originals): array
     {
         $arguments = [...[''], ...array_values(array_filter($originals, function (string $original): bool {
-            foreach ([self::COVERAGE_OPTION, self::MIN_OPTION, self::EXACTLY_OPTION, self::ONLY_COVERED_OPTION] as $option) {
+            foreach ([self::COVERAGE_OPTION, self::MIN_OPTION] as $option) {
                 if ($original === sprintf('--%s', $option)) {
                     return true;
                 }
@@ -86,8 +73,6 @@ final class Coverage implements AddsOutput, HandlesArguments
         $inputs = [];
         $inputs[] = new InputOption(self::COVERAGE_OPTION, null, InputOption::VALUE_NONE);
         $inputs[] = new InputOption(self::MIN_OPTION, null, InputOption::VALUE_REQUIRED);
-        $inputs[] = new InputOption(self::EXACTLY_OPTION, null, InputOption::VALUE_REQUIRED);
-        $inputs[] = new InputOption(self::ONLY_COVERED_OPTION, null, InputOption::VALUE_NONE);
 
         $input = new ArgvInput($arguments, new InputDefinition($inputs));
         if ((bool) $input->getOption(self::COVERAGE_OPTION)) {
@@ -121,21 +106,6 @@ final class Coverage implements AddsOutput, HandlesArguments
             $this->coverageMin = (float) $minOption;
         }
 
-        if ($input->getOption(self::EXACTLY_OPTION) !== null) {
-            /** @var int|float $exactlyOption */
-            $exactlyOption = $input->getOption(self::EXACTLY_OPTION);
-
-            $this->coverageExactly = (float) $exactlyOption;
-        }
-
-        if ((bool) $input->getOption(self::ONLY_COVERED_OPTION)) {
-            $this->showOnlyCovered = true;
-        }
-
-        if ($_SERVER['COLLISION_PRINTER_COMPACT'] ?? false) {
-            $this->compact = true;
-        }
-
         return $originals;
     }
 
@@ -144,10 +114,6 @@ final class Coverage implements AddsOutput, HandlesArguments
      */
     public function addOutput(int $exitCode): int
     {
-        if (Parallel::isWorker()) {
-            return $exitCode;
-        }
-
         if ($exitCode === 0 && $this->coverage) {
             if (! \Pest\Support\Coverage::isAvailable()) {
                 $this->output->writeln(
@@ -156,27 +122,15 @@ final class Coverage implements AddsOutput, HandlesArguments
                 exit(1);
             }
 
-            $coverage = \Pest\Support\Coverage::report($this->output, $this->compact, $this->showOnlyCovered);
+            $coverage = \Pest\Support\Coverage::report($this->output);
+
             $exitCode = (int) ($coverage < $this->coverageMin);
 
-            if ($exitCode === 0 && $this->coverageExactly !== null) {
-                $comparableCoverage = $this->computeComparableCoverage($coverage);
-                $comparableCoverageExactly = $this->computeComparableCoverage($this->coverageExactly);
-
-                $exitCode = $comparableCoverage === $comparableCoverageExactly ? 0 : 1;
-
-                if ($exitCode === 1) {
-                    $this->output->writeln(sprintf(
-                        "\n  <fg=white;bg=red;options=bold> FAIL </> Code coverage not exactly <fg=white;options=bold> %s %%</>, currently <fg=red;options=bold> %s %%</>.",
-                        number_format($this->coverageExactly, 1),
-                        number_format(floor($coverage * 10) / 10, 1),
-                    ));
-                }
-            } elseif ($exitCode === 1) {
+            if ($exitCode === 1) {
                 $this->output->writeln(sprintf(
                     "\n  <fg=white;bg=red;options=bold> FAIL </> Code coverage below expected <fg=white;options=bold> %s %%</>, currently <fg=red;options=bold> %s %%</>.",
                     number_format($this->coverageMin, 1),
-                    number_format(floor($coverage * 10) / 10, 1)
+                    number_format($coverage, 1)
                 ));
             }
 
@@ -184,13 +138,5 @@ final class Coverage implements AddsOutput, HandlesArguments
         }
 
         return $exitCode;
-    }
-
-    /**
-     * Computes the comparable coverage to a percentage with one decimal.
-     */
-    private function computeComparableCoverage(float $coverage): float
-    {
-        return floor($coverage * 10) / 10;
     }
 }

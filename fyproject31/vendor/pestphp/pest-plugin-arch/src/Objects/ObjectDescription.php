@@ -12,7 +12,7 @@ use PHPUnit\Architecture\Services\ServiceContainer;
 /**
  * @internal
  */
-final class ObjectDescription extends \PHPUnit\Architecture\Elements\ObjectDescription
+final class ObjectDescription extends \PHPUnit\Architecture\Elements\ObjectDescription // @phpstan-ignore-line
 {
     /**
      * {@inheritDoc}
@@ -22,7 +22,7 @@ final class ObjectDescription extends \PHPUnit\Architecture\Elements\ObjectDescr
         /** @var ObjectDescription|null $description */
         $description = parent::make($path);
 
-        if (! $description instanceof ObjectDescription) {
+        if (! $description instanceof \Pest\Arch\Objects\ObjectDescription) {
             return null;
         }
 
@@ -55,6 +55,6 @@ final class ObjectDescription extends \PHPUnit\Architecture\Elements\ObjectDescr
         }
 
         /** @var array<int, Expr> $expressions */
-        return array_filter(array_map(PhpCoreExpressions::getName(...), $expressions));
+        return array_filter(array_map(fn (Expr $expression): string => PhpCoreExpressions::getName($expression), $expressions));
     }
 }

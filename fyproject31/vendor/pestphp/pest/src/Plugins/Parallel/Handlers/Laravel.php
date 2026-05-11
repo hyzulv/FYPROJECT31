@@ -7,7 +7,6 @@ namespace Pest\Plugins\Parallel\Handlers;
 use Closure;
 use Composer\InstalledVersions;
 use Illuminate\Testing\ParallelRunner;
-use Orchestra\Testbench\TestCase;
 use ParaTest\Options;
 use ParaTest\RunnerInterface;
 use Pest\Contracts\Plugins\HandlesArguments;
@@ -27,7 +26,7 @@ final class Laravel implements HandlesArguments
      */
     public function handleArguments(array $arguments): array
     {
-        return $this->whenUsingLaravel($arguments, function (array $arguments): array {
+        return self::whenUsingLaravel($arguments, function (array $arguments): array {
             $this->ensureRunnerIsResolvable();
 
             $arguments = $this->ensureEnvironmentVariables($arguments);
@@ -40,13 +39,13 @@ final class Laravel implements HandlesArguments
      * Executes the given closure when running Laravel.
      *
      * @param  array<int, string>  $arguments
-     * @param  Closure(array<int, string>): array<int, string>  $closure
+     * @param  CLosure(array<int, string>): array<int, string>  $closure
      * @return array<int, string>
      */
-    private function whenUsingLaravel(array $arguments, Closure $closure): array
+    private static function whenUsingLaravel(array $arguments, Closure $closure): array
     {
         $isLaravelApplication = InstalledVersions::isInstalled('laravel/framework', false);
-        $isLaravelPackage = class_exists(TestCase::class);
+        $isLaravelPackage = class_exists(\Orchestra\Testbench\TestCase::class);
 
         if ($isLaravelApplication && ! $isLaravelPackage) {
             return $closure($arguments);

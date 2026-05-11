@@ -13,36 +13,25 @@ use PHPUnit\Event\Subscriber;
 /**
  * @internal
  */
-final readonly class BootSubscribers implements Bootstrapper
+final class BootSubscribers implements Bootstrapper
 {
     /**
      * The list of Subscribers.
      *
      * @var array<int, class-string<Subscriber>>
      */
-    private const array SUBSCRIBERS = [
+    private const SUBSCRIBERS = [
         Subscribers\EnsureConfigurationIsAvailable::class,
         Subscribers\EnsureIgnorableTestCasesAreIgnored::class,
         Subscribers\EnsureKernelDumpIsFlushed::class,
         Subscribers\EnsureTeamCityEnabled::class,
-        Subscribers\EnsureTiaIsRunningPestTestsOnly::class,
-        Subscribers\EnsureTiaStarts::class,
-        Subscribers\EnsureTiaEnds::class,
-        Subscribers\EnsureTiaResultsAreCollected::class,
-        Subscribers\EnsureTiaResultIsRecordedOnPassed::class,
-        Subscribers\EnsureTiaResultIsRecordedOnFailed::class,
-        Subscribers\EnsureTiaResultIsRecordedOnErrored::class,
-        Subscribers\EnsureTiaResultIsRecordedOnSkipped::class,
-        Subscribers\EnsureTiaResultIsRecordedOnIncomplete::class,
-        Subscribers\EnsureTiaResultIsRecordedOnRisky::class,
-        Subscribers\EnsureTiaAssertionsAreRecordedOnFinished::class,
     ];
 
     /**
      * Creates a new instance of the Boot Subscribers.
      */
     public function __construct(
-        private Container $container,
+        private readonly Container $container,
     ) {}
 
     /**

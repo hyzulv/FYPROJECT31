@@ -5,8 +5,6 @@
 [$bgBadgeColor, $bgBadgeText] = match ($type) {
     'INFO' => ['blue', 'INFO'],
     'ERROR' => ['red', 'ERROR'],
-    'WARN' => ['yellow', 'WARN'],
-    'SUCCESS' => ['green', 'SUCCESS'],
 };
 
 ?>

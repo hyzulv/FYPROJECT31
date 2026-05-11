@@ -23,9 +23,9 @@ final class Parallel implements HandlesArguments
 {
     use HandleArguments;
 
-    private const string GLOBAL_PREFIX = 'PEST_PARALLEL_GLOBAL_';
+    private const GLOBAL_PREFIX = 'PEST_PARALLEL_GLOBAL_';
 
-    private const array HANDLERS = [
+    private const HANDLERS = [
         Parallel\Handlers\Parallel::class,
         Parallel\Handlers\Pest::class,
         Parallel\Handlers\Laravel::class,
@@ -34,7 +34,7 @@ final class Parallel implements HandlesArguments
     /**
      * @var string[]
      */
-    private const array UNSUPPORTED_ARGUMENTS = ['--todo', '--todos', '--retry', '--notes', '--issue', '--pr', '--pull-request', '--flaky'];
+    private const UNSUPPORTED_ARGUMENTS = ['--todo', '--todos', '--retry'];
 
     /**
      * Whether the given command line arguments indicate that the test suite should be run in parallel.
@@ -42,7 +42,6 @@ final class Parallel implements HandlesArguments
     public static function isEnabled(): bool
     {
         $argv = new ArgvInput;
-
         if ($argv->hasParameterOption('--parallel')) {
             return true;
         }
@@ -127,9 +126,7 @@ final class Parallel implements HandlesArguments
             $arguments
         );
 
-        $filteredArguments = $this->processTeamcityArguments($filteredArguments);
-
-        $exitCode = $this->paratestCommand()->run(new ArgvInput(array_values($filteredArguments)), new CleanConsoleOutput);
+        $exitCode = $this->paratestCommand()->run(new ArgvInput($filteredArguments), new CleanConsoleOutput);
 
         return CallsAddsOutput::execute($exitCode);
     }
@@ -198,19 +195,5 @@ final class Parallel implements HandlesArguments
         $arguments = $this->popArgument('--parallel', $arguments);
 
         return $this->popArgument('-p', $arguments);
-    }
-
-    /**
-     * @param  string[]  $arguments
-     * @return string[]
-     */
-    public function processTeamcityArguments(array $arguments): array
-    {
-        $argv = new ArgvInput;
-        if ($argv->hasParameterOption('--teamcity')) {
-            $arguments[] = '--teamcity';
-        }
-
-        return $arguments;
     }
 }

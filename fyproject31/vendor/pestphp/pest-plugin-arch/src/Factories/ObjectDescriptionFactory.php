@@ -81,8 +81,8 @@ final class ObjectDescriptionFactory
         }
 
         return match (true) {
-            function_exists($use) => (new ReflectionFunction($use))->isUserDefined(),
             enum_exists($use) => (new \ReflectionEnum($use))->isUserDefined(),
+            function_exists($use) => (new ReflectionFunction($use))->isUserDefined(),
             class_exists($use) => (new ReflectionClass($use))->isUserDefined(),
             interface_exists($use) => (new ReflectionClass($use))->isUserDefined(),
             // ...
@@ -96,7 +96,9 @@ final class ObjectDescriptionFactory
      */
     private static function isSameLayer(\PHPUnit\Architecture\Elements\ObjectDescription $object, string $use): bool
     {
-        return in_array($use, ['self', 'static', 'parent'], true)
+        return $use === 'self'
+            || $use === 'static'
+            || $use === 'parent'
             || $object->reflectionClass->getNamespaceName() === $use;
     }
 }
