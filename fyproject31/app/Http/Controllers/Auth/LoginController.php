@@ -35,10 +35,10 @@ class LoginController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->intended('/staff/dashboard');
+            return redirect()->route('staff.dashboard');
         }
 
         return back()->withErrors([

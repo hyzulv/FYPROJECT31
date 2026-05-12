@@ -57,19 +57,7 @@
                             @else
                                 <input type="checkbox" name="addons[]" value="{{ $addOn['id'] }}" data-id="{{ $addOn['id'] }}" data-name="{{ $addOn['name'] }}" data-price="{{ $addOn['price'] }}" onchange="updateTotal()">
                             @endif
-                            <div class="addon-info">
-                                <div class="addon-image">
-                                    @php $addOnImg = \App\Helpers\MenuImageHelper::getImageFilename($addOn['name']); @endphp
-                                    @if($addOnImg)
-                                        <img src="{{ asset('images/menu/' . $addOnImg) }}" alt="{{ $addOn['name'] }}">
-                                    @elseif($addOn['image'])
-                                        <img src="{{ asset('images/menu/' . $addOn['image']) }}" alt="{{ $addOn['name'] }}">
-                                    @else
-                                        <div class="addon-placeholder">
-                                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Add-on" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
-                                        </div>
-                                    @endif
-                                </div>
+                             <div class="addon-info">
                                 <span class="addon-name">{{ $addOn['name'] }}</span>
                             </div>
                             <span class="addon-price">@if($addOn['price'] > 0)+RM {{ $addOn['price'] }}@else &nbsp; @endif</span>

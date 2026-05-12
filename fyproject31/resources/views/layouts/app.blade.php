@@ -589,8 +589,7 @@
             .profile-layout { grid-template-columns: 1fr; }
             .profile-left { position: static; }
         }
-    </style>
-    </style>
+        </style>
     @stack('styles')
 </head>
 <body>

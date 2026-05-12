@@ -24,13 +24,17 @@
             @foreach($menuItems as $item)
             <tr data-id="{{ $item->id }}">
                 <td>
-                    @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name); @endphp
-                    @if($imgFile)
-                        <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
-                    @elseif($item->image)
-                        <img src="{{ asset('images/menu/' . $item->image) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                    @if($item->category !== 'add_on')
+                        @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name); @endphp
+                        @if($imgFile)
+                            <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                        @elseif($item->image)
+                            <img src="{{ asset('images/menu/' . $item->image) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                        @else
+                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                        @endif
                     @else
-                        <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                        <span style="color:#999;font-size:0.85rem;">—</span>
                     @endif
                 </td>
                 <td>{{ $item->name }}</td>
@@ -116,7 +120,7 @@ function refreshMenu() {
             data.menu.forEach(item => {
                 const imgUrl = item.image_url ? item.image_url : item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
                 html += `<tr data-id="${item.id}">
-                    <td><img src="${imgUrl}" alt="${item.name}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;"></td>
+                    <td>${item.category === 'add_on' ? '<span style="color:#999;font-size:0.85rem;">—</span>' : `<img src="${imgUrl}" alt="${item.name}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">`}</td>
                     <td>${item.name}</td>
                     <td>${item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
                     <td>RM ${item.price}</td>
