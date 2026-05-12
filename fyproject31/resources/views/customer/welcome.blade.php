@@ -4,6 +4,15 @@
 
 @section('content')
 <div class="homepage-container">
+    <header class="menu-header" style="position: absolute; top: 0; left: 0; right: 0; z-index: 10; background: transparent; border: none;">
+        <div class="menu-header-left">
+            <button class="back-btn" onclick="window.history.back()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+        </div>
+    </header>
     <div class="hero-section">
         <div class="glass-overlay">
             <div class="logo-section">
