@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // Users
         User::updateOrCreate(['username' => 'admin'], [
             'name' => 'Admin User',
-            'email' => 'fypkumpulan31@gmail.com',
-            'password' => '$2y$12$EhI58NXt3X0is0vw5z5KMe7/wsgW4s.oNfEeJdiSRegCoS1uqeL1a',
+            'email' => 'kumpulan31@gmail.com',
+            'password' => '$2y$12$TOvGyhVckt5vzrWQzyOZW.d0jUjMyWj7Eb6ozBPlYBloOZMk8vCSO',
             'role' => 'admin',
             'phone' => '+60 11-123 4567',
             'status' => 'active',
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'ahmad'], [
             'name' => 'Ahmad Faizal',
             'email' => 'ahmad.faizal@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$z9aI2Dgn8u24XWheQTPWOuR1YFhEC8NhGOqpbKz1GDLSyajxgvMvy',
             'role' => 'staff',
             'phone' => '+60 12-345 6789',
             'status' => 'active',
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'nurul'], [
             'name' => 'Nurul Aisyah',
             'email' => 'nurul.aisyah@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$bhYT9oVz/i3ct7BLb39kKOw8lztkZ84qMbxKHtLixTbN5faapN3Ei',
             'role' => 'staff',
             'phone' => '+60 13-456 7890',
             'status' => 'active',
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'raj'], [
             'name' => 'Raj Kumar',
             'email' => 'raj.kumar@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$SVvczyJk3Ui1YCTh9JqdUuweziq8kQtgvukaJtDxZRKISZY0pb1Pq',
             'role' => 'staff',
             'phone' => '+60 14-567 8901',
             'status' => 'active',
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'lim'], [
             'name' => 'Lim Wei Jie',
             'email' => 'lim.weijie@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$muaS6mYPvt/YBmYApYdlvO1LDz1s6Wh2h1HpZjEEI7m78Asj2PtF.',
             'role' => 'staff',
             'phone' => '+60 16-678 9012',
             'status' => 'active',
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'sarah'], [
             'name' => 'Sarah Tan',
             'email' => 'sarah.tan@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$/2vTh1PfW7FwDRgqSIyxFOkzuIej4vJyTP7pDZfu9fmo8ItaE2qtm',
             'role' => 'staff',
             'phone' => '+60 17-789 0123',
             'status' => 'inactive',
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'zulkifli'], [
             'name' => 'Zulkifli Hassan',
             'email' => 'zulkifli.h@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$IIg.MtvUwHy60YxH2yBIeOhDywnNrgOjw2XXJE6b3oueqwMBzPzT6',
             'role' => 'staff',
             'phone' => '+60 18-890 1234',
             'status' => 'active',
@@ -80,18 +80,18 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['username' => 'farah'], [
             'name' => 'Farah Diana',
             'email' => 'farah.diana@gmail.com',
-            'password' => '$2y$12$nshNMRB0RgxQMfSSuiFLKeQvG28MxgFMYflay7u/BJMjQAmKtN/pa',
+            'password' => '$2y$12$ROTf1aAsTyMg41VpD6Gmge/71tKamlDbGI5Kirm/sJTfxKFD4P7vG',
             'role' => 'staff',
             'phone' => '+60 19-901 2345',
             'status' => 'active',
         ]);
 
         User::updateOrCreate(['username' => 'Ali'], [
-            'name' => 'Ali alala',
-            'email' => 'mohamadhaizul16@gmail.com',
-            'password' => '$2y$12$JjHzb31Lw13nghmMRMOCmucjNZH4JvlpYZfnrmrhT1sEQ2jy9cDMG',
+            'name' => 'ala',
+            'email' => 'fypkumpulan31@gmail.com',
+            'password' => '$2y$12$V12wt4Ys9aw09QPqKsS5LuOtSDYWMoSIEJfud/ByUt1CB0a1OHDPS',
             'role' => 'staff',
-            'phone' => '0118222723462',
+            'phone' => '324234234',
             'status' => 'active',
         ]);
 
@@ -353,8 +353,8 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T05',
             'items' => 'Nasi Goreng, Teh O',
             'total' => 13.00,
-            'status' => 'completed',
-            'order_time' => '2026-05-10 10:30:00',
+            'status' => 'preparing',
+            'order_time' => '2026-05-13 10:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-002'], [
@@ -362,15 +362,15 @@ class DatabaseSeeder extends Seeder
             'items' => 'Ayam Goreng Kunyit',
             'total' => 12.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-10 10:45:00',
+            'order_time' => '2026-05-13 10:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-003'], [
             'table_number' => 'T01',
             'items' => 'Mee Goreng, Kopi O',
             'total' => 14.50,
-            'status' => 'completed',
-            'order_time' => '2026-05-10 11:00:00',
+            'status' => 'preparing',
+            'order_time' => '2026-05-13 11:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-004'], [
@@ -378,7 +378,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Teh Tarik',
             'total' => 8.50,
             'status' => 'completed',
-            'order_time' => '2026-05-10 11:15:00',
+            'order_time' => '2026-05-13 11:15:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-005'], [
@@ -386,7 +386,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Lemak, Milo',
             'total' => 13.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-10 11:30:00',
+            'order_time' => '2026-05-13 11:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-006'], [
@@ -394,7 +394,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Char Kuey Teow',
             'total' => 10.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-10 11:45:00',
+            'order_time' => '2026-05-13 11:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-007'], [
@@ -402,7 +402,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Goreng, Air Kelapa',
             'total' => 15.00,
             'status' => 'completed',
-            'order_time' => '2026-05-10 12:00:00',
+            'order_time' => '2026-05-13 12:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-008'], [
@@ -410,7 +410,15 @@ class DatabaseSeeder extends Seeder
             'items' => 'Mee Goreng, Teh O',
             'total' => 14.00,
             'status' => 'completed',
-            'order_time' => '2026-05-10 12:15:00',
+            'order_time' => '2026-05-13 12:15:00',
+        ]);
+
+        Order::updateOrCreate(['order_id' => '#ORD-009'], [
+            'table_number' => 'T09',
+            'items' => 'Ayam Goreng Kunyit, Nasi Lemak',
+            'total' => 21.00,
+            'status' => 'completed',
+            'order_time' => '2026-05-13 12:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-010'], [
@@ -418,39 +426,15 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Kopi O, Milo',
             'total' => 12.50,
             'status' => 'completed',
-            'order_time' => '2026-05-10 12:45:00',
+            'order_time' => '2026-05-13 12:45:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-5EZVPF'], [
-            'table_number' => '12',
-            'items' => '[{\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":12,\"quantity\":1},{\"id\":4,\"name\":\"Roti Canai\",\"price\":5,\"quantity\":2}]',
-            'total' => 23.32,
-            'status' => 'preparing',
-            'order_time' => '2026-05-10 01:36:17',
-        ]);
-
-        Order::updateOrCreate(['order_id' => '#ORD-CLBIYY'], [
-            'table_number' => 'T01',
-            'items' => '[{\"key\":\"29-\",\"id\":29,\"name\":\"Air Kosong\",\"price\":1,\"quantity\":1,\"addons\":[]},{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',
-            'total' => 5.83,
-            'status' => 'preparing',
-            'order_time' => '2026-05-10 04:42:17',
-        ]);
-
-        Order::updateOrCreate(['order_id' => '#ORD-G5IX1O'], [
-            'table_number' => 'A12',
-            'items' => '[{\"key\":\"26-\",\"id\":26,\"name\":\"Nescafe\",\"price\":4.5,\"quantity\":1,\"addons\":[]},{\"key\":\"27-\",\"id\":27,\"name\":\"Teh\",\"price\":4.5,\"quantity\":1,\"addons\":[]}]',
-            'total' => 9.54,
-            'status' => 'preparing',
-            'order_time' => '2026-05-10 04:43:00',
-        ]);
-
-        Order::updateOrCreate(['order_id' => '#ORD-PCNJ0G'], [
-            'table_number' => 'T05',
-            'items' => '[{\"key\":\"2-30\",\"id\":2,\"name\":\"Daging Goreng Kunyit\",\"price\":15.9,\"quantity\":1,\"addons\":[{\"id\":30,\"name\":\"Telur Mata\",\"price\":2}]},{\"key\":\"27-33\",\"id\":27,\"name\":\"Teh\",\"price\":5,\"quantity\":1,\"addons\":[{\"id\":33,\"name\":\"Ice\",\"price\":0.5}]}]',
-            'total' => 22.15,
-            'status' => 'preparing',
-            'order_time' => '2026-05-10 07:13:05',
+        Order::updateOrCreate(['order_id' => '#ORD-YQER0X'], [
+            'table_number' => 'T10',
+            'items' => '[{\"key\":\"1-\",\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":10.9,\"quantity\":1,\"addons\":[]}]',
+            'total' => 11.55,
+            'status' => 'completed',
+            'order_time' => '2026-05-13 00:39:23',
         ]);
 
         // Feedback
@@ -486,7 +470,7 @@ class DatabaseSeeder extends Seeder
 
         Feedback::updateOrCreate(['customer_name' => 'Tan Mei Ling'], [
             'rating' => 4,
-            'message' => 'Char kuey teow sangat sedap, macam Penang punya! Milo dia pun pekat. Good value for money.',
+            'message' => 'Char kuey teow sangat sedap, macamPenang punya! Milo dia pun pekat. Good value for money.',
             'feedback_date' => '2026-04-25 00:00:00',
         ]);
 

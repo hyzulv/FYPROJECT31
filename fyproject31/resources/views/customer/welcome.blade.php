@@ -17,7 +17,7 @@
         <div class="glass-overlay">
             <div class="logo-section">
                 <div class="logo-icon">
-                    <img src="{{ asset('logo.jpg') }}" alt="MAT ROCK" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                    <img src="{{ asset('images/brand/logo.jpg') }}" alt="MAT ROCK" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
                 </div>
                 <h1 class="restaurant-name">MAT ROCK</h1>
                 <p class="restaurant-tagline">Ayam Goreng Kunyit Skudai</p>

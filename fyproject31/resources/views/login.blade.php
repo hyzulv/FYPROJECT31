@@ -144,7 +144,7 @@
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="off">
-                        <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" class="toggle-password" onclick="togglePassword('password', 'toggle-password-icon')" style="width: 20px; cursor: pointer; opacity: 0.6; position: absolute; right: 15px; top: 50%; transform: translateY(-50%);">
+                        <img src="{{ asset('images/icons/show_password.png') }}" id="toggle-password-icon" class="toggle-password" onclick="togglePassword('password', 'toggle-password-icon')" style="width: 20px; cursor: pointer; opacity: 0.6; position: absolute; right: 15px; top: 50%; transform: translateY(-50%);">
                     </div>
                 </div>
 
@@ -167,10 +167,10 @@
         var icon = document.getElementById(iconId);
         if (input.type === 'password') {
             input.type = 'text';
-            icon.src = "{{ asset('hide_password.png') }}";
+            icon.src = "{{ asset('images/icons/hide_password.png') }}";
         } else {
             input.type = 'password';
-            icon.src = "{{ asset('show_password.png') }}";
+            icon.src = "{{ asset('images/icons/show_password.png') }}";
         }
     }
     </script>

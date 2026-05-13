@@ -118,7 +118,7 @@
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
                         <input type="password" id="password" name="password" placeholder="New password (min 6 characters)" required>
-                        <img src="{{ asset('show_password.png') }}" id="toggle-password-icon" class="toggle-password" onclick="togglePassword('password', 'toggle-password-icon')" style="width: 20px;">
+                        <img src="{{ asset('images/icons/show_password.png') }}" id="toggle-password-icon" class="toggle-password" onclick="togglePassword('password', 'toggle-password-icon')" style="width: 20px;">
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                     <div class="input-wrapper">
                         <span class="icon">🔒</span>
                         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" required>
-                        <img src="{{ asset('show_password.png') }}" id="toggle-confirm-icon" class="toggle-password" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="width: 20px;">
+                        <img src="{{ asset('images/icons/show_password.png') }}" id="toggle-confirm-icon" class="toggle-password" onclick="togglePassword('password_confirmation', 'toggle-confirm-icon')" style="width: 20px;">
                     </div>
                 </div>
 
@@ -146,10 +146,10 @@
         var icon = document.getElementById(iconId);
         if (input.type === 'password') {
             input.type = 'text';
-            icon.src = "{{ asset('hide_password.png') }}";
+            icon.src = "{{ asset('images/icons/hide_password.png') }}";
         } else {
             input.type = 'password';
-            icon.src = "{{ asset('show_password.png') }}";
+            icon.src = "{{ asset('images/icons/show_password.png') }}";
         }
     }
     </script>

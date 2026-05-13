@@ -31,7 +31,7 @@
             <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Password</label>
             <div style="position: relative;">
                 <input type="password" id="staff_password" name="password" required minlength="6" style="width: 100%; padding: 12px 45px 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
-                <img src="{{ asset('show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+                <img src="{{ asset('images/icons/show_password.png') }}" id="toggle-staff-icon" onclick="togglePassword('staff_password', 'toggle-staff-icon')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
             </div>
         </div>
         <div>
@@ -97,10 +97,10 @@ function togglePassword(inputId, iconId) {
     var icon = document.getElementById(iconId);
     if (input.type === 'password') {
         input.type = 'text';
-        icon.src = "{{ asset('hide_password.png') }}";
+        icon.src = "{{ asset('images/icons/hide_password.png') }}";
     } else {
         input.type = 'password';
-        icon.src = "{{ asset('show_password.png') }}";
+        icon.src = "{{ asset('images/icons/show_password.png') }}";
     }
 }
 

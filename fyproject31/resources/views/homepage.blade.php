@@ -420,7 +420,7 @@
     <header>
 <a href="/login" class="auth-button">Staff / Admin Login</a>
         <div class="logo">
-            <img src="{{ asset('logo.jpg') }}" alt="MAT ROCK">
+            <img src="{{ asset('images/brand/logo.jpg') }}" alt="MAT ROCK">
             <h1>MAT ROCK RESTAURANT ORDERING SYSTEM</h1>
         </div>
         <nav class="flex-wrap px-2" style="gap: 12px;">
@@ -688,7 +688,7 @@
                 <p>Stay connected on social media</p>
                 <div class="footer-social">
                     <a href="https://www.facebook.com/matrocksunway" target="_blank" aria-label="Facebook">f</a>
-                    <a href="https://www.instagram.com/officialmatrock?igsh=MWVibzR5NnlubmticQ%3D%3D" target="_blank" aria-label="Instagram"><img src="{{ asset('ig-logo.png') }}" alt="Instagram" style="width:24px;height:24px;"></a>
+                    <a href="https://www.instagram.com/officialmatrock?igsh=MWVibzR5NnlubmticQ%3D%3D" target="_blank" aria-label="Instagram"><img src="{{ asset('images/icons/ig-logo.png') }}" alt="Instagram" style="width:24px;height:24px;"></a>
                 </div>
             </div>
         </div>
