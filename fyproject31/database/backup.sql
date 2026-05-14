@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '4bd7f52d-492b-11f1-9d8f-74d4dd36602a:1-274';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '4bd7f52d-492b-11f1-9d8f-74d4dd36602a:1-325';
 
 --
 -- Table structure for table `cache`
@@ -338,6 +338,7 @@ CREATE TABLE `password_reset_tokens` (
 
 LOCK TABLES `password_reset_tokens` WRITE;
 /*!40000 ALTER TABLE `password_reset_tokens` DISABLE KEYS */;
+INSERT INTO `password_reset_tokens` VALUES ('danialhakim256@gmail.com','$2y$12$LoN9BkswMg9Vc69YRjbmQuLFnruAWrF1LELnH28G6WJeUCPr9yZYO','2026-05-13 18:47:18');
 /*!40000 ALTER TABLE `password_reset_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +403,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin User','admin','kumpulan31@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$TOvGyhVckt5vzrWQzyOZW.d0jUjMyWj7Eb6ozBPlYBloOZMk8vCSO','YI2oJd1nEOrDwpzvzue8bW5mbEfjx9tV4meGZOScQme4bpGOOtZioyJBeeqt','2026-05-06 03:15:15','2026-05-08 15:52:45'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$z9aI2Dgn8u24XWheQTPWOuR1YFhEC8NhGOqpbKz1GDLSyajxgvMvy',NULL,'2026-05-06 03:15:15','2026-05-06 06:54:24'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$bhYT9oVz/i3ct7BLb39kKOw8lztkZ84qMbxKHtLixTbN5faapN3Ei',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$SVvczyJk3Ui1YCTh9JqdUuweziq8kQtgvukaJtDxZRKISZY0pb1Pq',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$muaS6mYPvt/YBmYApYdlvO1LDz1s6Wh2h1HpZjEEI7m78Asj2PtF.',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$/2vTh1PfW7FwDRgqSIyxFOkzuIej4vJyTP7pDZfu9fmo8ItaE2qtm',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:25'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$IIg.MtvUwHy60YxH2yBIeOhDywnNrgOjw2XXJE6b3oueqwMBzPzT6',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:25'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$ROTf1aAsTyMg41VpD6Gmge/71tKamlDbGI5Kirm/sJTfxKFD4P7vG',NULL,'2026-05-06 03:15:17','2026-05-06 06:54:25'),(11,'ala','Ali','fypkumpulan31@gmail.com','staff','324234234','active',NULL,'$2y$12$V12wt4Ys9aw09QPqKsS5LuOtSDYWMoSIEJfud/ByUt1CB0a1OHDPS',NULL,'2026-05-06 07:37:04','2026-05-07 00:33:48');
+INSERT INTO `users` VALUES (1,'Admin User','admin','fypkumpulan31@gmail.com','admin','+60 11-123 4567','active',NULL,'$2y$12$Qc2MOyMARsdtayDz9YhZXOJM62zfI02Gh83KA4IS/AJzfzeDLVso6','Y6MxWvc7sPORr9su5HOeh9EuaLAiGbAZEbUmTVXqRyIC58rWe2skTqd2YRSS','2026-05-06 03:15:15','2026-05-13 18:52:40'),(2,'Ahmad Faizal','ahmad','ahmad.faizal@gmail.com','staff','+60 12-345 6789','active',NULL,'$2y$12$z9aI2Dgn8u24XWheQTPWOuR1YFhEC8NhGOqpbKz1GDLSyajxgvMvy',NULL,'2026-05-06 03:15:15','2026-05-06 06:54:24'),(3,'Nurul Aisyah','nurul','nurul.aisyah@gmail.com','staff','+60 13-456 7890','active',NULL,'$2y$12$bhYT9oVz/i3ct7BLb39kKOw8lztkZ84qMbxKHtLixTbN5faapN3Ei',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(4,'Raj Kumar','raj','raj.kumar@gmail.com','staff','+60 14-567 8901','active',NULL,'$2y$12$SVvczyJk3Ui1YCTh9JqdUuweziq8kQtgvukaJtDxZRKISZY0pb1Pq',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(5,'Lim Wei Jie','lim','lim.weijie@gmail.com','staff','+60 16-678 9012','active',NULL,'$2y$12$muaS6mYPvt/YBmYApYdlvO1LDz1s6Wh2h1HpZjEEI7m78Asj2PtF.',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:24'),(6,'Sarah Tan','sarah','sarah.tan@gmail.com','staff','+60 17-789 0123','inactive',NULL,'$2y$12$/2vTh1PfW7FwDRgqSIyxFOkzuIej4vJyTP7pDZfu9fmo8ItaE2qtm',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:25'),(7,'Zulkifli Hassan','zulkifli','zulkifli.h@gmail.com','staff','+60 18-890 1234','active',NULL,'$2y$12$IIg.MtvUwHy60YxH2yBIeOhDywnNrgOjw2XXJE6b3oueqwMBzPzT6',NULL,'2026-05-06 03:15:16','2026-05-06 06:54:25'),(8,'Farah Diana','farah','farah.diana@gmail.com','staff','+60 19-901 2345','active',NULL,'$2y$12$ROTf1aAsTyMg41VpD6Gmge/71tKamlDbGI5Kirm/sJTfxKFD4P7vG',NULL,'2026-05-06 03:15:17','2026-05-06 06:54:25'),(11,'ala','Ali','danialhakim256@gmail.com','staff','324234234','active',NULL,'$2y$12$hBG6WG4zKE2kfKEy4DVdIOMbjy9dHrwrthOo.GMIIa9/AFXdVRqqa','ebxJqzsSabDC0oANAWGft5MR3ODNPRxDm9w47tEdAhp4Fgy1VOKCBouXyHHH','2026-05-06 07:37:04','2026-05-13 18:48:44');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -416,4 +417,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-13  8:42:18
+-- Dump completed on 2026-05-14 10:52:40

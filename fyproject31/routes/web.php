@@ -154,7 +154,6 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('staff.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
 
@@ -162,7 +161,6 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
         $request->validate(['status' => 'required|in:preparing,completed']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->update(['status' => $request->status]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
         }
@@ -172,7 +170,6 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
     Route::delete('/orders/{orderId}', function ($orderId, \Illuminate\Http\Request $request) {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->delete();
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
         }
@@ -320,7 +317,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         return redirect()->route('admin.profile')->with('success', 'Password changed successfully!');
     })->name('change-password.submit');
 
@@ -328,7 +324,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         $request->validate(['status' => 'required|in:preparing,completed']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->update(['status' => $request->status]);
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
         }
@@ -338,7 +333,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/orders/{orderId}', function ($orderId, \Illuminate\Http\Request $request) {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->delete();
-        \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
         }

@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // Users
         User::updateOrCreate(['username' => 'admin'], [
             'name' => 'Admin User',
-            'email' => 'kumpulan31@gmail.com',
-            'password' => '$2y$12$TOvGyhVckt5vzrWQzyOZW.d0jUjMyWj7Eb6ozBPlYBloOZMk8vCSO',
+            'email' => 'fypkumpulan31@gmail.com',
+            'password' => '$2y$12$Qc2MOyMARsdtayDz9YhZXOJM62zfI02Gh83KA4IS/AJzfzeDLVso6',
             'role' => 'admin',
             'phone' => '+60 11-123 4567',
             'status' => 'active',
@@ -88,8 +88,8 @@ class DatabaseSeeder extends Seeder
 
         User::updateOrCreate(['username' => 'Ali'], [
             'name' => 'ala',
-            'email' => 'fypkumpulan31@gmail.com',
-            'password' => '$2y$12$V12wt4Ys9aw09QPqKsS5LuOtSDYWMoSIEJfud/ByUt1CB0a1OHDPS',
+            'email' => 'danialhakim256@gmail.com',
+            'password' => '$2y$12$hBG6WG4zKE2kfKEy4DVdIOMbjy9dHrwrthOo.GMIIa9/AFXdVRqqa',
             'role' => 'staff',
             'phone' => '324234234',
             'status' => 'active',
@@ -354,7 +354,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Goreng, Teh O',
             'total' => 13.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-13 10:30:00',
+            'order_time' => '2026-05-14 10:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-002'], [
@@ -362,7 +362,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Ayam Goreng Kunyit',
             'total' => 12.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-13 10:45:00',
+            'order_time' => '2026-05-14 10:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-003'], [
@@ -370,7 +370,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Mee Goreng, Kopi O',
             'total' => 14.50,
             'status' => 'preparing',
-            'order_time' => '2026-05-13 11:00:00',
+            'order_time' => '2026-05-14 11:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-004'], [
@@ -378,7 +378,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Teh Tarik',
             'total' => 8.50,
             'status' => 'completed',
-            'order_time' => '2026-05-13 11:15:00',
+            'order_time' => '2026-05-14 11:15:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-005'], [
@@ -386,7 +386,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Lemak, Milo',
             'total' => 13.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-13 11:30:00',
+            'order_time' => '2026-05-14 11:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-006'], [
@@ -394,7 +394,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Char Kuey Teow',
             'total' => 10.00,
             'status' => 'preparing',
-            'order_time' => '2026-05-13 11:45:00',
+            'order_time' => '2026-05-14 11:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-007'], [
@@ -402,7 +402,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Nasi Goreng, Air Kelapa',
             'total' => 15.00,
             'status' => 'completed',
-            'order_time' => '2026-05-13 12:00:00',
+            'order_time' => '2026-05-14 12:00:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-008'], [
@@ -410,7 +410,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Mee Goreng, Teh O',
             'total' => 14.00,
             'status' => 'completed',
-            'order_time' => '2026-05-13 12:15:00',
+            'order_time' => '2026-05-14 12:15:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-009'], [
@@ -418,7 +418,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Ayam Goreng Kunyit, Nasi Lemak',
             'total' => 21.00,
             'status' => 'completed',
-            'order_time' => '2026-05-13 12:30:00',
+            'order_time' => '2026-05-14 12:30:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-010'], [
@@ -426,7 +426,7 @@ class DatabaseSeeder extends Seeder
             'items' => 'Roti Canai, Kopi O, Milo',
             'total' => 12.50,
             'status' => 'completed',
-            'order_time' => '2026-05-13 12:45:00',
+            'order_time' => '2026-05-14 12:45:00',
         ]);
 
         Order::updateOrCreate(['order_id' => '#ORD-YQER0X'], [
@@ -434,7 +434,7 @@ class DatabaseSeeder extends Seeder
             'items' => '[{\"key\":\"1-\",\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":10.9,\"quantity\":1,\"addons\":[]}]',
             'total' => 11.55,
             'status' => 'completed',
-            'order_time' => '2026-05-13 00:39:23',
+            'order_time' => '2026-05-14 00:39:23',
         ]);
 
         // Feedback

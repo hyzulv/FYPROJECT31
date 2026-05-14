@@ -43,7 +43,6 @@ class ResetPasswordController extends Controller
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            \Illuminate\Support\Facades\Artisan::call('db:sync', ['--no-git' => true]);
             return redirect()->route('login')->with('status', 'Password reset successful!');
         }
 
