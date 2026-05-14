@@ -24,23 +24,30 @@ class ResetPasswordController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
-        $status = Password::broker()->reset(
-            [
-                'email' => $request->email,
-                'password' => $request->password,
-                'password_confirmation' => $request->password_confirmation,
-                'token' => $request->token,
-            ],
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => $password,
-                ])->setRememberToken(Str::random(60));
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'password_confirmation' => $request->password_confirmation,
+            'token' => $request->token,
+        ];
 
-                $user->save();
+        $callback = function ($user, $password) {
+            $user->forceFill([
+                'password' => $password,
+            ])->setRememberToken(Str::random(60));
 
-                event(new PasswordReset($user));
-            }
-        );
+            $user->save();
+
+            event(new PasswordReset($user));
+        };
+
+        $status = Password::broker('staff')->reset($credentials, $callback);
+
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('login')->with('status', 'Password reset successful!');
+        }
+
+        $status = Password::broker('admins')->reset($credentials, $callback);
 
         if ($status === Password::PASSWORD_RESET) {
             return redirect()->route('login')->with('status', 'Password reset successful!');

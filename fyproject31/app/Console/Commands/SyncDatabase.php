@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Staff;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
@@ -53,7 +54,8 @@ class SyncDatabase extends Command
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Staff;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
@@ -64,20 +66,36 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Users
+        // Admins
 ';
 
-        // Add users
-        $users = User::all();
-        foreach ($users as $user) {
+        // Add admins
+        $admins = Admin::all();
+        foreach ($admins as $user) {
             $name = addslashes($user->name);
             $email = addslashes($user->email);
             $phone = addslashes($user->phone ?? '');
-            $newContent .= "        User::updateOrCreate(['username' => '{$user->username}'], [
+            $newContent .= "        Admin::updateOrCreate(['username' => '{$user->username}'], [
             'name' => '{$name}',
             'email' => '{$email}',
             'password' => '{$user->password}',
-            'role' => '{$user->role}',
+            'phone' => '{$phone}',
+            'status' => '{$user->status}',
+        ]);\n\n";
+        }
+
+        $newContent .= '        // Staff
+';
+
+        $staff = Staff::all();
+        foreach ($staff as $user) {
+            $name = addslashes($user->name);
+            $email = addslashes($user->email);
+            $phone = addslashes($user->phone ?? '');
+            $newContent .= "        Staff::updateOrCreate(['username' => '{$user->username}'], [
+            'name' => '{$name}',
+            'email' => '{$email}',
+            'password' => '{$user->password}',
             'phone' => '{$phone}',
             'status' => '{$user->status}',
         ]);\n\n";

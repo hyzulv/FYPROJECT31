@@ -5,7 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CustomerOrderController;
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Staff;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
@@ -52,7 +53,7 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
     ]);
 
     try {
-        $adminEmail = User::where('role', 'admin')->value('email');
+        $adminEmail = Admin::value('email');
         \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactMail(
             $validated['name'],
             $validated['email'],
@@ -65,7 +66,7 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
 })->name('contact.send');
 
 // Staff Routes
-Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
+Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
         $pendingOrders = Order::where('status', 'preparing')->count();
@@ -111,7 +112,7 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
                 'name' => $user->name,
                 'username' => $user->username,
                 'email' => $user->email,
-                'role' => $user->role,
+                'role' => 'staff',
                 'phone' => $user->phone,
                 'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2024',
             ],
@@ -125,7 +126,11 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
     })->name('profile.update.name');
 
     Route::post('/profile/update-email', function (\Illuminate\Http\Request $request) {
-        $request->validate(['email' => 'required|email|max:255|unique:users,email,' . auth()->id()]);
+        $request->validate(['email' => ['required', 'email', 'max:255', function ($attribute, $value, $fail) {
+            $exists = Staff::where('email', $value)->where('id', '!=', auth()->id())->exists()
+                   || Admin::where('email', $value)->exists();
+            if ($exists) { $fail('The email has already been taken.'); }
+        }]]);
         auth()->user()->update(['email' => $request->email]);
         return back()->with('success', 'Email updated successfully!');
     })->name('profile.update.email');
@@ -228,12 +233,12 @@ Route::middleware('auth')->prefix('staff')->name('staff.')->group(function () {
 });
 
 // Admin Routes
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
         $pendingOrders = Order::where('status', 'preparing')->count();
         $completedOrders = Order::where('status', 'completed')->count();
-        $totalStaff = User::where('role', 'staff')->count();
+        $totalStaff = Staff::count();
         $recentOrders = Order::orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
@@ -274,7 +279,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
                 'name' => $user->name,
                 'username' => $user->username,
                 'email' => $user->email,
-                'role' => $user->role,
+                'role' => 'admin',
                 'phone' => $user->phone,
                 'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2023',
             ],
@@ -288,7 +293,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('profile.update.name');
 
     Route::post('/profile/update-email', function (\Illuminate\Http\Request $request) {
-        $request->validate(['email' => 'required|email|max:255|unique:users,email,' . auth()->id()]);
+        $request->validate(['email' => ['required', 'email', 'max:255', function ($attribute, $value, $fail) {
+            $exists = Admin::where('email', $value)->where('id', '!=', auth()->id())->exists()
+                   || Staff::where('email', $value)->exists();
+            if ($exists) { $fail('The email has already been taken.'); }
+        }]]);
         auth()->user()->update(['email' => $request->email]);
         return back()->with('success', 'Email updated successfully!');
     })->name('profile.update.email');
@@ -390,52 +399,65 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     })->name('feedback');
 
     Route::get('/staff', function () {
-        $staff = User::whereIn('role', ['staff', 'admin'])->get()->map(function ($u) {
-            return [
-                'id' => $u->id,
-                'name' => $u->name,
-                'username' => $u->username,
-                'email' => $u->email,
-                'role' => $u->role,
-                'phone' => $u->phone ?? '+60 12-345 6789',
-                'status' => ucfirst($u->status),
-            ];
+        $admins = Admin::all()->map(function ($u) {
+            return ['id' => 'admin_' . $u->id, 'name' => $u->name, 'username' => $u->username, 'email' => $u->email, 'role' => 'admin', 'phone' => $u->phone ?? '+60 12-345 6789', 'status' => ucfirst($u->status), 'model' => 'admin'];
         });
+        $staff = Staff::all()->map(function ($u) {
+            return ['id' => 'staff_' . $u->id, 'name' => $u->name, 'username' => $u->username, 'email' => $u->email, 'role' => 'staff', 'phone' => $u->phone ?? '+60 12-345 6789', 'status' => ucfirst($u->status), 'model' => 'staff'];
+        });
+        $allUsers = $admins->concat($staff)->sortBy('name')->values();
 
         return view('admin.staff', [
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
-            'staff' => $staff,
+            'staff' => $allUsers,
         ]);
     })->name('staff');
 
     Route::post('/staff/add', function (\Illuminate\Http\Request $request) {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
+            'username' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (Admin::where('username', $value)->exists() || Staff::where('username', $value)->exists()) {
+                    $fail('The username has already been taken.');
+                }
+            }],
+            'email' => ['required', 'email', 'max:255', function ($attribute, $value, $fail) {
+                if (Admin::where('email', $value)->exists() || Staff::where('email', $value)->exists()) {
+                    $fail('The email has already been taken.');
+                }
+            }],
             'password' => 'required|min:6',
             'role' => 'required|in:staff,admin',
             'phone' => 'nullable|string|max:255',
         ]);
 
-        User::create([
+        $model = $validated['role'] === 'admin' ? new Admin : new Staff;
+        $model->fill([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
-            'role' => $validated['role'],
             'phone' => $validated['phone'],
             'status' => 'active',
         ]);
+        $model->save();
 
         return redirect()->route('admin.staff')->with('success', 'Staff added successfully!');
     })->name('staff.add');
 
     Route::delete('/staff/{id}', function ($id) {
-        $user = User::findOrFail($id);
-        if ($user->role === 'admin' && User::where('role', 'admin')->count() <= 1) {
-            return back()->withErrors(['error' => 'Cannot delete the last admin.']);
+        $parts = explode('_', $id, 2);
+        $type = $parts[0];
+        $realId = $parts[1] ?? $id;
+
+        if ($type === 'admin') {
+            $user = Admin::findOrFail($realId);
+            if (Admin::count() <= 1) {
+                return back()->withErrors(['error' => 'Cannot delete the last admin.']);
+            }
+        } else {
+            $user = Staff::findOrFail($realId);
         }
         $user->delete();
         return redirect()->route('admin.staff')->with('success', 'Staff deleted successfully!');
@@ -443,7 +465,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 });
 
 // API Routes for Real-time Order Sync & Menu Management
-Route::middleware('auth')->prefix('api')->name('api.')->group(function () {
+Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
         static $lastCount = null;
         $currentCount = Order::count();

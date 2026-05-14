@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Staff;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
@@ -13,86 +14,62 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Users
-        User::updateOrCreate(['username' => 'admin'], [
+        // Admins
+        Admin::updateOrCreate(['username' => 'admin'], [
             'name' => 'Admin User',
             'email' => 'fypkumpulan31@gmail.com',
             'password' => '$2y$12$Qc2MOyMARsdtayDz9YhZXOJM62zfI02Gh83KA4IS/AJzfzeDLVso6',
-            'role' => 'admin',
             'phone' => '+60 11-123 4567',
             'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'ahmad'], [
-            'name' => 'Ahmad Faizal',
-            'email' => 'ahmad.faizal@gmail.com',
+        // Staff
+        Staff::updateOrCreate(['username' => 'ahmad'], [
+            'name' => 'Ahmad Faizal', 'email' => 'ahmad.faizal@gmail.com',
             'password' => '$2y$12$z9aI2Dgn8u24XWheQTPWOuR1YFhEC8NhGOqpbKz1GDLSyajxgvMvy',
-            'role' => 'staff',
-            'phone' => '+60 12-345 6789',
-            'status' => 'active',
+            'phone' => '+60 12-345 6789', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'nurul'], [
-            'name' => 'Nurul Aisyah',
-            'email' => 'nurul.aisyah@gmail.com',
+        Staff::updateOrCreate(['username' => 'nurul'], [
+            'name' => 'Nurul Aisyah', 'email' => 'nurul.aisyah@gmail.com',
             'password' => '$2y$12$bhYT9oVz/i3ct7BLb39kKOw8lztkZ84qMbxKHtLixTbN5faapN3Ei',
-            'role' => 'staff',
-            'phone' => '+60 13-456 7890',
-            'status' => 'active',
+            'phone' => '+60 13-456 7890', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'raj'], [
-            'name' => 'Raj Kumar',
-            'email' => 'raj.kumar@gmail.com',
+        Staff::updateOrCreate(['username' => 'raj'], [
+            'name' => 'Raj Kumar', 'email' => 'raj.kumar@gmail.com',
             'password' => '$2y$12$SVvczyJk3Ui1YCTh9JqdUuweziq8kQtgvukaJtDxZRKISZY0pb1Pq',
-            'role' => 'staff',
-            'phone' => '+60 14-567 8901',
-            'status' => 'active',
+            'phone' => '+60 14-567 8901', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'lim'], [
-            'name' => 'Lim Wei Jie',
-            'email' => 'lim.weijie@gmail.com',
+        Staff::updateOrCreate(['username' => 'lim'], [
+            'name' => 'Lim Wei Jie', 'email' => 'lim.weijie@gmail.com',
             'password' => '$2y$12$muaS6mYPvt/YBmYApYdlvO1LDz1s6Wh2h1HpZjEEI7m78Asj2PtF.',
-            'role' => 'staff',
-            'phone' => '+60 16-678 9012',
-            'status' => 'active',
+            'phone' => '+60 16-678 9012', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'sarah'], [
-            'name' => 'Sarah Tan',
-            'email' => 'sarah.tan@gmail.com',
+        Staff::updateOrCreate(['username' => 'sarah'], [
+            'name' => 'Sarah Tan', 'email' => 'sarah.tan@gmail.com',
             'password' => '$2y$12$/2vTh1PfW7FwDRgqSIyxFOkzuIej4vJyTP7pDZfu9fmo8ItaE2qtm',
-            'role' => 'staff',
-            'phone' => '+60 17-789 0123',
-            'status' => 'inactive',
+            'phone' => '+60 17-789 0123', 'status' => 'inactive',
         ]);
 
-        User::updateOrCreate(['username' => 'zulkifli'], [
-            'name' => 'Zulkifli Hassan',
-            'email' => 'zulkifli.h@gmail.com',
+        Staff::updateOrCreate(['username' => 'zulkifli'], [
+            'name' => 'Zulkifli Hassan', 'email' => 'zulkifli.h@gmail.com',
             'password' => '$2y$12$IIg.MtvUwHy60YxH2yBIeOhDywnNrgOjw2XXJE6b3oueqwMBzPzT6',
-            'role' => 'staff',
-            'phone' => '+60 18-890 1234',
-            'status' => 'active',
+            'phone' => '+60 18-890 1234', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'farah'], [
-            'name' => 'Farah Diana',
-            'email' => 'farah.diana@gmail.com',
+        Staff::updateOrCreate(['username' => 'farah'], [
+            'name' => 'Farah Diana', 'email' => 'farah.diana@gmail.com',
             'password' => '$2y$12$ROTf1aAsTyMg41VpD6Gmge/71tKamlDbGI5Kirm/sJTfxKFD4P7vG',
-            'role' => 'staff',
-            'phone' => '+60 19-901 2345',
-            'status' => 'active',
+            'phone' => '+60 19-901 2345', 'status' => 'active',
         ]);
 
-        User::updateOrCreate(['username' => 'Ali'], [
-            'name' => 'ala',
-            'email' => 'danialhakim256@gmail.com',
+        Staff::updateOrCreate(['username' => 'Ali'], [
+            'name' => 'ala', 'email' => 'danialhakim256@gmail.com',
             'password' => '$2y$12$hBG6WG4zKE2kfKEy4DVdIOMbjy9dHrwrthOo.GMIIa9/AFXdVRqqa',
-            'role' => 'staff',
-            'phone' => '324234234',
-            'status' => 'active',
+            'phone' => '324234234', 'status' => 'active',
         ]);
 
         // Menu Items
