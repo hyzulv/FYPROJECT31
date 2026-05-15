@@ -5,6 +5,7 @@
 @section('content')
 <div class="success-container">
     <div class="success-card">
+        @if($order->payment_status === 'paid')
         <div class="success-icon-large">
             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="45" stroke="#420C09" stroke-width="3" fill="rgba(66,12,9,0.1)"/>
@@ -12,6 +13,23 @@
             </svg>
         </div>
         <h1>Order Confirmed!</h1>
+        @elseif($order->payment_status === 'failed')
+        <div class="success-icon-large">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="#dc3545" stroke-width="3" fill="rgba(220,53,69,0.1)"/>
+                <path d="M35 35l30 30M65 35l-30 30" stroke="#dc3545" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Payment Failed</h1>
+        @else
+        <div class="success-icon-large">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="#420C09" stroke-width="3" fill="rgba(66,12,9,0.1)"/>
+                <path d="M30 50l12 12 24-24" stroke="#420C09" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Order Confirmed!</h1>
+        @endif
         <p class="order-id">Order {{ $order->order_id }}</p>
         <p class="order-details">Table {{ $order->table_number }}</p>
 
@@ -38,8 +56,26 @@
 
         <div class="status-badge">
             <span class="status-dot"></span>
-            <span>Preparing your order</span>
+            <span>
+                @if($order->payment_status === 'paid')
+                    Payment Successful &bull; Preparing your order
+                @elseif($order->payment_status === 'failed')
+                    Payment Failed &bull; Please pay at counter
+                @else
+                    Preparing your order &bull; Pay at counter
+                @endif
+            </span>
         </div>
+
+        @if($order->payment_status === 'paid' && $order->transaction_id)
+        <p class="transaction-id">Transaction: {{ $order->transaction_id }}</p>
+        @endif
+
+        @if($order->payment_status === 'unpaid' || $order->payment_status === 'failed')
+        <p style="color: #dc3545; font-size: 0.9rem; margin-top: 8px;">
+            Please pay at the counter to confirm your order.
+        </p>
+        @endif
 
         <p class="thank-you">Thank you for dining with us!</p>
 

@@ -13,6 +13,7 @@
                 <th>Table</th>
                 <th>Items</th>
                 <th>Total</th>
+                <th>Payment</th>
                 <th>Status</th>
                 <th>Time</th>
                 <th>Actions</th>
@@ -25,6 +26,7 @@
                 <td>{{ $order['table'] }}</td>
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
+                <td><span class="badge badge-{{ $order['payment_status'] ?? 'unpaid' }}">{{ ucfirst($order['payment_status'] ?? 'unpaid') }}</span></td>
                 <td>
                     <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
                         <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
@@ -121,11 +123,13 @@ function updateOrders(data) {
     let html = '';
     data.orders.forEach(order => {
         const encodedId = encodeURIComponent(order.id);
+        const payStatus = order.payment_status || 'unpaid';
         html += `<tr data-order-id="${order.id}">
             <td>${order.id}</td>
             <td>${order.table}</td>
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
+            <td><span class="badge badge-${payStatus}">${payStatus.charAt(0).toUpperCase() + payStatus.slice(1)}</span></td>
             <td>
                 <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
                     <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>

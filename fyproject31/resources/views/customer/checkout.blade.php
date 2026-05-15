@@ -56,22 +56,6 @@
         </button>
     </form>
 </div>
-
-<div class="success-modal" id="successModal" style="display: none;">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-        <div class="success-icon">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="35" stroke="#420C09" stroke-width="3" fill="rgba(66,12,9,0.1)"/>
-                <path d="M25 40l10 10 20-20" stroke="#420C09" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        <h2>Order Placed!</h2>
-        <p class="order-number" id="modalOrderId"></p>
-        <p>Your food is being prepared</p>
-        <a href="{{ route('homepage') }}" class="btn-primary">Back to Home</a>
-    </div>
-</div>
 @endsection
 
 @push('scripts')
@@ -190,8 +174,7 @@ async function placeOrder() {
 
         if (result.success) {
             window.cartManager.clearCart();
-            document.getElementById('modalOrderId').textContent = `Order ${result.order_id}`;
-            document.getElementById('successModal').style.display = 'flex';
+            window.location.href = result.receipt_url;
         } else {
             tableError.textContent = result.message || 'Something went wrong. Please try again.';
         }

@@ -248,6 +248,11 @@
             color: #ffc107;
         }
 
+        .badge-preparing {
+            background: rgba(0, 123, 255, 0.2);
+            color: #007bff;
+        }
+
         .badge-completed {
             background: rgba(40, 167, 69, 0.2);
             color: #28a745;
@@ -256,6 +261,21 @@
         .badge-processing {
             background: rgba(0, 123, 255, 0.2);
             color: #007bff;
+        }
+
+        .badge-paid {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .badge-unpaid {
+            background: rgba(255, 193, 7, 0.2);
+            color: #cc9a06;
+        }
+
+        .badge-failed {
+            background: rgba(220, 53, 69, 0.15);
+            color: #dc3545;
         }
 
         .badge-admin {

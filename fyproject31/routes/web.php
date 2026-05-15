@@ -35,6 +35,9 @@ Route::get('/cart', [CustomerOrderController::class, 'cart'])->name('customer.ca
 Route::get('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.checkout');
 Route::post('/order/store', [CustomerOrderController::class, 'storeOrder'])->name('customer.order.store');
 Route::get('/order/success/{orderId}', [CustomerOrderController::class, 'orderSuccess'])->name('customer.order.success');
+Route::get('/order/receipt/{order}', [CustomerOrderController::class, 'receipt'])->name('customer.order.receipt');
+Route::post('/payment/callback', [CustomerOrderController::class, 'paymentCallback'])->name('payment.callback');
+Route::get('/payment/redirect', [CustomerOrderController::class, 'paymentRedirect'])->name('payment.redirect');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -87,6 +90,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                     'items' => $itemsText ?: '-',
                     'total' => number_format($order->total, 2),
                     'status' => $order->status,
+                    'payment_status' => $order->payment_status,
                     'time' => $order->created_at?->diffForHumans(),
                 ];
             });
@@ -194,6 +198,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
                 'status' => $order->status,
+                'payment_status' => $order->payment_status,
                 'time' => $order->created_at?->diffForHumans() ?: '-',
             ];
         });
@@ -256,6 +261,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                     'items' => $itemsText ?: '-',
                     'total' => number_format($order->total, 2),
                     'status' => $order->status,
+                    'payment_status' => $order->payment_status,
                     'time' => $order->created_at?->diffForHumans(),
                 ];
             });
@@ -363,6 +369,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
                 'status' => $order->status,
+                'payment_status' => $order->payment_status,
                 'time' => $order->created_at?->diffForHumans() ?: '-',
             ];
         });
@@ -489,6 +496,7 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
                     'items' => $itemsText ?: '-',
                     'total' => number_format($order->total, 2),
                     'status' => $order->status,
+                    'payment_status' => $order->payment_status,
                     'time' => $order->created_at?->diffForHumans(),
                     'timestamp' => $order->created_at?->toISOString(),
                 ];
