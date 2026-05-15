@@ -28,12 +28,10 @@ class CustomerOrderController extends Controller
             ->where('status', 'available')
             ->get()
             ->filter(function ($addOn) use ($item) {
-                $appliesTo = json_decode($addOn->applies_to, true);
-                if ($appliesTo !== null && !in_array($item->category, $appliesTo)) {
+                if ($addOn->applies_to !== null && !in_array($item->category, $addOn->applies_to)) {
                     return false;
                 }
-                $excludeFor = json_decode($addOn->exclude_for, true);
-                if ($excludeFor !== null && in_array($item->name, $excludeFor)) {
+                if ($addOn->exclude_for !== null && in_array($item->name, $addOn->exclude_for)) {
                     return false;
                 }
                 return true;

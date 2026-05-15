@@ -35,15 +35,19 @@
             </div>
         </div>
         <div>
-            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Role</label>
-            <select name="role" required style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem;">
-                <option value="staff">Staff</option>
-                <option value="admin">Admin</option>
-            </select>
+            <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Confirm Password</label>
+            <div style="position: relative;">
+                <input type="password" id="staff_password_confirm" name="password_confirmation" required minlength="6" style="width: 100%; padding: 12px 45px 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
+                <img src="{{ asset('images/icons/show_password.png') }}" id="toggle-staff-icon-confirm" onclick="togglePassword('staff_password_confirm', 'toggle-staff-icon-confirm')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.6; width: 20px;">
+            </div>
         </div>
+
         <div>
             <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Phone</label>
-            <input type="text" name="phone" style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 0.95rem; transition: all 0.3s ease;">
+            <div style="display: flex; align-items: center; gap: 0;">
+                <span style="padding: 12px 10px 12px 15px; background: #e0e0e0; border: 1px solid #ddd; border-right: none; border-radius: 10px 0 0 10px; color: #555; font-size: 0.95rem; font-weight: 600;">+60</span>
+                <input type="tel" name="phone" maxlength="10" style="flex: 1; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 0 10px 10px 0; color: #222; font-size: 0.95rem; transition: all 0.3s ease;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            </div>
         </div>
         <button type="submit" style="padding: 12px 24px; background: #420C09; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">Add Staff</button>
     </form>

@@ -90,7 +90,10 @@
                     <div style="display: flex; align-items: center; gap: 15px;">
                         <div style="flex: 1;">
                             <label style="display: block; color: #420C09; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Phone</label>
-                            <input type="tel" name="phone" value="{{ $profile['phone'] ?? '' }}" maxlength="15" style="width: 100%; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; color: #222; font-size: 1rem; transition: all 0.3s ease;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <div style="display: flex; align-items: center; gap: 0;">
+                                <span style="padding: 12px 10px 12px 15px; background: #e0e0e0; border: 1px solid #ddd; border-right: none; border-radius: 10px 0 0 10px; color: #555; font-size: 1rem; font-weight: 600;">+60</span>
+                                <input type="tel" name="phone" value="{{ preg_replace('/^\+60/', '', $profile['phone'] ?? '') }}" maxlength="10" style="flex: 1; padding: 12px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 0 10px 10px 0; color: #222; font-size: 1rem; transition: all 0.3s ease;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
                         </div>
                         <button type="submit" style="margin-top: 24px; padding: 12px 24px; background: #420C09; border: none; border-radius: 10px; color: #fff; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Update</button>
                     </div>

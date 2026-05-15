@@ -137,7 +137,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
 
     Route::post('/profile/update-phone', function (\Illuminate\Http\Request $request) {
         $request->validate(['phone' => 'nullable|string|max:255']);
-        auth()->user()->update(['phone' => $request->phone]);
+        auth()->user()->update(['phone' => '+60' . ltrim($request->phone, '0')]);
         return back()->with('success', 'Phone updated successfully!');
     })->name('profile.update.phone');
 
@@ -206,11 +206,13 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     })->name('orders');
 
     Route::get('/menu', function () {
-        $menuItems = MenuItem::orderBy('name')->get();
+        $menuItems = MenuItem::orderBy('category')->orderBy('name')->get();
+        $addOns = MenuItem::where('category', 'add_on')->orderBy('name')->get();
         return view('staff.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'staff',
             'menuItems' => $menuItems,
+            'addOns' => $addOns,
         ]);
     })->name('menu');
 
@@ -304,7 +306,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     Route::post('/profile/update-phone', function (\Illuminate\Http\Request $request) {
         $request->validate(['phone' => 'nullable|string|max:255']);
-        auth()->user()->update(['phone' => $request->phone]);
+        auth()->user()->update(['phone' => '+60' . ltrim($request->phone, '0')]);
         return back()->with('success', 'Phone updated successfully!');
     })->name('profile.update.phone');
 
@@ -373,11 +375,13 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('orders');
 
     Route::get('/menu', function () {
-        $menuItems = MenuItem::orderBy('name')->get();
+        $menuItems = MenuItem::orderBy('category')->orderBy('name')->get();
+        $addOns = MenuItem::where('category', 'add_on')->orderBy('name')->get();
         return view('admin.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
             'menuItems' => $menuItems,
+            'addOns' => $addOns,
         ]);
     })->name('menu');
 
@@ -427,21 +431,18 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                     $fail('The email has already been taken.');
                 }
             }],
-            'password' => 'required|min:6',
-            'role' => 'required|in:staff,admin',
+            'password' => 'required|min:6|confirmed',
             'phone' => 'nullable|string|max:255',
         ]);
 
-        $model = $validated['role'] === 'admin' ? new Admin : new Staff;
-        $model->fill([
+        Staff::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
-            'phone' => $validated['phone'],
+            'phone' => $validated['phone'] ? '+60' . ltrim($validated['phone'], '0') : null,
             'status' => 'active',
         ]);
-        $model->save();
 
         return redirect()->route('admin.staff')->with('success', 'Staff added successfully!');
     })->name('staff.add');
@@ -510,7 +511,7 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
     })->name('orders.update-status');
 
     Route::get('/menu/check', function () {
-        $menuItems = MenuItem::orderBy('name')->get()->map(function ($item) {
+        $menuItems = MenuItem::orderBy('category')->orderBy('name')->get()->map(function ($item) {
             $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name);
             return [
                 'id' => $item->id,
@@ -533,15 +534,38 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'category' => 'required|string',
-            'status' => 'required|in:available,unavailable',
+            'status' => 'nullable|in:available,unavailable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'linked_addons' => 'nullable|array',
+            'linked_addons.*' => 'integer|exists:menu_items,id',
         ]);
+
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images/menu'), $imageName);
+        }
+
         $item = MenuItem::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'category' => $request->category,
-            'status' => $request->status,
+            'status' => $request->status ?? 'available',
+            'image' => $imageName,
         ]);
+
+        if ($request->category !== 'add_on' && $request->filled('linked_addons')) {
+            $addons = MenuItem::whereIn('id', $request->linked_addons)->where('category', 'add_on')->get();
+            foreach ($addons as $addon) {
+                $appliesTo = $addon->applies_to ?? [];
+                if (!in_array($request->category, $appliesTo)) {
+                    $appliesTo[] = $request->category;
+                    $addon->update(['applies_to' => $appliesTo]);
+                }
+            }
+        }
+
         return response()->json(['success' => true, 'item' => $item]);
     })->name('menu.add');
 
@@ -550,6 +574,14 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         $item->delete();
         return response()->json(['success' => true]);
     })->name('menu.delete');
+
+    Route::patch('/menu/{id}/status', function ($id) {
+        $request = request();
+        $request->validate(['status' => 'required|in:available,unavailable']);
+        $item = MenuItem::findOrFail($id);
+        $item->update(['status' => $request->status]);
+        return response()->json(['success' => true, 'status' => $item->status]);
+    })->name('menu.status');
 });
 
 // Test line
