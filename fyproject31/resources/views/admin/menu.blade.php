@@ -44,6 +44,7 @@
                     </select>
                 </td>
                 <td>
+                    <button onclick="openEditModal('{{ $item->id }}')" style="background: #ffc107; color: #222; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 4px;">Edit</button>
                     <button onclick="deleteMenuItem('{{ $item->id }}', '{{ $item->name }}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
                 </td>
             </tr>
@@ -103,6 +104,59 @@
         </form>
     </div>
 </div>
+<div id="editMenuModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 24px; border-radius: 12px; width: 90%; max-width: 420px; border: 2px solid #420C09;">
+        <h3 style="margin-bottom: 16px; color: #420C09;">Edit Menu Item</h3>
+        <form id="editMenuForm" onsubmit="submitEditMenu(event)">
+            <input type="hidden" name="id" id="editId">
+            <input type="text" name="name" id="editName" placeholder="Item Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+            <div id="editDescriptionContainer">
+                <textarea name="description" id="editDescription" placeholder="Description" rows="2" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;"></textarea>
+            </div>
+            <input type="number" name="price" id="editPrice" step="0.01" min="0" placeholder="Price (RM)" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+            <select name="category" id="editCategory" required onchange="toggleEditAddOnFields()" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <option value="ala_carte">Ala Carte</option>
+                <option value="combo_set">Combo Set</option>
+                <option value="mix">Mix</option>
+                <option value="nasi_lemak">Nasi Lemak</option>
+                <option value="kicap">Kicap Edition</option>
+                <option value="set_family">Set Family</option>
+                <option value="minuman">Minuman</option>
+                <option value="add_on">Add-On</option>
+            </select>
+            <select name="status" id="editStatus" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+            </select>
+            <div id="editImageUploadContainer">
+                <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Item Image</label>
+                <div id="editImagePreview" style="margin-bottom: 8px;"></div>
+                <input type="file" name="image" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" style="width: 100%; padding: 8px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <p style="margin: -8px 0 12px; font-size: 0.8rem; color: #888;">Max 2MB. Leave empty to keep current image.</p>
+            </div>
+            <div id="editAddonSelectionContainer" style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Link Add-Ons</label>
+                <div style="max-height: 150px; overflow-y: auto; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px;">
+                    @forelse($addOns as $addon)
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; color: #222; cursor: pointer;">
+                            <input type="checkbox" name="linked_addons[]" value="{{ $addon->id }}" class="edit-linked-addon">
+                            {{ $addon->name }} 
+                            @if($addon->group_name)
+                                <span style="color: #888; font-size: 0.8rem;">({{ $addon->group_name }})</span>
+                            @endif
+                        </label>
+                    @empty
+                        <span style="color: #999; font-size: 0.85rem;">No add-ons available.</span>
+                    @endforelse
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeEditModal()" style="flex: 1; padding: 10px; background: #f0f0f0; color: #222; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Cancel</button>
+                <button type="submit" style="flex: 1; padding: 10px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -151,6 +205,72 @@ function submitAddMenu(e) {
     .catch(() => alert('Error adding item. Please try again.'));
 }
 
+function openEditModal(id) {
+    fetch(`/api/menu/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            const item = data.item;
+            document.getElementById('editId').value = item.id;
+            document.getElementById('editName').value = item.name;
+            document.getElementById('editDescription').value = item.description || '';
+            document.getElementById('editPrice').value = item.price;
+            document.getElementById('editCategory').value = item.category;
+            document.getElementById('editStatus').value = item.status;
+            toggleEditAddOnFields();
+
+            const preview = document.getElementById('editImagePreview');
+            if (item.category !== 'add_on') {
+                const imgUrl = item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
+                preview.innerHTML = `<img src="${imgUrl}" alt="Current" style="width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid #ddd;">`;
+            } else {
+                preview.innerHTML = '';
+            }
+
+            document.querySelectorAll('#editAddonSelectionContainer .edit-linked-addon').forEach(cb => {
+                cb.checked = data.linked_addon_ids.includes(parseInt(cb.value));
+            });
+
+            document.getElementById('editMenuModal').style.display = 'flex';
+        })
+        .catch(() => alert('Failed to load item data.'));
+}
+
+function closeEditModal() {
+    document.getElementById('editMenuModal').style.display = 'none';
+    document.getElementById('editMenuForm').reset();
+    document.getElementById('editImagePreview').innerHTML = '';
+}
+
+function toggleEditAddOnFields() {
+    const cat = document.getElementById('editCategory').value;
+    const isAddOn = cat === 'add_on';
+    document.getElementById('editImageUploadContainer').style.display = isAddOn ? 'none' : 'block';
+    document.getElementById('editDescriptionContainer').style.display = isAddOn ? 'none' : 'block';
+    document.getElementById('editAddonSelectionContainer').style.display = isAddOn ? 'none' : 'block';
+}
+
+function submitEditMenu(e) {
+    e.preventDefault();
+    const form = e.target;
+    const id = document.getElementById('editId').value;
+    const data = new FormData(form);
+    fetch(`/api/menu/${id}/update`, {
+        method: 'POST',
+        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+        body: data
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            closeEditModal();
+            refreshMenu();
+        } else {
+            alert('Error updating item. Please check your input.');
+        }
+    })
+    .catch(() => alert('Error updating item. Please try again.'));
+}
+
 function deleteMenuItem(id, name) {
     if (!confirm(`Delete "${name}"?`)) return;
     fetch(`/api/menu/${id}`, {
@@ -184,6 +304,7 @@ function refreshMenu() {
                         </select>
                     </td>
                     <td>
+                        <button onclick="openEditModal('${item.id}')" style="background: #ffc107; color: #222; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 4px;">Edit</button>
                         <button onclick="deleteMenuItem('${item.id}', '${item.name.replace(/'/g, "\\'")}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
                     </td>
                 </tr>`;

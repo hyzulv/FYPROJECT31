@@ -517,7 +517,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                     $fail('The email has already been taken.');
                 }
             }],
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
             'phone' => 'nullable|string|max:255',
         ]);
 
@@ -549,6 +550,76 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $user->delete();
         return redirect()->route('admin.staff')->with('success', 'Staff deleted successfully!');
     })->name('staff.delete');
+
+    Route::get('/staff/{id}/edit', function ($id) {
+        $parts = explode('_', $id, 2);
+        $type = $parts[0];
+        $realId = $parts[1] ?? $id;
+
+        if ($type === 'admin') {
+            $user = Admin::findOrFail($realId);
+        } else {
+            $user = Staff::findOrFail($realId);
+        }
+
+        return response()->json([
+            'name' => $user->name,
+            'username' => $user->username,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'status' => ucfirst($user->status),
+        ]);
+    })->name('staff.edit');
+
+    Route::post('/staff/{id}/update', function (\Illuminate\Http\Request $request, $id) {
+        $parts = explode('_', $id, 2);
+        $type = $parts[0];
+        $realId = $parts[1] ?? $id;
+
+        if ($type === 'admin') {
+            $user = Admin::findOrFail($realId);
+        } else {
+            $user = Staff::findOrFail($realId);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) use ($user) {
+                $adminExists = Admin::where('username', $value)->where('id', '!=', $user->id)->exists();
+                $staffExists = Staff::where('username', $value)->where('id', '!=', $user->id)->exists();
+                if ($adminExists || $staffExists) {
+                    $fail('The username has already been taken.');
+                }
+            }],
+            'email' => ['required', 'email', 'max:255', function ($attribute, $value, $fail) use ($user) {
+                $adminExists = Admin::where('email', $value)->where('id', '!=', $user->id)->exists();
+                $staffExists = Staff::where('email', $value)->where('id', '!=', $user->id)->exists();
+                if ($adminExists || $staffExists) {
+                    $fail('The email has already been taken.');
+                }
+            }],
+            'phone' => 'nullable|string|max:255',
+            'status' => 'required|in:active,inactive',
+            'password' => 'nullable|min:6',
+            'password_confirmation' => 'required_with:password|same:password',
+        ]);
+
+        $data = [
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ? '+60' . ltrim($validated['phone'], '0') : null,
+            'status' => $validated['status'],
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($validated['password']);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.staff')->with('success', 'Staff updated successfully!');
+    })->name('staff.update');
 });
 
 // API Routes for Real-time Order Sync & Menu Management
@@ -669,6 +740,93 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         $item->update(['status' => $request->status]);
         return response()->json(['success' => true, 'status' => $item->status]);
     })->name('menu.status');
+
+    Route::get('/menu/{id}', function ($id) {
+        $item = MenuItem::findOrFail($id);
+        $linkedAddonIds = [];
+        if ($item->category !== 'add_on') {
+            $linkedAddonIds = MenuItem::where('category', 'add_on')
+                ->whereJsonContains('applies_to', $item->category)
+                ->pluck('id')
+                ->toArray();
+        }
+        return response()->json([
+            'item' => $item,
+            'linked_addon_ids' => $linkedAddonIds,
+        ]);
+    })->name('menu.show');
+
+    Route::post('/menu/{id}/update', function ($id) {
+        $request = request();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|string',
+            'status' => 'nullable|in:available,unavailable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'linked_addons' => 'nullable|array',
+            'linked_addons.*' => 'integer|exists:menu_items,id',
+        ]);
+
+        $item = MenuItem::findOrFail($id);
+        $oldCategory = $item->category;
+
+        $imageName = $item->image;
+        if ($request->hasFile('image')) {
+            if ($item->image && file_exists(public_path('images/menu/' . $item->image))) {
+                @unlink(public_path('images/menu/' . $item->image));
+            }
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images/menu'), $imageName);
+        }
+
+        $item->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category' => $request->category,
+            'status' => $request->status ?? 'available',
+            'image' => $imageName,
+        ]);
+
+        if ($oldCategory !== $request->category && $oldCategory !== 'add_on') {
+            $oldLinkedAddons = MenuItem::where('category', 'add_on')
+                ->whereJsonContains('applies_to', $oldCategory)
+                ->get();
+            foreach ($oldLinkedAddons as $addon) {
+                $appliesTo = $addon->applies_to ?? [];
+                $appliesTo = array_values(array_filter($appliesTo, fn($c) => $c !== $oldCategory));
+                $addon->update(['applies_to' => $appliesTo]);
+            }
+        }
+
+        if ($request->category !== 'add_on') {
+            $allAddons = MenuItem::where('category', 'add_on')
+                ->whereJsonContains('applies_to', $request->category)
+                ->get();
+            foreach ($allAddons as $addon) {
+                if (!$request->filled('linked_addons') || !in_array($addon->id, $request->linked_addons)) {
+                    $appliesTo = $addon->applies_to ?? [];
+                    $appliesTo = array_values(array_filter($appliesTo, fn($c) => $c !== $request->category));
+                    $addon->update(['applies_to' => $appliesTo]);
+                }
+            }
+
+            if ($request->filled('linked_addons')) {
+                $addons = MenuItem::whereIn('id', $request->linked_addons)->where('category', 'add_on')->get();
+                foreach ($addons as $addon) {
+                    $appliesTo = $addon->applies_to ?? [];
+                    if (!in_array($request->category, $appliesTo)) {
+                        $appliesTo[] = $request->category;
+                        $addon->update(['applies_to' => $appliesTo]);
+                    }
+                }
+            }
+        }
+
+        return response()->json(['success' => true]);
+    })->name('menu.update');
 });
 
 // Test line
