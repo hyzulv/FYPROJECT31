@@ -623,7 +623,100 @@
         </section>
         <section id="feedback" class="section">
             <h2>Feedback</h2>
-            <p>Share your feedback.</p>
+
+            @if(session('feedback_success'))
+            <div style="background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745; padding: 12px; border-radius: 5px; margin-bottom: 15px; text-align: center;">{{ session('feedback_success') }}</div>
+            @endif
+            @if(session('feedback_error'))
+            <div style="background: rgba(220, 53, 69, 0.2); border: 1px solid #dc3545; color: #dc3545; padding: 12px; border-radius: 5px; margin-bottom: 15px; text-align: center;">{{ session('feedback_error') }}</div>
+            @endif
+
+            <div style="max-width: 700px; margin: 20px auto; background-color: #fafafa; padding: 20px; border-radius: 8px; border: 2px solid #420C09;">
+                <form method="POST" action="{{ route('feedback.send') }}">
+                    @csrf
+                    <label style="display: block; color: #420C09; margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Name:</label>
+                    <input type="text" name="customer_name" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 15px; background-color: #FFFFFF; border: 1px solid #420C09; color: #222222; border-radius: 5px; box-sizing: border-box;">
+
+                    <label style="display: block; color: #420C09; margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Rating:</label>
+                    <div class="star-rating" style="margin-bottom: 15px; font-size: 2rem; cursor: pointer;">
+                        <span class="star" data-value="1" style="color: #ddd;">&#9733;</span>
+                        <span class="star" data-value="2" style="color: #ddd;">&#9733;</span>
+                        <span class="star" data-value="3" style="color: #ddd;">&#9733;</span>
+                        <span class="star" data-value="4" style="color: #ddd;">&#9733;</span>
+                        <span class="star" data-value="5" style="color: #ddd;">&#9733;</span>
+                        <input type="hidden" name="rating" id="rating-value" value="0">
+                    </div>
+
+                    <label style="display: block; color: #420C09; margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Message:</label>
+                    <textarea name="message" rows="5" placeholder="Share your feedback..." required style="width: 100%; padding: 10px; margin-bottom: 15px; background-color: #FFFFFF; border: 1px solid #420C09; color: #222222; border-radius: 5px; box-sizing: border-box;"></textarea>
+
+                    <button type="submit" style="background-color: #420C09; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; width: 100%;">Submit Feedback</button>
+                </form>
+            </div>
+
+            @if(isset($feedbacks) && count($feedbacks) > 0)
+            <div style="max-width: 700px; margin: 30px auto;">
+                <h3 style="color: #420C09; margin-bottom: 20px;">Recent Feedback</h3>
+                <div style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                @foreach($feedbacks as $fb)
+                @php $isOwner = in_array($fb->id, $ownedFeedbackIds); @endphp
+                <div id="fb-card-{{ $fb->id }}" style="background-color: #fafafa; border: 1px solid #420C09; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <strong style="color: #420C09;">{{ $fb->customer_name }}</strong>
+                        <span style="color: #FFD700;">{!! str_repeat('&#9733;', $fb->rating) !!}{!! str_repeat('&#9734;', 5 - $fb->rating) !!}</span>
+                    </div>
+                    <p style="color: #333333; margin: 0;">{{ $fb->message }}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                        <span style="color: #666; font-size: 0.85rem;">{{ $fb->feedback_date->format('F j, Y') }}</span>
+                        @if($isOwner)
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="showEditForm({{ $fb->id }})" style="background: none; border: 1px solid #420C09; color: #420C09; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Edit</button>
+                            <button onclick="confirmDelete({{ $fb->id }})" style="background: none; border: 1px solid #dc3545; color: #dc3545; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                @if($isOwner)
+                <div id="fb-edit-{{ $fb->id }}" style="display: none; max-width: 700px; margin-bottom: 15px; background-color: #fafafa; padding: 20px; border-radius: 8px; border: 2px solid #420C09;">
+                    <form method="POST" action="{{ route('feedback.update', $fb->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <label style="display: block; color: #420C09; margin-top: 10px; margin-bottom: 5px; font-weight: bold;">Name:</label>
+                        <input type="text" name="customer_name" value="{{ $fb->customer_name }}" required style="width: 100%; padding: 10px; margin-bottom: 12px; background-color: #FFFFFF; border: 1px solid #420C09; color: #222222; border-radius: 5px; box-sizing: border-box;">
+
+                        <label style="display: block; color: #420C09; margin-top: 10px; margin-bottom: 5px; font-weight: bold;">Rating:</label>
+                        <div class="edit-star-rating" data-fb-id="{{ $fb->id }}" style="margin-bottom: 12px; font-size: 2rem; cursor: pointer;">
+                            @for($s = 1; $s <= 5; $s++)
+                            <span class="estar" data-fb-id="{{ $fb->id }}" data-value="{{ $s }}" style="color: {{ $s <= $fb->rating ? '#FFD700' : '#ddd' }};">&#9733;</span>
+                            @endfor
+                            <input type="hidden" name="rating" id="edit-rating-{{ $fb->id }}" value="{{ $fb->rating }}">
+                        </div>
+
+                        <label style="display: block; color: #420C09; margin-top: 10px; margin-bottom: 5px; font-weight: bold;">Message:</label>
+                        <textarea name="message" rows="5" required style="width: 100%; padding: 10px; margin-bottom: 12px; background-color: #FFFFFF; border: 1px solid #420C09; color: #222222; border-radius: 5px; box-sizing: border-box;">{{ $fb->message }}</textarea>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" style="background-color: #420C09; color: white; padding: 10px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Save</button>
+                            <button type="button" onclick="hideEditForm({{ $fb->id }})" style="background: #eee; color: #555; padding: 10px 24px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="fb-delete-{{ $fb->id }}" style="display: none; max-width: 700px; margin-bottom: 15px; background-color: #fff3f3; padding: 20px; border-radius: 8px; border: 2px solid #dc3545;">
+                    <p style="color: #dc3545; font-weight: bold; margin: 0 0 10px 0;">Delete this feedback?</p>
+                    <form method="POST" action="{{ route('feedback.delete', $fb->id) }}" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background-color: #dc3545; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Yes, Delete</button>
+                        <button type="button" onclick="hideDeleteForm({{ $fb->id }})" style="background: #eee; color: #555; padding: 8px 20px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancel</button>
+                    </form>
+                </div>
+                @endif
+                @endforeach
+                </div>
+            </div>
+            @endif
         </section>
     </div>
     <script>
@@ -637,12 +730,83 @@
             document.getElementById(sectionId).style.display = 'block';
         }
 
-        // Show Contact section if success/error message exists, else show About
+        // Edit / Delete toggle functions
+        function showEditForm(id) {
+            document.getElementById('fb-card-' + id).style.display = 'none';
+            document.getElementById('fb-edit-' + id).style.display = 'block';
+        }
+        function hideEditForm(id) {
+            document.getElementById('fb-card-' + id).style.display = 'block';
+            document.getElementById('fb-edit-' + id).style.display = 'none';
+        }
+        function confirmDelete(id) {
+            document.getElementById('fb-card-' + id).style.display = 'none';
+            document.getElementById('fb-delete-' + id).style.display = 'block';
+        }
+        function hideDeleteForm(id) {
+            document.getElementById('fb-card-' + id).style.display = 'block';
+            document.getElementById('fb-delete-' + id).style.display = 'none';
+        }
+
+        // Edit form star rating interaction
+        document.querySelectorAll('.edit-star-rating .estar').forEach(function(star) {
+            star.addEventListener('click', function() {
+                var fbId = this.getAttribute('data-fb-id');
+                var value = this.getAttribute('data-value');
+                document.getElementById('edit-rating-' + fbId).value = value;
+                document.querySelectorAll('.edit-star-rating[data-fb-id="' + fbId + '"] .estar').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= value ? '#FFD700' : '#ddd';
+                });
+            });
+            star.addEventListener('mouseenter', function() {
+                var fbId = this.getAttribute('data-fb-id');
+                var value = this.getAttribute('data-value');
+                document.querySelectorAll('.edit-star-rating[data-fb-id="' + fbId + '"] .estar').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= value ? '#FFD700' : '#ddd';
+                });
+            });
+            star.addEventListener('mouseleave', function() {
+                var fbId = this.getAttribute('data-fb-id');
+                var selected = document.getElementById('edit-rating-' + fbId).value;
+                document.querySelectorAll('.edit-star-rating[data-fb-id="' + fbId + '"] .estar').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= selected ? '#FFD700' : '#ddd';
+                });
+            });
+        });
+
+        // Star rating interaction
+        document.querySelectorAll('.star-rating .star').forEach(function(star) {
+            star.addEventListener('click', function() {
+                var value = this.getAttribute('data-value');
+                document.getElementById('rating-value').value = value;
+                document.querySelectorAll('.star-rating .star').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= value ? '#FFD700' : '#ddd';
+                });
+            });
+            star.addEventListener('mouseenter', function() {
+                var value = this.getAttribute('data-value');
+                document.querySelectorAll('.star-rating .star').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= value ? '#FFD700' : '#ddd';
+                });
+            });
+            star.addEventListener('mouseleave', function() {
+                var selected = document.getElementById('rating-value').value;
+                document.querySelectorAll('.star-rating .star').forEach(function(s) {
+                    s.style.color = s.getAttribute('data-value') <= selected ? '#FFD700' : '#ddd';
+                });
+            });
+        });
+
+        // Show Contact section if success/error message exists, else show Feedback, else show About
         window.onload = function() {
             var contactSection = document.getElementById('contact');
-            var hasAlert = contactSection && contactSection.querySelector('div[style*="rgba(40, 167, 69"], div[style*="rgba(220, 53, 69"]');
-            if (hasAlert) {
+            var feedbackSection = document.getElementById('feedback');
+            var hasContactAlert = contactSection && contactSection.querySelector('div[style*="rgba(40, 167, 69"], div[style*="rgba(220, 53, 69"]');
+            var hasFeedbackAlert = feedbackSection && feedbackSection.querySelector('div[style*="rgba(40, 167, 69"], div[style*="rgba(220, 53, 69"]');
+            if (hasContactAlert) {
                 showSection('contact');
+            } else if (hasFeedbackAlert) {
+                showSection('feedback');
             } else {
                 showSection('about');
             }

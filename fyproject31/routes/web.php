@@ -23,7 +23,9 @@ Route::get('/', function () {
         ->inRandomOrder()
         ->take(4)
         ->get();
-    return view('homepage', ['foods' => $foods, 'drinks' => $drinks]);
+    $feedbacks = \App\Models\Feedback::orderBy('feedback_date', 'desc')->take(10)->get();
+    $ownedFeedbackIds = session('owned_feedback_ids', []);
+    return view('homepage', ['foods' => $foods, 'drinks' => $drinks, 'feedbacks' => $feedbacks, 'ownedFeedbackIds' => $ownedFeedbackIds]);
 })->name('homepage');
 Route::get('/homepage', function () {
     return redirect()->route('homepage');
@@ -67,6 +69,71 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
         return back()->with('contact_error', 'Sorry, failed to send message. Please try again later.');
     }
 })->name('contact.send');
+
+Route::post('/feedback', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'message' => 'required|string',
+    ]);
+
+    try {
+        $feedback = Feedback::create([
+            'customer_name' => $validated['customer_name'],
+            'rating' => $validated['rating'],
+            'message' => $validated['message'],
+            'feedback_date' => now(),
+        ]);
+        session()->push('owned_feedback_ids', $feedback->id);
+        return back()->with('feedback_success', 'Thank you for your feedback!');
+    } catch (\Exception $e) {
+        return back()->with('feedback_error', 'Sorry, failed to submit feedback. Please try again later.');
+    }
+})->name('feedback.send');
+
+Route::put('/feedback/{id}', function (\Illuminate\Http\Request $request, $id) {
+    $ownedIds = session('owned_feedback_ids', []);
+    if (!in_array((int)$id, $ownedIds)) {
+        return back()->with('feedback_error', 'You can only edit your own feedback.');
+    }
+
+    $validated = $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'message' => 'required|string',
+    ]);
+
+    try {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->update([
+            'customer_name' => $validated['customer_name'],
+            'rating' => $validated['rating'],
+            'message' => $validated['message'],
+        ]);
+        return back()->with('feedback_success', 'Your feedback has been updated!');
+    } catch (\Exception $e) {
+        return back()->with('feedback_error', 'Sorry, failed to update feedback. Please try again later.');
+    }
+})->name('feedback.update');
+
+Route::delete('/feedback/{id}', function ($id) {
+    $ownedIds = session('owned_feedback_ids', []);
+    if (!in_array((int)$id, $ownedIds)) {
+        return back()->with('feedback_error', 'You can only delete your own feedback.');
+    }
+
+    try {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+        $ownedIds = array_filter($ownedIds, function ($oid) use ($id) {
+            return (int)$oid !== (int)$id;
+        });
+        session(['owned_feedback_ids' => array_values($ownedIds)]);
+        return back()->with('feedback_success', 'Your feedback has been deleted.');
+    } catch (\Exception $e) {
+        return back()->with('feedback_error', 'Sorry, failed to delete feedback. Please try again later.');
+    }
+})->name('feedback.delete');
 
 // Staff Routes
 Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function () {
@@ -222,7 +289,12 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     })->name('menu');
 
     Route::get('/feedback', function () {
-        $feedbacks = Feedback::orderBy('feedback_date', 'desc')->get()->map(function ($fb) {
+        $rating = request()->query('rating');
+        $query = Feedback::orderBy('feedback_date', 'desc');
+        if ($rating && in_array((int)$rating, [1,2,3,4,5])) {
+            $query->where('rating', (int)$rating);
+        }
+        $feedbacks = $query->get()->map(function ($fb) {
             return [
                 'customer' => $fb->customer_name,
                 'rating' => $fb->rating,
@@ -235,6 +307,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
             'userName' => auth()->user()->name,
             'userRole' => 'staff',
             'feedbacks' => $feedbacks,
+            'selectedRating' => $rating ? (int)$rating : null,
         ]);
     })->name('feedback');
 });
@@ -393,7 +466,12 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('menu');
 
     Route::get('/feedback', function () {
-        $feedbacks = Feedback::orderBy('feedback_date', 'desc')->get()->map(function ($fb) {
+        $rating = request()->query('rating');
+        $query = Feedback::orderBy('feedback_date', 'desc');
+        if ($rating && in_array((int)$rating, [1,2,3,4,5])) {
+            $query->where('rating', (int)$rating);
+        }
+        $feedbacks = $query->get()->map(function ($fb) {
             return [
                 'customer' => $fb->customer_name,
                 'rating' => $fb->rating,
@@ -406,6 +484,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
             'feedbacks' => $feedbacks,
+            'selectedRating' => $rating ? (int)$rating : null,
         ]);
     })->name('feedback');
 
