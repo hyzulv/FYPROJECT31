@@ -102,14 +102,6 @@
                 <div class="payment-status unpaid">
                     <span class="payment-badge unpaid">Unpaid</span>
                     <p>Please complete your payment to confirm order.</p>
-                    @if($payment_url)
-                        <a href="{{ $payment_url }}" class="btn-primary pay-now-btn">
-                            Pay Now with ToyyibPay
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                                <path d="M9 18l6-6-6-6"/>
-                            </svg>
-                        </a>
-                    @endif
                 </div>
             @endif
         </div>

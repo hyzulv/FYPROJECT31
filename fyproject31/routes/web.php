@@ -142,7 +142,8 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
         $pendingOrders = Order::where('status', 'preparing')->count();
         $completedOrders = Order::where('status', 'completed')->count();
         $totalMenuItems = MenuItem::where('status', 'available')->count();
-        $recentOrders = Order::orderBy('updated_at', 'desc')
+        $recentOrders = Order::where('payment_status', '!=', 'failed')
+            ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {
@@ -319,7 +320,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $pendingOrders = Order::where('status', 'preparing')->count();
         $completedOrders = Order::where('status', 'completed')->count();
         $totalStaff = Staff::count();
-        $recentOrders = Order::orderBy('updated_at', 'desc')
+        $recentOrders = Order::where('payment_status', '!=', 'failed')
+            ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {

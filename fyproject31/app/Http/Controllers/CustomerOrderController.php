@@ -185,10 +185,16 @@ class CustomerOrderController extends Controller
             ]);
         }
 
+        $paymentUrl = null;
+        if ($order->bill_code) {
+            $paymentUrl = $toyyibpay->getPaymentUrl($order->bill_code);
+        }
+
         return response()->json([
             'success' => true,
             'order_id' => $order->order_id,
-                'receipt_url' => route('customer.order.receipt', ['order' => $order->id]),
+            'payment_url' => $paymentUrl,
+            'receipt_url' => route('customer.order.receipt', ['order' => $order->id]),
             'message' => 'Order placed successfully!',
         ]);
     }
@@ -273,17 +279,10 @@ class CustomerOrderController extends Controller
         return redirect()->route('homepage');
     }
 
-    public function receipt(Order $order, ToyyibPayService $toyyibpay)
+    public function receipt(Order $order)
     {
-
-        $paymentUrl = null;
-        if ($order->bill_code && $order->payment_status === 'unpaid') {
-            $paymentUrl = $toyyibpay->getPaymentUrl($order->bill_code);
-        }
-
         return view('customer.receipt', [
             'order' => $order,
-            'payment_url' => $paymentUrl,
         ]);
     }
 

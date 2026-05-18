@@ -109,7 +109,7 @@ function updateOrders(data) {
 
     const tbody = document.getElementById('ordersTableBody');
     let html = '';
-    data.orders.forEach(order => {
+    data.orders.filter(order => order.payment_status !== 'failed').forEach(order => {
         html += `<tr>
             <td>${order.id}</td>
             <td>${order.table}</td>
