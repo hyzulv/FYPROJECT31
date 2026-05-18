@@ -37,7 +37,10 @@
     <form id="checkoutForm" class="checkout-form">
         <div class="form-group">
             <label for="table_number">Table Number <span class="required">*</span></label>
-            <input type="text" id="table_number" name="table_number" placeholder="e.g., T01, 5, A12" required>
+            <div class="table-input-wrapper">
+                <span class="table-prefix">T</span>
+                <input type="text" id="table_number" name="table_number" placeholder="01" maxlength="2" inputmode="numeric" pattern="[0-9]{2}" required>
+            </div>
             <span class="error-message" id="tableError"></span>
         </div>
 
@@ -66,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
         placeOrder();
+    });
+
+    document.getElementById('table_number').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 2);
     });
 });
 
@@ -131,8 +138,14 @@ async function placeOrder() {
 
     tableError.textContent = '';
 
-    if (!tableInput.value.trim()) {
+    const tableVal = tableInput.value.trim();
+    if (!tableVal) {
         tableError.textContent = 'Please enter your table number';
+        tableInput.focus();
+        return;
+    }
+    if (!/^\d{2}$/.test(tableVal)) {
+        tableError.textContent = 'Please enter 2 digits only (e.g., 01, 12, 99)';
         tableInput.focus();
         return;
     }

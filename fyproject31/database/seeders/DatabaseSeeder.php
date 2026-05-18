@@ -326,7 +326,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Orders
-        Order::updateOrCreate(['order_id' => '#ORD-001'], [
+        Order::updateOrCreate(['order_id' => '#MR-0001'], [
             'table_number' => 'T05',
             'items' => 'Nasi Goreng, Teh O',
             'total' => 13.00,
@@ -334,7 +334,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 10:30:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-002'], [
+        Order::updateOrCreate(['order_id' => '#MR-0002'], [
             'table_number' => 'T03',
             'items' => 'Ayam Goreng Kunyit',
             'total' => 12.00,
@@ -342,7 +342,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 10:45:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-003'], [
+        Order::updateOrCreate(['order_id' => '#MR-0003'], [
             'table_number' => 'T01',
             'items' => 'Mee Goreng, Kopi O',
             'total' => 14.50,
@@ -350,7 +350,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 11:00:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-004'], [
+        Order::updateOrCreate(['order_id' => '#MR-0004'], [
             'table_number' => 'T08',
             'items' => 'Roti Canai, Teh Tarik',
             'total' => 8.50,
@@ -358,7 +358,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 11:15:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-005'], [
+        Order::updateOrCreate(['order_id' => '#MR-0005'], [
             'table_number' => 'T02',
             'items' => 'Nasi Lemak, Milo',
             'total' => 13.00,
@@ -366,7 +366,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 11:30:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-006'], [
+        Order::updateOrCreate(['order_id' => '#MR-0006'], [
             'table_number' => 'T06',
             'items' => 'Char Kuey Teow',
             'total' => 10.00,
@@ -374,7 +374,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 11:45:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-007'], [
+        Order::updateOrCreate(['order_id' => '#MR-0007'], [
             'table_number' => 'T04',
             'items' => 'Nasi Goreng, Air Kelapa',
             'total' => 15.00,
@@ -382,7 +382,7 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 12:00:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-008'], [
+        Order::updateOrCreate(['order_id' => '#MR-0008'], [
             'table_number' => 'T07',
             'items' => 'Mee Goreng, Teh O',
             'total' => 14.00,
@@ -390,27 +390,27 @@ class DatabaseSeeder extends Seeder
             'order_time' => '2026-05-14 12:15:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-009'], [
+        Order::updateOrCreate(['order_id' => '#MR-0009'], [
             'table_number' => 'T09',
             'items' => 'Ayam Goreng Kunyit, Nasi Lemak',
             'total' => 21.00,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 12:30:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-010'], [
+        Order::updateOrCreate(['order_id' => '#MR-0010'], [
             'table_number' => 'T10',
             'items' => 'Roti Canai, Kopi O, Milo',
             'total' => 12.50,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 12:45:00',
         ]);
 
-        Order::updateOrCreate(['order_id' => '#ORD-YQER0X'], [
+        Order::updateOrCreate(['order_id' => '#MR-0011'], [
             'table_number' => 'T10',
             'items' => '[{\"key\":\"1-\",\"id\":1,\"name\":\"Ayam Goreng Kunyit\",\"price\":10.9,\"quantity\":1,\"addons\":[]}]',
             'total' => 11.55,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 00:39:23',
         ]);
 

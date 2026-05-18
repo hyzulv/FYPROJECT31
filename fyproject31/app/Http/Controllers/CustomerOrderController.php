@@ -8,7 +8,6 @@ use App\Models\OrderItem;
 use App\Services\ToyyibPayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class CustomerOrderController extends Controller
 {
@@ -129,7 +128,7 @@ class CustomerOrderController extends Controller
     public function storeOrder(Request $request, ToyyibPayService $toyyibpay)
     {
         $request->validate([
-            'table_number' => 'required|string|max:10',
+            'table_number' => 'required|string|regex:/^\d{2}$/',
             'items' => 'required|array|min:1',
             'items.*.id' => 'required|integer|exists:menu_items,id',
             'items.*.name' => 'required|string',
@@ -139,8 +138,8 @@ class CustomerOrderController extends Controller
         ]);
 
         $order = Order::create([
-            'order_id' => '#ORD-' . strtoupper(Str::random(6)),
-            'table_number' => $request->table_number,
+            'order_id' => $this->generateOrderId(),
+            'table_number' => 'T' . $request->table_number,
             'items' => json_encode($request->items),
             'total' => $request->total,
             'status' => 'pending',
@@ -290,6 +289,22 @@ class CustomerOrderController extends Controller
     {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         return view('customer.order-success', ['order' => $order]);
+    }
+
+    private function generateOrderId(): string
+    {
+        $lastOrder = Order::where('order_id', 'like', '#MR-%')
+            ->orderBy('order_id', 'desc')
+            ->first();
+
+        if ($lastOrder) {
+            $lastNumber = (int) substr($lastOrder->order_id, 4);
+            $nextNumber = ($lastNumber + 1) % 10000;
+        } else {
+            $nextNumber = 0;
+        }
+
+        return '#MR-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
     }
 
     private function getToyyibpayUrl(string $path): string
