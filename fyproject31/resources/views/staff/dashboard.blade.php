@@ -17,12 +17,12 @@
     <div class="stat-card" id="statPending">
         <div class="card-icon">⏳</div>
         <div class="card-value" id="pendingOrders">{{ $pendingOrders }}</div>
-        <div class="card-label">Preparing Orders</div>
+        <div class="card-label">Pending Orders</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card" id="statReady">
         <div class="card-icon">✅</div>
-        <div class="card-value">{{ $completedOrders }}</div>
-        <div class="card-label">Completed Orders</div>
+        <div class="card-value" id="readyOrders">{{ $readyOrders }}</div>
+        <div class="card-label">Ready Orders</div>
     </div>
     <div class="stat-card">
         <div class="card-icon">🍽️</div>
@@ -90,13 +90,13 @@ function checkNewOrders() {
 function showNotification(data) {
     playNotificationSound();
     const notif = document.getElementById('orderNotification');
-    document.getElementById('newOrderInfo').textContent = data.pendingOrders + ' preparing orders';
+    document.getElementById('newOrderInfo').textContent = data.pendingOrders + ' pending orders';
     notif.classList.add('show');
     setTimeout(() => notif.classList.remove('show'), 4000);
 
     try {
         if (Notification.permission === 'granted') {
-            new Notification('New Order!', { body: data.pendingOrders + ' pending orders waiting' });
+            new Notification('New Order!', { body: data.pendingOrders + ' pending orders' });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission();
         }

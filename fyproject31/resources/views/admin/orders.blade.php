@@ -29,8 +29,9 @@
                 <td><span class="badge badge-{{ $order['payment_status'] ?? 'unpaid' }}">{{ ucfirst($order['payment_status'] ?? 'unpaid') }}</span></td>
                 <td>
                     <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
+                        <option value="pending" {{ $order['status'] == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
-                        <option value="completed" {{ $order['status'] == 'completed' ? 'selected' : '' }}>Completed</option>
+                        <option value="ready" {{ $order['status'] == 'ready' ? 'selected' : '' }}>Ready</option>
                     </select>
                 </td>
                 <td class="order-time" data-time="{{ $order['time'] }}">{{ $order['time'] }}</td>
@@ -132,8 +133,9 @@ function updateOrders(data) {
             <td><span class="badge badge-${payStatus}">${payStatus.charAt(0).toUpperCase() + payStatus.slice(1)}</span></td>
             <td>
                 <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
+                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
                     <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
-                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                    <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
                 </select>
             </td>
             <td class="order-time" data-time="${order.time}">${order.time}</td>

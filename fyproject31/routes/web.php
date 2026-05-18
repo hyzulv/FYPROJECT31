@@ -139,8 +139,8 @@ Route::delete('/feedback/{id}', function ($id) {
 Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'preparing')->count();
-        $completedOrders = Order::where('status', 'completed')->count();
+        $pendingOrders = Order::where('status', 'pending')->count();
+        $readyOrders = Order::where('status', 'ready')->count();
         $totalMenuItems = MenuItem::where('status', 'available')->count();
         $recentOrders = Order::where('payment_status', '!=', 'failed')
             ->orderBy('updated_at', 'desc')
@@ -168,7 +168,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
             'userRole' => 'staff',
             'totalOrders' => $totalOrders,
             'pendingOrders' => $pendingOrders,
-            'completedOrders' => $completedOrders,
+            'readyOrders' => $readyOrders,
             'totalMenuItems' => $totalMenuItems,
             'recentOrders' => $recentOrders,
         ]);
@@ -317,8 +317,8 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'preparing')->count();
-        $completedOrders = Order::where('status', 'completed')->count();
+        $pendingOrders = Order::where('status', 'pending')->count();
+        $readyOrders = Order::where('status', 'ready')->count();
         $totalStaff = Staff::count();
         $recentOrders = Order::where('payment_status', '!=', 'failed')
             ->orderBy('updated_at', 'desc')
@@ -346,7 +346,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'userRole' => 'admin',
             'totalOrders' => $totalOrders,
             'pendingOrders' => $pendingOrders,
-            'completedOrders' => $completedOrders,
+            'readyOrders' => $readyOrders,
             'totalStaff' => $totalStaff,
             'recentOrders' => $recentOrders,
         ]);
@@ -413,7 +413,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('change-password.submit');
 
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:preparing,completed']);
+        $request->validate(['status' => 'required|in:pending,preparing,ready']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
@@ -657,14 +657,15 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         return response()->json([
             'hasNew' => $hasNew,
             'totalOrders' => $currentCount,
-            'pendingOrders' => Order::where('status', 'preparing')->count(),
-            'completedOrders' => Order::where('status', 'completed')->count(),
+            'pendingOrders' => Order::where('status', 'pending')->count(),
+            'readyOrders' => Order::where('status', 'ready')->count(),
             'orders' => $latestOrders,
         ]);
     })->name('orders.check');
 
     Route::post('/orders/{id}/status', function ($id) {
         $request = request();
+        $request->validate(['status' => 'required|in:pending,preparing,ready']);
         $order = Order::findOrFail($id);
         $order->update(['status' => $request->status]);
         return response()->json(['success' => true]);

@@ -253,9 +253,14 @@
             color: #007bff;
         }
 
-        .badge-completed {
+        .badge-ready {
             background: rgba(40, 167, 69, 0.2);
             color: #28a745;
+        }
+
+        .badge-completed {
+            background: rgba(108, 117, 125, 0.2);
+            color: #6c757d;
         }
 
         .badge-processing {

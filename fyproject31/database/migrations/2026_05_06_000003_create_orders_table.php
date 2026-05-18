@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('table_number');
             $table->text('items');
             $table->decimal('total', 8, 2);
-            $table->enum('status', ['preparing', 'completed'])->default('preparing');
+            $table->enum('status', ['pending', 'preparing', 'ready'])->default('pending');
             $table->time('order_time')->nullable();
             $table->timestamps();
         });

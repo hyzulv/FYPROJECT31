@@ -330,7 +330,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T05',
             'items' => 'Nasi Goreng, Teh O',
             'total' => 13.00,
-            'status' => 'preparing',
+            'status' => 'pending',
             'order_time' => '2026-05-14 10:30:00',
         ]);
 
@@ -354,7 +354,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T08',
             'items' => 'Roti Canai, Teh Tarik',
             'total' => 8.50,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 11:15:00',
         ]);
 
@@ -362,7 +362,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T02',
             'items' => 'Nasi Lemak, Milo',
             'total' => 13.00,
-            'status' => 'preparing',
+            'status' => 'pending',
             'order_time' => '2026-05-14 11:30:00',
         ]);
 
@@ -378,7 +378,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T04',
             'items' => 'Nasi Goreng, Air Kelapa',
             'total' => 15.00,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 12:00:00',
         ]);
 
@@ -386,7 +386,7 @@ class DatabaseSeeder extends Seeder
             'table_number' => 'T07',
             'items' => 'Mee Goreng, Teh O',
             'total' => 14.00,
-            'status' => 'completed',
+            'status' => 'ready',
             'order_time' => '2026-05-14 12:15:00',
         ]);
 
