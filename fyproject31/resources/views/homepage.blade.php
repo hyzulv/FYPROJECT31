@@ -393,6 +393,58 @@
             font-size: 0.85rem;
             color: #999999;
         }
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fafafa;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #420C09;
+        }
+        .order-table th {
+            background: #420C09;
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .order-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e0d6d5;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        .order-table tr:last-child td {
+            border-bottom: none;
+        }
+        .order-table tr:hover {
+            background: #f0e8e7;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+        .status-pending { background: #f39c12; }
+        .status-preparing { background: #3498db; }
+        .status-ready { background: #27ae60; }
+        .remove-btn {
+            background: none;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .remove-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
         @media (max-width: 768px) {
             .auth-button {
                 position: static;
@@ -425,6 +477,7 @@
         </div>
         <nav class="flex-wrap px-2" style="gap: 12px;">
             <button class="nav-btn" onclick="showSection('qr')"><span class="nav-icon">🛒</span> Order Now</button>
+            <button class="nav-btn" onclick="showSection('order-status')"><span class="nav-icon">📋</span> Order Status</button>
             <button class="nav-btn" onclick="showSection('menu')"><span class="nav-icon">🍽️</span> Menu</button>
             <button class="nav-btn" onclick="showSection('about')"><span class="nav-icon">ℹ️</span> About Us</button>
             <button class="nav-btn" onclick="showSection('contact')"><span class="nav-icon">📞</span> Contact Us</button>
@@ -454,6 +507,15 @@
             <p style="text-align:center;">
                 <a href="{{ route('customer.welcome') }}" class="hero-button">Open Customer Menu Page</a>
             </p>
+        </section>
+        <section id="order-status" class="section">
+            <h2>Order Status</h2>
+            <p>Real-time view of all recent orders.</p>
+            <div id="order-status-container" style="max-width: 900px; margin: 20px auto;">
+                <div id="order-status-scroll" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                    <p style="text-align: center; color: #666; padding: 20px;">Loading orders...</p>
+                </div>
+            </div>
         </section>
         <section id="menu" class="section">
             <h2>Food/Drink Menu</h2>
@@ -834,6 +896,54 @@
         // Run on load and on resize
         window.addEventListener('load', equalizeMenuHeights);
         window.addEventListener('resize', equalizeMenuHeights);
+
+        // Order Status - Live all orders feed
+        function renderOrders(orders) {
+            var scrollDiv = document.getElementById('order-status-scroll');
+            if (!scrollDiv) return;
+
+            if (!orders || orders.length === 0) {
+                scrollDiv.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No orders yet.</p>';
+                return;
+            }
+
+            var html = '<table class="order-table"><thead><tr>';
+            html += '<th>Order ID</th><th>Items</th><th>Status</th><th>Time</th>';
+            html += '</tr></thead><tbody>';
+
+            orders.forEach(function(order) {
+                var badgeClass = 'status-badge status-' + order.status;
+                var statusLabel = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+
+                html += '<tr>';
+                html += '<td><strong>' + order.id + '</strong></td>';
+                html += '<td>' + order.items + '</td>';
+                html += '<td><span class="' + badgeClass + '">' + statusLabel + '</span></td>';
+                html += '<td>' + order.time + '</td>';
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            scrollDiv.innerHTML = html;
+        }
+
+        function fetchOrders() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/orders/recent', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    renderOrders(data.orders);
+                }
+            };
+            xhr.send();
+        }
+
+        // Auto-fetch on load and poll every 5 seconds
+        window.addEventListener('load', function() {
+            fetchOrders();
+            setInterval(fetchOrders, 5000);
+        });
     </script>
     <footer class="site-footer">
         <div class="footer-container">

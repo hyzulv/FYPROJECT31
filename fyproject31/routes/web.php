@@ -624,6 +624,33 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('staff.update');
 });
 
+// Public API - Recent orders for customer order status
+Route::get('/api/orders/recent', function () {
+    $orders = Order::where(function ($q) {
+            $q->where('status', '!=', 'ready')
+              ->orWhere('updated_at', '>=', now()->subMinutes(10));
+        })
+        ->orderBy('updated_at', 'desc')
+        ->take(50)
+        ->get()
+        ->map(function ($order) {
+            $items = json_decode($order->items, true) ?? [];
+            $itemsText = collect($items)->map(function ($item) {
+                return $item['name'] . ' x' . ($item['quantity'] ?? 1);
+            })->implode(', ');
+
+            return [
+                'id' => $order->order_id,
+                'items' => $itemsText ?: '-',
+                'status' => $order->status,
+                'updated_at' => $order->updated_at?->toISOString(),
+                'time' => $order->updated_at?->diffForHumans() ?? '-',
+            ];
+        });
+
+    return response()->json(['orders' => $orders]);
+});
+
 // API Routes for Real-time Order Sync & Menu Management
 Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
