@@ -237,6 +237,12 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
         $request->validate(['status' => 'required|in:preparing,completed']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
+        if ($order->payment_status === 'unpaid') {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Cannot change status for unpaid orders.'], 403);
+            }
+            return back()->withErrors(['error' => 'Cannot change status for unpaid orders.']);
+        }
         $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
@@ -254,7 +260,10 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
-        $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
+        $orders = Order::where('payment_status', '!=', 'failed')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($order) {
             $items = json_decode($order->items, true) ?? [];
             $itemsText = collect($items)->map(function ($item) {
                 return $item['name'] . ' x' . ($item['quantity'] ?? 1);
@@ -415,6 +424,12 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
         $request->validate(['status' => 'required|in:pending,preparing,ready']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
+        if ($order->payment_status === 'unpaid') {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Cannot change status for unpaid orders.'], 403);
+            }
+            return back()->withErrors(['error' => 'Cannot change status for unpaid orders.']);
+        }
         $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
@@ -432,7 +447,10 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
-        $orders = Order::orderBy('created_at', 'desc')->get()->map(function ($order) {
+        $orders = Order::where('payment_status', '!=', 'failed')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($order) {
             $items = json_decode($order->items, true) ?? [];
             $itemsText = collect($items)->map(function ($item) {
                 return $item['name'] . ' x' . ($item['quantity'] ?? 1);
@@ -626,7 +644,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
 // Public API - Recent orders for customer order status
 Route::get('/api/orders/recent', function () {
-    $orders = Order::where(function ($q) {
+    $orders = Order::where('payment_status', 'paid')
+        ->where(function ($q) {
             $q->where('status', '!=', 'ready')
               ->orWhere('updated_at', '>=', now()->subMinutes(10));
         })
@@ -655,12 +674,13 @@ Route::get('/api/orders/recent', function () {
 Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
         static $lastCount = null;
-        $currentCount = Order::count();
+        $currentCount = Order::where('payment_status', '!=', 'failed')->count();
         $lastCount = $lastCount ?? $currentCount;
         $hasNew = $currentCount > $lastCount;
         $lastCount = $currentCount;
 
-        $latestOrders = Order::orderBy('updated_at', 'desc')
+        $latestOrders = Order::where('payment_status', '!=', 'failed')
+            ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {
@@ -684,8 +704,8 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         return response()->json([
             'hasNew' => $hasNew,
             'totalOrders' => $currentCount,
-            'pendingOrders' => Order::where('status', 'pending')->count(),
-            'readyOrders' => Order::where('status', 'ready')->count(),
+            'pendingOrders' => Order::where('payment_status', '!=', 'failed')->where('status', 'pending')->count(),
+            'readyOrders' => Order::where('payment_status', '!=', 'failed')->where('status', 'ready')->count(),
             'orders' => $latestOrders,
         ]);
     })->name('orders.check');
@@ -694,6 +714,9 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         $request = request();
         $request->validate(['status' => 'required|in:pending,preparing,ready']);
         $order = Order::findOrFail($id);
+        if ($order->payment_status === 'unpaid') {
+            return response()->json(['success' => false, 'message' => 'Cannot change status for unpaid orders.'], 403);
+        }
         $order->update(['status' => $request->status]);
         return response()->json(['success' => true]);
     })->name('orders.update-status');

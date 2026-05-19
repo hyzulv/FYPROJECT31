@@ -48,7 +48,7 @@
         <input type="hidden" name="total" id="checkoutTotalValue">
 
         <button type="submit" class="btn-place-order" id="placeOrderBtn">
-            <span class="btn-text">Pay Now with ToyyibPay</span>
+            <span class="btn-text">Pay Now</span>
             <span class="btn-loader" style="display: none;">
                 <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>

@@ -28,11 +28,17 @@
                 <td>RM {{ $order['total'] }}</td>
                 <td><span class="badge badge-{{ $order['payment_status'] ?? 'unpaid' }}">{{ ucfirst($order['payment_status'] ?? 'unpaid') }}</span></td>
                 <td>
-                    <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
-                        <option value="pending" {{ $order['status'] == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
-                        <option value="ready" {{ $order['status'] == 'ready' ? 'selected' : '' }}>Ready</option>
-                    </select>
+                    @if($order['payment_status'] === 'unpaid')
+                        <select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
+                            <option value="{{ $order['status'] }}" selected>{{ ucfirst($order['status']) }}</option>
+                        </select>
+                    @else
+                        <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
+                            <option value="pending" {{ $order['status'] == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="preparing" {{ $order['status'] == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                            <option value="ready" {{ $order['status'] == 'ready' ? 'selected' : '' }}>Ready</option>
+                        </select>
+                    @endif
                 </td>
                 <td class="order-time" data-time="{{ $order['time'] }}">{{ $order['time'] }}</td>
                 <td>
@@ -122,9 +128,10 @@ function checkNewOrders() {
 function updateOrders(data) {
     const tbody = document.getElementById('ordersTableBody');
     let html = '';
-    data.orders.forEach(order => {
+    data.orders.filter(order => order.payment_status !== 'failed').forEach(order => {
         const encodedId = encodeURIComponent(order.id);
         const payStatus = order.payment_status || 'unpaid';
+        const isUnpaid = payStatus === 'unpaid';
         html += `<tr data-order-id="${order.id}">
             <td>${order.id}</td>
             <td>${order.table}</td>
@@ -132,11 +139,16 @@ function updateOrders(data) {
             <td>RM ${order.total}</td>
             <td><span class="badge badge-${payStatus}">${payStatus.charAt(0).toUpperCase() + payStatus.slice(1)}</span></td>
             <td>
-                <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
-                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
-                    <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
-                    <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
-                </select>
+                ${isUnpaid
+                    ? `<select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
+                        <option value="${order.status}" selected>${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</option>
+                    </select>`
+                    : `<select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                        <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
+                    </select>`
+                }
             </td>
             <td class="order-time" data-time="${order.time}">${order.time}</td>
             <td>
