@@ -35,7 +35,7 @@ jobs:
           username: u725120533.root
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /domains/matrock.shop/public_html/
+          server-dir: /
           exclude: |
             .git/**
             .gitignore
