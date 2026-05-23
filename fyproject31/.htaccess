@@ -1,9 +1,38 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Force HTTPS (recommended for InfinityFree)
+    # Force HTTPS
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect everything to public folder
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block access to sensitive files
+<FilesMatch "\.(env|env\.example|gitignore|md|log)$">
+    Require all denied
+</FilesMatch>
+
+# Deny access to hidden files
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Set PHP version for Hostinger (uncomment if needed)
+# Use PHP 8.2
+# <IfModule mime_module>
+#     AddHandler application/x-httpd-ea-php82 .php
+# </IfModule>
