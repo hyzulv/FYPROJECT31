@@ -49,6 +49,10 @@ jobs:
             .env.example
             .env.production
             node_modules/**
+            vendor/**
+            storage/framework/cache/**
+            storage/framework/sessions/**
+            storage/framework/views/**
             README.md
             sync-push.bat
             tests/**
