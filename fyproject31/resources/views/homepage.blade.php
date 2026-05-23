@@ -934,7 +934,12 @@
                 if (xhr.status === 200) {
                     var data = JSON.parse(xhr.responseText);
                     renderOrders(data.orders);
+                } else {
+                    renderOrders([]);
                 }
+            };
+            xhr.onerror = function() {
+                renderOrders([]);
             };
             xhr.send();
         }
