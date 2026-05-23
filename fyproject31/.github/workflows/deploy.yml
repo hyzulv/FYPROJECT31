@@ -34,7 +34,7 @@ jobs:
           server: ftp.matrock.shop
           username: u725120533.root
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          local-dir: ./fyproject31/
           server-dir: /
           exclude: |
             .git/**
