@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    # Bootstrap CSS and Google Fonts
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -501,10 +500,10 @@
 
         </section>
         <section id="qr" class="section">
-            <div style="text-align:center; margin-bottom: 20px;">
-                <img src="{{ asset('images/menu/QR.png') }}" alt="MAT ROCK" style="max-width:300px;width:100%;border-radius:8px;border:2px solid #420C09;">
-            </div>
             <p style="text-align:center; margin-bottom: 16px;">Tap the button below to view our menu and place your order.</p>
+            <div style="text-align:center; margin-bottom: 20px;">
+                <img src="{{ asset('images/menu/MATROCK_QR.png') }}" alt="MAT ROCK" style="max-width:500px;width:100%;">
+            </div>
             <p style="text-align:center;">
                 <a href="{{ route('customer.welcome') }}" class="hero-button">Open Customer Menu Page</a>
             </p>
