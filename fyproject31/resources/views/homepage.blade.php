@@ -473,7 +473,7 @@
 <a href="/login" class="auth-button">Staff / Admin Login</a>
         <div class="logo">
             <img src="{{ asset('images/brand/logo.jpg') }}" alt="MAT ROCK">
-            <h1>MAT ROCK RESTAURANT ORDERING SYSTEM</h1>
+            <h1>HARD ROCK RESTAURANT ORDERING SYSTEM</h1>
         </div>
         <nav class="flex-wrap px-2" style="gap: 12px;">
             <button class="nav-btn" onclick="showSection('qr')"><span class="nav-icon">🛒</span> Order Now</button>
