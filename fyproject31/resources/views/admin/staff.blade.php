@@ -99,12 +99,6 @@
     </table>
 </div>
 
-<div class="data-card" style="margin-top: 2rem;">
-    <h3>Sync Database</h3>
-    <p>After adding/removing staff, run this command to sync with your friend:</p>
-    <code style="display: block; background: #f4f4f4; padding: 10px; margin: 10px 0;">php artisan db:sync</code>
-</div>
-
 <div id="editStaffModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background: #fff; padding: 24px; border-radius: 12px; width: 90%; max-width: 420px; border: 2px solid #420C09; max-height: 90vh; overflow-y: auto;">
         <h3 style="margin-bottom: 16px; color: #420C09;">Edit Staff</h3>
