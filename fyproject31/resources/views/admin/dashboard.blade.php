@@ -51,10 +51,8 @@
                 <td>{{ $order['table'] }}</td>
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
-                <td><span class="badge badge-{{ $order['status'] }}">{{ ucfirst($order['status']) }}</span></td>
-                <td>{{ $order['time'] }}</td>
-            </tr>
-            @endforeach
+                    <td><span class="badge badge-{{ $order['payment_status'] === 'unpaid' ? 'unpaid' : $order['status'] }}">{{ $order['payment_status'] === 'unpaid' ? 'Invalid order' : ucfirst($order['status']) }}</span></td>
+                @endforeach
         </tbody>
     </table>
 </div>
@@ -115,7 +113,7 @@ function updateOrders(data) {
             <td>${order.table}</td>
             <td>${order.items}</td>
             <td>RM ${order.total}</td>
-            <td><span class="badge badge-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
+            <td><span class="badge badge-${order.payment_status === 'unpaid' ? 'unpaid' : order.status}">${order.payment_status === 'unpaid' ? 'Invalid order' : order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
             <td class="order-time" data-time="${order.timestamp || order.time}">${order.time}</td>
         </tr>`;
     });

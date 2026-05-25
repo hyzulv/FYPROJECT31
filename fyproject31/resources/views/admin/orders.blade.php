@@ -30,7 +30,7 @@
                 <td>
                     @if($order['payment_status'] === 'unpaid')
                         <select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
-                            <option value="{{ $order['status'] }}" selected>{{ ucfirst($order['status']) }}</option>
+                            <option value="{{ $order['status'] }}" selected>Invalid order</option>
                         </select>
                     @else
                         <select onchange="updateOrderStatus('{{ $order['id'] }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
@@ -141,7 +141,7 @@ function updateOrders(data) {
             <td>
                 ${isUnpaid
                     ? `<select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
-                        <option value="${order.status}" selected>${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</option>
+                        <option value="${order.status}" selected>Invalid order</option>
                     </select>`
                     : `<select onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
                         <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
