@@ -37,6 +37,7 @@ const CartManager = function() {
     }
 
     function addItem(item) {
+        reloadFromStorage();
         const addons = item.addons || [];
         const key = generateKey(item.id, addons);
         const existing = cart.findIndex(i => i.key === key);
@@ -57,16 +58,19 @@ const CartManager = function() {
     }
 
     function removeItem(key) {
+        reloadFromStorage();
         cart = cart.filter(i => i.key !== key);
         save();
     }
 
     function increaseItem(key) {
+        reloadFromStorage();
         const item = cart.find(i => i.key === key);
         if (item) { item.quantity += 1; save(); }
     }
 
     function decreaseItem(key) {
+        reloadFromStorage();
         const item = cart.find(i => i.key === key);
         if (item) {
             item.quantity -= 1;
@@ -74,7 +78,28 @@ const CartManager = function() {
         }
     }
 
+    function reloadFromStorage() {
+        const savedCart = localStorage.getItem(CART_KEY);
+        if (savedCart) {
+            try {
+                const parsed = JSON.parse(savedCart);
+                cart = parsed.map(item => {
+                    if (!item.key) {
+                        const addons = item.addons || [];
+                        item.key = generateKey(item.id, addons);
+                    }
+                    return item;
+                });
+            } catch (e) {
+                cart = [];
+            }
+        } else {
+            cart = [];
+        }
+    }
+
     function clearCart() {
+        reloadFromStorage();
         cart = [];
         localStorage.removeItem(CART_KEY);
         updateCartDisplay();
@@ -84,8 +109,20 @@ const CartManager = function() {
         return cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
+    function getStoredCount() {
+        try {
+            const savedCart = localStorage.getItem(CART_KEY);
+            if (savedCart) {
+                const parsed = JSON.parse(savedCart);
+                return parsed.reduce((sum, item) => sum + (item.quantity || 0), 0);
+            }
+        } catch (e) {}
+        return 0;
+    }
+
     function updateCartDisplay() {
-        const count = getTotalItems();
+        reloadFromStorage();
+        const count = getStoredCount();
         document.querySelectorAll('#cartCount, #floatingCartCount').forEach(el => {
             if (el) {
                 el.textContent = count;
@@ -98,6 +135,10 @@ const CartManager = function() {
         }
         if (typeof window.onCartUpdate === 'function') {
             window.onCartUpdate();
+        }
+        const cartItemsEl = document.getElementById('cartItems');
+        if (cartItemsEl && typeof window.renderCartPage === 'function') {
+            window.renderCartPage();
         }
     }
 
@@ -113,8 +154,19 @@ const CartManager = function() {
 
     return {
         getCart, addItem, removeItem, increaseItem, decreaseItem,
-        clearCart, getTotalItems, updateCartDisplay
+        clearCart, getTotalItems, updateCartDisplay, reloadFromStorage
     };
 };
 
 window.cartManager = CartManager();
+
+function refreshCartDisplay() {
+    window.cartManager.updateCartDisplay();
+}
+
+window.addEventListener('pageshow', refreshCartDisplay);
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        refreshCartDisplay();
+    }
+});

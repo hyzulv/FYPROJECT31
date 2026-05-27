@@ -5,7 +5,7 @@
 @section('content')
 <div class="cart-container">
     <header class="cart-header">
-        <button class="back-btn" onclick="window.history.back()">
+        <button class="back-btn" onclick="window.location.href='{{ route('customer.menu') }}'">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -61,9 +61,11 @@
 
 @push('scripts')
 <script>
+window.renderCartPage = renderCartPage;
+window.onCartUpdate = renderCartPage;
+
 document.addEventListener('DOMContentLoaded', function() {
     renderCartPage();
-    window.onCartUpdate = renderCartPage;
 
     document.getElementById('cartItems').addEventListener('click', function(e) {
         const removeBtn = e.target.closest('.remove-btn');
