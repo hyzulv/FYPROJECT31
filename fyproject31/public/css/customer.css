@@ -621,56 +621,6 @@ input {
     border: 2px solid var(--dark-bg);
 }
 
-@media (max-width: 360px) {
-    .restaurant-name {
-        font-size: 2rem;
-        letter-spacing: 4px;
-    }
-
-    .features-section {
-        gap: 10px;
-    }
-
-    .feature-card {
-        padding: 16px 8px;
-    }
-
-    .menu-grid {
-        gap: 12px;
-    }
-
-    .menu-item-image {
-        height: 100px;
-    }
-}
-
-@media (min-width: 768px) {
-    .menu-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .glass-overlay {
-        padding: 60px 40px;
-    }
-
-    .restaurant-name {
-        font-size: 3rem;
-    }
-
-    .qr-card {
-        max-width: 400px;
-        padding: 40px 32px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .menu-grid {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-}
-
 /* ==================== ITEM DETAIL PAGE ==================== */
 
 .item-detail-container {
@@ -1730,26 +1680,156 @@ input {
 
 /* ==================== RESPONSIVE ==================== */
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
+    .menu-header, .cart-header, .checkout-header, .item-detail-header {
+        padding: 14px 16px;
+    }
+
+    .menu-grid {
+        gap: 12px;
+        padding: 0 16px 20px;
+    }
+
+    .menu-item-image {
+        height: 100px;
+    }
+
+    .menu-item-info {
+        padding: 10px;
+    }
+
+    .menu-item-name-link {
+        font-size: 0.8rem;
+    }
+
+    .menu-item-price {
+        font-size: 0.85rem;
+    }
+
+    .add-to-cart-btn {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+    }
+
+    .menu-section-title {
+        font-size: 1rem;
+        padding: 14px 16px 6px;
+    }
+
+    .category-filter {
+        padding: 12px 16px;
+        gap: 10px;
+    }
+
+    .category-btn {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+    }
+
+    .item-detail-image {
+        height: 220px;
+    }
+
+    .item-detail-info {
+        padding: 16px;
+    }
+
+    .item-detail-name {
+        font-size: 1.2rem;
+    }
+
+    .item-detail-addons, .item-detail-quantity {
+        padding: 16px;
+    }
+
+    .item-detail-bottom {
+        padding: 12px 16px;
+    }
+
+    .btn-add-cart, .btn-checkout-now {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+    }
+
+    .cart-items {
+        padding: 12px 16px;
+        gap: 10px;
+    }
+
+    .cart-item {
+        padding: 14px;
+    }
+
+    .cart-item-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .cart-item-total {
+        font-size: 0.9rem;
+    }
+
+    .cart-summary {
+        padding: 16px;
+    }
+
+    .checkout-order-summary {
+        margin: 16px;
+        padding: 16px;
+    }
+
+    .checkout-form {
+        margin: 0 16px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group input {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+
+    .btn-place-order, .btn-checkout {
+        padding: 14px;
+        font-size: 0.95rem;
+    }
+
+    .cart-empty {
+        padding: 60px 24px;
+    }
+
+    .empty-icon {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cart-empty h3 {
+        font-size: 1.1rem;
+    }
+
     .restaurant-name {
         font-size: 2rem;
         letter-spacing: 4px;
     }
 
-    .features-section {
-        gap: 10px;
+    .floating-cart-btn {
+        bottom: 16px;
+        right: 16px;
+        width: 50px;
+        height: 50px;
     }
 
-    .feature-card {
-        padding: 16px 8px;
+    .item-total-value {
+        font-size: 1.1rem;
     }
 
-    .menu-grid {
-        gap: 12px;
+    .checkout-item-name {
+        font-size: 0.85rem;
     }
 
-    .menu-item-image {
-        height: 100px;
+    .checkout-item-price {
+        font-size: 0.85rem;
     }
 }
 

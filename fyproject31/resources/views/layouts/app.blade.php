@@ -458,8 +458,16 @@
                 padding: 20px;
             }
 
+            .navbar {
+                padding: 12px 20px;
+            }
+
             .stat-cards {
                 grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 20px;
             }
 
             .data-table {
@@ -467,10 +475,208 @@
                 overflow-x: auto;
             }
 
+            .data-table th,
+            .data-table td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+
+            .data-card {
+                padding: 18px;
+            }
+
             .menu-item-card {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-detail {
+                flex-direction: column;
+                gap: 4px;
+                padding: 10px 0;
+            }
+
+            .notification-toast {
+                left: 16px;
+                right: 16px;
+                min-width: unset;
+                top: 16px;
+            }
+
+            .change-password-card {
+                padding: 24px 20px;
+                margin: 0 16px;
+            }
+
+            .edit-card, .security-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 12px;
+            }
+
+            .navbar-title {
+                font-size: 1rem;
+            }
+
+            .navbar-right .user-info span {
+                display: none;
+            }
+
+            .user-avatar {
+                width: 34px;
+                height: 34px;
+                font-size: 0.9rem;
+            }
+
+            .content-area {
+                padding: 12px;
+            }
+
+            .data-card {
+                padding: 14px;
+                border-radius: 10px;
+            }
+
+            .data-card h3 {
+                font-size: 1rem;
+                margin-bottom: 14px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-card .card-value {
+                font-size: 1.5rem;
+            }
+
+            .stat-card .card-icon {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+            }
+
+            .menu-item-card {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .menu-item-img {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .menu-item-info p {
+                font-size: 0.8rem;
+            }
+
+            .feedback-card {
+                padding: 14px;
+            }
+
+            .feedback-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .profile-card-full {
+                padding: 24px 16px;
+            }
+
+            .profile-avatar-large {
+                width: 90px;
+                height: 90px;
+                font-size: 2.2rem;
+            }
+
+            .profile-name {
+                font-size: 1.2rem;
+            }
+
+            .profile-details-grid {
+                gap: 12px;
+            }
+
+            .detail-item {
+                padding: 10px 14px;
+            }
+
+            .edit-card, .security-card {
+                padding: 16px;
+                border-radius: 10px;
+            }
+
+            .edit-form-group input {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .btn-save, .btn-submit {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .change-password-card {
+                padding: 20px 16px;
+            }
+
+            .cp-form-group input {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .sidebar-header {
+                padding: 14px;
+            }
+
+            .sidebar-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .sidebar-menu a {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .sidebar-menu a .icon {
+                font-size: 1rem;
+                width: 20px;
+                margin-right: 10px;
+            }
+
+            .notification-toast {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+
+            .profile-layout {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .profile-left {
+                position: static;
             }
         }
 
