@@ -782,6 +782,9 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
 
     Route::delete('/menu/{id}', function ($id) {
         $item = MenuItem::findOrFail($id);
+        if ($item->image && file_exists(public_path('images/menu/' . $item->image))) {
+            @unlink(public_path('images/menu/' . $item->image));
+        }
         $item->delete();
         return response()->json(['success' => true]);
     })->name('menu.delete');
