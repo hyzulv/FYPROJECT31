@@ -647,7 +647,7 @@ Route::get('/api/orders/recent', function () {
     $orders = Order::where('payment_status', 'paid')
         ->where(function ($q) {
             $q->where('status', '!=', 'ready')
-              ->orWhere('updated_at', '>=', now()->subMinutes(10));
+              ->orWhere('updated_at', '>=', now()->subMinutes(1));
         })
         ->orderBy('updated_at', 'desc')
         ->take(50)
