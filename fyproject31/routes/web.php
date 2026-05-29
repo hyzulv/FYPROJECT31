@@ -142,8 +142,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
         $pendingOrders = Order::where('status', 'pending')->count();
         $readyOrders = Order::where('status', 'ready')->count();
         $totalMenuItems = MenuItem::where('status', 'available')->count();
-        $recentOrders = Order::where('payment_status', '!=', 'failed')
-            ->orderBy('updated_at', 'desc')
+        $recentOrders = Order::orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {
@@ -261,8 +260,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
-        $orders = Order::where('payment_status', '!=', 'failed')
-            ->orderBy('created_at', 'desc')
+        $orders = Order::orderBy('created_at', 'desc')
             ->get()
             ->map(function ($order) {
             $items = json_decode($order->items, true) ?? [];
@@ -275,9 +273,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                 'table' => $order->table_number,
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
-                'status' => $order->status,
-                'payment_status' => $order->payment_status,
-                'time' => $order->created_at?->diffForHumans() ?: '-',
+
             ];
         });
 
@@ -330,8 +326,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $pendingOrders = Order::where('status', 'pending')->count();
         $readyOrders = Order::where('status', 'ready')->count();
         $totalStaff = Staff::count();
-        $recentOrders = Order::where('payment_status', '!=', 'failed')
-            ->orderBy('updated_at', 'desc')
+        $recentOrders = Order::orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {
@@ -449,8 +444,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('orders.destroy');
 
     Route::get('/orders', function () {
-        $orders = Order::where('payment_status', '!=', 'failed')
-            ->orderBy('created_at', 'desc')
+        $orders = Order::orderBy('created_at', 'desc')
             ->get()
             ->map(function ($order) {
             $items = json_decode($order->items, true) ?? [];
@@ -463,9 +457,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                 'table' => $order->table_number,
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
-                'status' => $order->status,
-                'payment_status' => $order->payment_status,
-                'time' => $order->created_at?->diffForHumans() ?: '-',
+
             ];
         });
 
@@ -676,13 +668,12 @@ Route::get('/api/orders/recent', function () {
 Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
         static $lastCount = null;
-        $currentCount = Order::where('payment_status', '!=', 'failed')->count();
+        $currentCount = Order::count();
         $lastCount = $lastCount ?? $currentCount;
         $hasNew = $currentCount > $lastCount;
         $lastCount = $currentCount;
 
-        $latestOrders = Order::where('payment_status', '!=', 'failed')
-            ->orderBy('updated_at', 'desc')
+        $latestOrders = Order::orderBy('updated_at', 'desc')
             ->take(5)
             ->get()
             ->map(function ($order) {

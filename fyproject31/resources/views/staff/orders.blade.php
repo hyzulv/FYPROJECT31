@@ -128,7 +128,7 @@ function checkNewOrders() {
 function updateOrders(data) {
     const tbody = document.getElementById('ordersTableBody');
     let html = '';
-    data.orders.filter(order => order.payment_status !== 'failed').forEach(order => {
+    data.orders.forEach(order => {
         const payStatus = order.payment_status || 'unpaid';
         const isUnpaid = payStatus === 'unpaid';
         html += `<tr data-order-id="${order.id}">
