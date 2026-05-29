@@ -169,8 +169,8 @@ class CustomerOrderController extends Controller
                 'amount' => $request->total,
                 'reference_no' => $order->id,
                 'customer_name' => 'Customer',
-                'return_url' => $this->getToyyibpayUrl(route('payment.redirect', [], false)),
-                'callback_url' => $this->getToyyibpayUrl(route('payment.callback', [], false)),
+                'return_url' => route('payment.redirect', [], true),
+                'callback_url' => route('payment.callback', [], true),
             ]);
 
             if (isset($bill['BillCode'])) {
@@ -307,12 +307,4 @@ class CustomerOrderController extends Controller
         return '#MR-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
     }
 
-    private function getToyyibpayUrl(string $path): string
-    {
-        $base = config('services.toyyibpay.redirect_url');
-        if ($base) {
-            return rtrim($base, '/') . '/' . ltrim($path, '/');
-        }
-        return url($path);
-    }
 }
