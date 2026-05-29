@@ -218,9 +218,9 @@ class CustomerOrderController extends Controller
             return response('Order not found', 404);
         }
 
-        $paymentStatus = match ($statusId) {
-            1 => 'paid',
-            3 => 'failed',
+        $paymentStatus = match ((string) $statusId) {
+            '1' => 'paid',
+            '3' => 'failed',
             default => 'unpaid',
         };
 
@@ -239,7 +239,7 @@ class CustomerOrderController extends Controller
         return response('OK', 200);
     }
 
-    public function paymentRedirect(Request $request)
+    public function paymentRedirect(Request $request, ToyyibPayService $toyyibpay)
     {
         $refNo = $request->input('order_id');
         $statusId = $request->input('status_id');
@@ -254,21 +254,34 @@ class CustomerOrderController extends Controller
             $order = null;
         }
 
-        if ($order && $statusId) {
-            $paymentStatus = match ($statusId) {
+        if ($order && $statusId && $order->payment_status !== 'paid') {
+            $verifiedStatus = match ((string) $statusId) {
                 '1' => 'paid',
                 '3' => 'failed',
                 default => 'unpaid',
             };
 
-            if ($paymentStatus === 'paid' && $order->payment_status !== 'paid') {
+            if ($billCode && $verifiedStatus === 'paid') {
+                try {
+                    $transactions = $toyyibpay->getPaymentStatus($billCode);
+                    if (!empty($transactions[0]['billPaymentStatus']) && $transactions[0]['billPaymentStatus'] === '1') {
+                        $verifiedStatus = 'paid';
+                    } else {
+                        $verifiedStatus = 'unpaid';
+                    }
+                } catch (\Exception $e) {
+                    Log::warning('ToyyibPay status verification failed', ['bill_code' => $billCode, 'error' => $e->getMessage()]);
+                }
+            }
+
+            if ($verifiedStatus === 'paid') {
                 $order->update([
                     'status' => 'pending',
                     'payment_status' => 'paid',
                     'paid_at' => now(),
                     'transaction_id' => $transactionId,
                 ]);
-            } elseif ($paymentStatus === 'failed' && $order->payment_status !== 'paid') {
+            } elseif ($verifiedStatus === 'failed') {
                 $order->update(['payment_status' => 'failed']);
             }
         }
