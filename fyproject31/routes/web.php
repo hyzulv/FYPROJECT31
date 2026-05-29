@@ -273,7 +273,9 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                 'table' => $order->table_number,
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
-
+                'status' => $order->status,
+                'payment_status' => $order->payment_status,
+                'time' => $order->created_at?->diffForHumans(),
             ];
         });
 
@@ -457,7 +459,9 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                 'table' => $order->table_number,
                 'items' => $itemsText ?: '-',
                 'total' => number_format($order->total, 2),
-
+                'status' => $order->status,
+                'payment_status' => $order->payment_status,
+                'time' => $order->created_at?->diffForHumans(),
             ];
         });
 
