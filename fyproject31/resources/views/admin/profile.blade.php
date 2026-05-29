@@ -107,7 +107,7 @@
                     <span style="font-size: 1.5rem;">🟢</span>
                     <div style="display: flex; flex-direction: column;">
                         <span style="color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
-                        <span style="color: #28a745; font-size: 1rem; font-weight: 500;">Active</span>
+                        <span style="color: {{ $profile['status'] == 'active' ? '#28a745' : '#dc3545' }}; font-size: 1rem; font-weight: 500;">{{ ucfirst($profile['status'] ?? 'Active') }}</span>
                     </div>
                 </div>
             </div>

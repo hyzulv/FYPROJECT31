@@ -186,6 +186,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                 'email' => $user->email,
                 'role' => 'staff',
                 'phone' => $user->phone,
+                'status' => $user->status,
                 'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2024',
             ],
         ]);
@@ -373,6 +374,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                 'email' => $user->email,
                 'role' => 'admin',
                 'phone' => $user->phone,
+                'status' => $user->status,
                 'join_date' => $user->created_at?->format('F d, Y') ?? 'January 2023',
             ],
         ]);
