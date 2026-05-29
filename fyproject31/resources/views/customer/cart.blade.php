@@ -10,8 +10,8 @@
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
         </button>
-        <h1>Your Cart</h1>
-        <button class="clear-cart-btn" onclick="clearCartAction()" title="Clear Cart">
+        <h1 id="cartTitle">Your Cart</h1>
+        <button id="clearCartBtn" class="clear-cart-btn" onclick="clearCartAction()" title="Clear Cart">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14"/>
             </svg>
@@ -93,17 +93,24 @@ function renderCartPage() {
     const cartEmptyEl = document.getElementById('cartEmpty');
     const cartSummaryEl = document.getElementById('cartSummary');
 
+    const cartTitle = document.getElementById('cartTitle');
+    const clearBtn = document.getElementById('clearCartBtn');
+
     if (!cartItemsEl || !cartEmptyEl || !cartSummaryEl) return;
 
     if (cart.length === 0) {
         cartItemsEl.innerHTML = '';
         cartEmptyEl.style.display = 'flex';
         cartSummaryEl.style.display = 'none';
+        if (cartTitle) cartTitle.style.display = 'none';
+        if (clearBtn) clearBtn.style.display = 'none';
         return;
     }
 
     cartEmptyEl.style.display = 'none';
     cartSummaryEl.style.display = 'block';
+    if (cartTitle) cartTitle.style.display = 'block';
+    if (clearBtn) clearBtn.style.display = 'flex';
 
     let html = '';
     let subtotal = 0;
