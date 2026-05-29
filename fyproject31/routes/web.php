@@ -723,6 +723,11 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         return response()->json(['success' => true]);
     })->name('orders.update-status');
 
+    Route::get('/menu/addons', function () {
+        $addOns = MenuItem::where('category', 'add_on')->orderBy('name')->get(['id', 'name', 'group_name']);
+        return response()->json(['addons' => $addOns]);
+    })->name('menu.addons');
+
     Route::get('/menu/check', function () {
         $menuItems = MenuItem::orderBy('category')->orderBy('name')->get()->map(function ($item) {
             $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name);

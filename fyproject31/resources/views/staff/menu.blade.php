@@ -166,7 +166,7 @@
 <script>
 const csrfToken = '{{ csrf_token() }}';
 
-function openAddModal() { document.getElementById('addMenuModal').style.display = 'flex'; toggleAddOnFields(); }
+function openAddModal() { document.getElementById('addMenuModal').style.display = 'flex'; refreshAddOns(); toggleAddOnFields(); }
 function closeAddModal() { document.getElementById('addMenuModal').style.display = 'none'; document.getElementById('addMenuForm').reset(); toggleAddOnFields(); }
 
 function toggleAddOnFields() {
@@ -200,6 +200,7 @@ function submitAddMenu(e) {
     .then(res => {
         if (res.success) {
             closeAddModal();
+            refreshAddOns();
             refreshMenu();
         } else {
             alert('Error adding item. Please check your input.');
@@ -282,9 +283,9 @@ function deleteMenuItem(id, name) {
     })
     .then(res => res.json())
     .then(res => {
-        if (res.success) refreshMenu();
+        if (res.success) { refreshAddOns(); refreshMenu(); }
     })
-    .catch(() => refreshMenu());
+    .catch(() => { refreshAddOns(); refreshMenu(); });
 }
 
 function refreshMenu() {
@@ -313,6 +314,29 @@ function refreshMenu() {
                 </tr>`;
             });
             tbody.innerHTML = html;
+        });
+}
+
+function refreshAddOns() {
+    fetch('/api/menu/addons')
+        .then(res => res.json())
+        .then(data => {
+            const addContainer = document.querySelector('#addonSelectionContainer > div');
+            const editContainer = document.querySelector('#editAddonSelectionContainer > div');
+            if (!data.addons || data.addons.length === 0) {
+                const msg = '<span style="color: #999; font-size: 0.85rem;">No add-ons available. Create add-on items first.</span>';
+                addContainer.innerHTML = msg;
+                editContainer.innerHTML = '<span style="color: #999; font-size: 0.85rem;">No add-ons available.</span>';
+                return;
+            }
+            let addHtml = '', editHtml = '';
+            data.addons.forEach(a => {
+                const label = a.group_name ? ` ${a.name} <span style="color: #888; font-size: 0.8rem;">(${a.group_name})</span>` : ` ${a.name}`;
+                addHtml += `<label style="display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; color: #222; cursor: pointer;"><input type="checkbox" name="linked_addons[]" value="${a.id}">${label}</label>`;
+                editHtml += `<label style="display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; color: #222; cursor: pointer;"><input type="checkbox" name="linked_addons[]" value="${a.id}" class="edit-linked-addon">${label}</label>`;
+            });
+            addContainer.innerHTML = addHtml;
+            editContainer.innerHTML = editHtml;
         });
 }
 
