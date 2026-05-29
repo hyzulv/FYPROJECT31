@@ -163,7 +163,13 @@
 <script>
 const csrfToken = '{{ csrf_token() }}';
 
-function openAddModal() { document.getElementById('addMenuModal').style.display = 'flex'; refreshAddOns(); toggleAddOnFields(); }
+function openAddModal() {
+    const btn = document.querySelector('#addMenuForm button[type="submit"]');
+    btn.disabled = false;
+    btn.textContent = 'Add';
+    document.getElementById('addMenuModal').style.display = 'flex';
+    toggleAddOnFields();
+}
 function closeAddModal() { document.getElementById('addMenuModal').style.display = 'none'; document.getElementById('addMenuForm').reset(); toggleAddOnFields(); }
 
 function toggleAddOnFields() {
@@ -189,6 +195,9 @@ function toggleStatus(id, status) {
 function submitAddMenu(e) {
     e.preventDefault();
     const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
     const data = new FormData(form);
     fetch('/api/menu/add', {
         method: 'POST',
@@ -203,9 +212,15 @@ function submitAddMenu(e) {
             refreshMenu();
         } else {
             alert('Error adding item. Please check your input.');
+            btn.disabled = false;
+            btn.textContent = 'Add';
         }
     })
-    .catch(() => alert('Error adding item. Please try again.'));
+    .catch(() => {
+        alert('Error adding item. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Add';
+    });
 }
 
 function openEditModal(id) {

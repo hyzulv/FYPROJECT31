@@ -773,13 +773,26 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
             'image' => $imageName,
         ]);
 
-        if ($request->category !== 'add_on' && $request->filled('linked_addons')) {
-            $addons = MenuItem::whereIn('id', $request->linked_addons)->where('category', 'add_on')->get();
-            foreach ($addons as $addon) {
-                $appliesTo = $addon->applies_to ?? [];
-                if (!in_array($request->category, $appliesTo)) {
-                    $appliesTo[] = $request->category;
+        if ($request->category !== 'add_on') {
+            $allAddons = MenuItem::where('category', 'add_on')
+                ->whereJsonContains('applies_to', $request->category)
+                ->get();
+            foreach ($allAddons as $addon) {
+                if (!$request->filled('linked_addons') || !in_array($addon->id, $request->linked_addons)) {
+                    $appliesTo = $addon->applies_to ?? [];
+                    $appliesTo = array_values(array_filter($appliesTo, fn($c) => $c !== $request->category));
                     $addon->update(['applies_to' => $appliesTo]);
+                }
+            }
+
+            if ($request->filled('linked_addons')) {
+                $addons = MenuItem::whereIn('id', $request->linked_addons)->where('category', 'add_on')->get();
+                foreach ($addons as $addon) {
+                    $appliesTo = $addon->applies_to ?? [];
+                    if (!in_array($request->category, $appliesTo)) {
+                        $appliesTo[] = $request->category;
+                        $addon->update(['applies_to' => $appliesTo]);
+                    }
                 }
             }
         }
