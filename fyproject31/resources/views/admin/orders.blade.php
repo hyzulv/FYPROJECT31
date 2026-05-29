@@ -26,9 +26,9 @@
                 <td>{{ $order['table'] }}</td>
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
-                <td><span class="badge badge-{{ $order['payment_status'] ?? 'unpaid' }}">{{ ucfirst($order['payment_status'] ?? 'unpaid') }}</span></td>
+                <td><span class="badge badge-{{ $order['payment_status'] === 'failed' ? 'unpaid' : ($order['payment_status'] ?? 'unpaid') }}">{{ $order['payment_status'] === 'failed' ? 'Unpaid' : ucfirst($order['payment_status'] ?? 'Unpaid') }}</span></td>
                 <td>
-                    @if($order['payment_status'] === 'unpaid')
+                    @if($order['payment_status'] === 'unpaid' || $order['payment_status'] === 'failed')
                         <select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
                             <option value="{{ $order['status'] }}" selected>Invalid order</option>
                         </select>
@@ -130,8 +130,9 @@ function updateOrders(data) {
     let html = '';
     data.orders.forEach(order => {
         const encodedId = encodeURIComponent(order.id);
-        const payStatus = order.payment_status || 'unpaid';
-        const isUnpaid = payStatus === 'unpaid';
+        const rawPayStatus = order.payment_status || 'unpaid';
+        const payStatus = rawPayStatus === 'failed' ? 'unpaid' : rawPayStatus;
+        const isInvalid = payStatus === 'unpaid';
         html += `<tr data-order-id="${order.id}">
             <td>${order.id}</td>
             <td>${order.table}</td>
@@ -139,7 +140,7 @@ function updateOrders(data) {
             <td>RM ${order.total}</td>
             <td><span class="badge badge-${payStatus}">${payStatus.charAt(0).toUpperCase() + payStatus.slice(1)}</span></td>
             <td>
-                ${isUnpaid
+                ${isInvalid
                     ? `<select disabled style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; appearance: none; -webkit-appearance: none;">
                         <option value="${order.status}" selected>Invalid order</option>
                     </select>`
