@@ -235,7 +235,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     })->name('change-password.submit');
 
     Route::post('/orders/{orderId}/status', function ($orderId, \Illuminate\Http\Request $request) {
-        $request->validate(['status' => 'required|in:preparing,completed']);
+        $request->validate(['status' => 'required|in:pending,preparing,ready']);
         $order = Order::where('order_id', $orderId)->firstOrFail();
         if ($order->payment_status === 'unpaid') {
             if ($request->expectsJson()) {

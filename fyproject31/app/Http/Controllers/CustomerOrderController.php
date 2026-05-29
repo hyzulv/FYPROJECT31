@@ -227,6 +227,7 @@ class CustomerOrderController extends Controller
         $updateData = ['payment_status' => $paymentStatus];
 
         if ($paymentStatus === 'paid') {
+            $updateData['status'] = 'pending';
             $updateData['paid_at'] = now();
             if ($transactionId) {
                 $updateData['transaction_id'] = $transactionId;
@@ -262,6 +263,7 @@ class CustomerOrderController extends Controller
 
             if ($paymentStatus === 'paid' && $order->payment_status !== 'paid') {
                 $order->update([
+                    'status' => 'pending',
                     'payment_status' => 'paid',
                     'paid_at' => now(),
                     'transaction_id' => $transactionId,
