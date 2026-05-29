@@ -753,7 +753,7 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
             'price' => 'required|numeric|min:0',
             'category' => 'required|string',
             'status' => 'nullable|in:available,unavailable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => ($request->category !== 'add_on' ? 'required|' : 'nullable|') . 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'linked_addons' => 'nullable|array',
             'linked_addons.*' => 'integer|exists:menu_items,id',
         ]);

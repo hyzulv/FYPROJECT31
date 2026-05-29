@@ -77,8 +77,8 @@
                 <option value="unavailable">Unavailable</option>
             </select>
             <div id="imageUploadContainer">
-                <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Item Image</label>
-                <input type="file" name="image" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" style="width: 100%; padding: 8px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Item Image <span style="color: #dc3545;">*</span></label>
+                <input type="file" name="image" accept="image/jpeg,image/png,image/jpg,image/gif,image.webp" required style="width: 100%; padding: 8px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
                 <p style="margin: -8px 0 12px; font-size: 0.8rem; color: #888;">Max 2MB. JPEG, PNG, JPG, GIF, or WebP.</p>
             </div>
             <div id="addonSelectionContainer" style="margin-bottom: 12px;">
@@ -169,9 +169,11 @@ function closeAddModal() { document.getElementById('addMenuModal').style.display
 function toggleAddOnFields() {
     const cat = document.getElementById('addCategory').value;
     const isAddOn = cat === 'add_on';
+    const imgInput = document.querySelector('#imageUploadContainer input[type="file"]');
     document.getElementById('imageUploadContainer').style.display = isAddOn ? 'none' : 'block';
     document.getElementById('descriptionContainer').style.display = isAddOn ? 'none' : 'block';
     document.getElementById('addonSelectionContainer').style.display = isAddOn ? 'none' : 'block';
+    if (isAddOn) { imgInput.required = false; } else { imgInput.required = true; }
 }
 
 function toggleStatus(id, status) {
