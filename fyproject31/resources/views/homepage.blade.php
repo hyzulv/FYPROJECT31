@@ -580,7 +580,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Kuala Lumpur - Kampung Pandan</h3>
                         <p>No. 15, Jalan Kampung Pandan,<br>Maluri, 55100 Kuala Lumpur</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kampung+Pandan+Kuala+Lumpur" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -589,7 +589,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Kuala Lumpur - Cheras</h3>
                         <p>7, Jalan Dwitasik, Dataran Dwitasik,<br>56000 Kuala Lumpur</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Cheras+Kuala+Lumpur" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -598,7 +598,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Kota Damansara</h3>
                         <p>9-1, Jalan PJU 5/12, Dataran Sunway,<br>47810 Petaling Jaya, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kota+Damansara+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -607,7 +607,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Shah Alam</h3>
                         <p>15, Jalan Plumbum R7/R, Seksyen 7,<br>40000 Shah Alam, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Shah+Alam+Seksyen+7" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -616,7 +616,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Klang</h3>
                         <p>No. 52A, Lorong Batu Nilam 1B,<br>Bandar Bukit Tinggi 1, 41200 Klang, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Klang+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -625,7 +625,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Selangor - Cyberjaya</h3>
                         <p>Unit C-01, Container Avenue, Block 3513,<br>Jalan Teknokrat 5, 63000 Cyberjaya, Selangor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Cyberjaya+Selangor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -634,7 +634,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Perak - Ipoh</h3>
                         <p>54, Regat Sri Cempaka, Taman Cempaka,<br>31400 Ipoh, Perak</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Ipoh+Perak" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -643,7 +643,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Pahang - Gambang</h3>
                         <p>A11, Jalan Bandar Gambang 1,<br>Bandar Gambang, 26300 Gambang, Pahang</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Gambang+Pahang" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -652,7 +652,7 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Terengganu - Kemaman</h3>
                         <p>Jalan Chukai Utama, Kampung Pengkalan Pandan,<br>24000 Chukai, Terengganu</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Kemaman+Terengganu" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
@@ -661,12 +661,12 @@
                         <h3 style="color: #420C09; margin-bottom: 5px;">Johor - Skudai</h3>
                         <p>No. 22, Jalan Impian Emas 1, Taman Impian Emas,<br>Skudai, 81300 Johor Bahru, Johor</p>
                         <p><a href="https://maps.google.com/?q=Mat+Rock+Skudai+Johor" target="_blank" class="contact-link">📍 Map and Driving Directions</a></p>
-                        <p class="branch-phone">Phone: +60 16-660 7314</p>
+                        <p class="branch-phone">Phone: <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     </div>
 
                     <div class="branch-divider"></div>
 
-                    <p style="margin-top: 15px;"><strong>WhatsApp:</strong> <a href="https://wa.me/60166607314" target="_blank" class="contact-link">+60 16-660 7314</a></p>
+                    <p style="margin-top: 15px;"><strong>WhatsApp:</strong> <a href="https://wa.link/h3266u" target="_blank" class="contact-link">+60 16-660 7314</a></p>
                     <p><strong>Email:</strong> <a href="mailto:fypkumpulan31@gmail.com" class="contact-link">fypkumpulan31@gmail.com</a></p>
                 </div>
                 <form class="contact-form" method="POST" action="{{ route('contact.send') }}">
@@ -960,8 +960,8 @@
             <div class="footer-col">
                 <h4>Contact</h4>
                 <p>Phone: +60 16-660 7314</p>
-                <p>Email: fypkumpulan31@gmail.com</p>
-                <p>WhatsApp: +60 16-660 7314</p>
+                <p>Email: <a href="mailto:fypkumpulan31@gmail.com" style="color: #CCCCCC; text-decoration: none;">fypkumpulan31@gmail.com</a></p>
+                <p>WhatsApp: <a href="https://wa.link/h3266u" target="_blank" style="color: #CCCCCC; text-decoration: none;">+60 16-660 7314</a></p>
             </div>
             <div class="footer-col">
                 <h4>Follow Us</h4>
