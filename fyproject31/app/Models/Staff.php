@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
-class Staff extends Authenticatable
+class Staff extends Authenticatable implements MustVerifyEmailContract
 {
-    use Notifiable;
+    use MustVerifyEmail, Notifiable;
 
-    protected $fillable = ['name', 'username', 'email', 'password', 'phone', 'status'];
+    protected $fillable = ['name', 'username', 'email', 'password', 'phone', 'status', 'email_verified_at'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -24,6 +27,23 @@ class Staff extends Authenticatable
     public function getAuthIdentifierName()
     {
         return 'username';
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $url = URL::temporarySignedRoute(
+            'staff.verification.verify',
+            now()->addMinutes(60),
+            ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+        );
+
+        Mail::mailer('staff_smtp')->send('emails.staff-verify', [
+            'url' => $url,
+            'user' => $this,
+        ], function ($message) {
+            $message->to($this->email)
+                ->subject('Verify Your Email - Mat Rock Restaurant');
+        });
     }
 
     public function sendPasswordResetNotification($token)

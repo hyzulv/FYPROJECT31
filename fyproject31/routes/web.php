@@ -45,6 +45,22 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $request, $id, $hash) {
+    $staff = \App\Models\Staff::findOrFail($id);
+
+    if (!hash_equals((string) $hash, sha1($staff->getEmailForVerification()))) {
+        abort(403);
+    }
+
+    if ($staff->hasVerifiedEmail()) {
+        return redirect()->route('login')->with('status', 'Email already verified. Please login.');
+    }
+
+    $staff->markEmailAsVerified();
+
+    return redirect()->route('login')->with('status', 'Email verified successfully! You can now login.');
+})->middleware(['signed'])->name('staff.verification.verify');
+
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
@@ -540,7 +556,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'phone' => 'nullable|string|max:255',
         ]);
 
-        Staff::create([
+        $staff = Staff::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
@@ -549,7 +565,14 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'status' => 'active',
         ]);
 
-        return redirect()->route('admin.staff')->with('success', 'Staff added successfully!');
+        try {
+            $staff->sendEmailVerificationNotification();
+            $message = 'Staff added successfully! A verification email has been sent to ' . $staff->email . '.';
+        } catch (\Exception $e) {
+            $message = 'Staff added successfully! However, the verification email could not be sent. Please configure SMTP settings.';
+        }
+
+        return redirect()->route('admin.staff')->with('success', $message);
     })->name('staff.add');
 
     Route::delete('/staff/{id}', function ($id) {

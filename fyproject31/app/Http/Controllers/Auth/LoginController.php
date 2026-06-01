@@ -29,6 +29,12 @@ class LoginController extends Controller
             ])->onlyInput('username');
         }
 
+        if ($staff && !$staff->hasVerifiedEmail()) {
+            return back()->withErrors([
+                'username' => 'Please verify your email before logging in. Check your inbox for the verification link.',
+            ])->onlyInput('username');
+        }
+
         if (Auth::guard('staff')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
             return redirect()->route('staff.dashboard');
