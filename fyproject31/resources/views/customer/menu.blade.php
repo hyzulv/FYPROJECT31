@@ -68,11 +68,18 @@
                             <a href="{{ route('customer.item.detail', $item['id']) }}" class="menu-item-name-link">{{ $item['name'] }}</a>
                             <p class="menu-item-desc">{{ Str::limit($item['description'], 60) }}</p>
                             <div class="menu-item-footer">
-                                <span class="menu-item-price">RM {{ $item['price'] }}</span>
+                                <span class="menu-item-price">
+                                    @if($item['discount_percentage'] > 0)
+                                        <span style="text-decoration: line-through; color: #999; font-size: 0.8rem;">RM {{ $item['price'] }}</span>
+                                        RM {{ $item['effective_price'] }}
+                                    @else
+                                        RM {{ $item['price'] }}
+                                    @endif
+                                </span>
                                 <button class="add-to-cart-btn"
                                         data-id="{{ $item['id'] }}"
                                         data-name="{{ $item['name'] }}"
-                                        data-price="{{ $item['price'] }}"
+                                        data-price="{{ $item['effective_price'] }}"
                                         onclick="addToCart(this)">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M12 5v14M5 12h14"/>

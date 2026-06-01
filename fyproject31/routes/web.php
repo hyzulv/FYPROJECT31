@@ -10,6 +10,7 @@ use App\Models\Staff;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\Feedback;
+use App\Models\Discount;
 
 // Customer Ordering Routes (No Auth Required)
 Route::get('/', function () {
@@ -491,13 +492,65 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/menu', function () {
         $menuItems = MenuItem::orderBy('category')->orderBy('name')->get();
         $addOns = MenuItem::where('category', 'add_on')->orderBy('name')->get();
+        $discounts = Discount::with('menuItems')->orderBy('name')->get();
         return view('admin.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
             'menuItems' => $menuItems,
             'addOns' => $addOns,
+            'discounts' => $discounts,
         ]);
     })->name('menu');
+
+    Route::post('/discounts/add', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'percentage' => 'required|numeric|min:0|max:100',
+            'menu_item_ids' => 'nullable|array',
+            'menu_item_ids.*' => 'integer|exists:menu_items,id',
+        ]);
+
+        $discount = Discount::create([
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+            'is_active' => true,
+        ]);
+
+        if (!empty($validated['menu_item_ids'])) {
+            $discount->menuItems()->attach($validated['menu_item_ids']);
+        }
+
+        return redirect()->route('admin.menu')->with('success', 'Discount created successfully.');
+    })->name('discounts.add');
+
+    Route::post('/discounts/{id}/update', function (\Illuminate\Http\Request $request, $id) {
+        $discount = Discount::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'percentage' => 'required|numeric|min:0|max:100',
+            'is_active' => 'required|boolean',
+            'menu_item_ids' => 'nullable|array',
+            'menu_item_ids.*' => 'integer|exists:menu_items,id',
+        ]);
+
+        $discount->update([
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+            'is_active' => $validated['is_active'],
+        ]);
+
+        $discount->menuItems()->sync($validated['menu_item_ids'] ?? []);
+
+        return redirect()->route('admin.menu')->with('success', 'Discount updated successfully.');
+    })->name('discounts.update');
+
+    Route::delete('/discounts/{id}', function ($id) {
+        $discount = Discount::findOrFail($id);
+        $discount->menuItems()->detach();
+        $discount->delete();
+        return redirect()->route('admin.menu')->with('success', 'Discount deleted successfully.');
+    })->name('discounts.delete');
 
     Route::get('/feedback', function () {
         $rating = request()->query('rating');
@@ -746,14 +799,21 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
         return response()->json(['addons' => $addOns]);
     })->name('menu.addons');
 
+    Route::get('/menu/non-addons', function () {
+        $items = MenuItem::where('category', '!=', 'add_on')->orderBy('name')->get(['id', 'name', 'category', 'price']);
+        return response()->json(['items' => $items]);
+    })->name('menu.non-addons');
+
     Route::get('/menu/check', function () {
-        $menuItems = MenuItem::orderBy('category')->orderBy('name')->get()->map(function ($item) {
+        $menuItems = MenuItem::with('activeDiscounts')->orderBy('category')->orderBy('name')->get()->map(function ($item) {
             $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name);
             return [
                 'id' => $item->id,
                 'name' => $item->name,
                 'description' => $item->description,
                 'price' => number_format($item->price, 2),
+                'effective_price' => number_format($item->effective_price, 2),
+                'discount_percentage' => $item->discount_percentage,
                 'category' => $item->category,
                 'status' => $item->status,
                 'image' => $item->image,

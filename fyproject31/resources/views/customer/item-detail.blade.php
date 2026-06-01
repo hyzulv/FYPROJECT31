@@ -38,7 +38,15 @@
         <div class="item-detail-info">
             <h2 class="item-detail-name">{{ $item['name'] }}</h2>
             <p class="item-detail-desc">{{ $item['description'] }}</p>
-            <span class="item-detail-price">RM {{ $item['price'] }}</span>
+            <span class="item-detail-price">
+                @if($item['discount_percentage'] > 0)
+                    <span style="text-decoration: line-through; color: #999; font-size: 0.9rem;">RM {{ $item['price'] }}</span>
+                    <span style="color: #dc3545; font-weight: 700;">RM {{ $item['effective_price'] }}</span>
+                    <span style="background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; margin-left: 8px;">-{{ $item['discount_percentage'] }}%</span>
+                @else
+                    RM {{ $item['price'] }}
+                @endif
+            </span>
         </div>
 
         @if($addOns->count() > 0)
@@ -106,7 +114,7 @@
 
 @push('scripts')
 <script>
-const itemBasePrice = {{ $item['price'] }};
+const itemBasePrice = {{ $item['effective_price'] }};
 const itemId = {{ $item['id'] }};
 const itemName = '{{ addslashes($item['name']) }}';
 let quantity = 1;

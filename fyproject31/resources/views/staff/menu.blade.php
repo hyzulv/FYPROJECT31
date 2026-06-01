@@ -16,6 +16,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
+                <th>Discount</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -39,7 +40,23 @@
                 </td>
                 <td>{{ $item->name }}</td>
                 <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
-                <td>RM {{ number_format($item->price, 2) }}</td>
+                <td>
+                    @php $effPrice = $item->effective_price; @endphp
+                    @if($effPrice < $item->price)
+                        <span style="text-decoration: line-through; color: #999;">RM {{ number_format($item->price, 2) }}</span>
+                        <span style="color: #dc3545; font-weight: 600;">RM {{ number_format($effPrice, 2) }}</span>
+                    @else
+                        RM {{ number_format($item->price, 2) }}
+                    @endif
+                </td>
+                <td>
+                    @php $discPct = $item->discount_percentage; @endphp
+                    @if($discPct > 0)
+                        <span style="background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;">-{{ $discPct }}%</span>
+                    @else
+                        <span style="color: #999; font-size: 0.85rem;">—</span>
+                    @endif
+                </td>
                 <td>
                     <select onchange="toggleStatus('{{ $item->id }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
                         <option value="available" {{ $item->status == 'available' ? 'selected' : '' }}>Available</option>
@@ -313,11 +330,21 @@ function refreshMenu() {
             let html = '';
             data.menu.forEach(item => {
                 const imgUrl = item.image_url ? item.image_url : item.image ? `/images/menu/${item.image}` : '/images/menu/ayam-goreng-kunyit.jpg';
+                const discPct = parseFloat(item.discount_percentage) || 0;
+                let priceHtml = `RM ${item.price}`;
+                if (discPct > 0) {
+                    priceHtml = `<span style="text-decoration: line-through; color: #999;">RM ${item.price}</span> <span style="color: #dc3545; font-weight: 600;">RM ${item.effective_price}</span>`;
+                }
+                let discBadge = '<span style="color: #999; font-size: 0.85rem;">—</span>';
+                if (discPct > 0) {
+                    discBadge = `<span style="background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;">-${discPct}%</span>`;
+                }
                 html += `<tr data-id="${item.id}">
                     <td>${item.category === 'add_on' ? '<span style="color:#999;font-size:0.85rem;">—</span>' : `<img src="${imgUrl}" alt="${item.name}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">`}</td>
                     <td>${item.name}</td>
                     <td>${item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
-                    <td>RM ${item.price}</td>
+                    <td>${priceHtml}</td>
+                    <td>${discBadge}</td>
                     <td>
                         <select onchange="toggleStatus('${item.id}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
                             <option value="available" ${item.status === 'available' ? 'selected' : ''}>Available</option>

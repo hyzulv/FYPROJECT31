@@ -23,7 +23,7 @@ class CustomerOrderController extends Controller
 
     public function itemDetail($id)
     {
-        $item = MenuItem::where('id', $id)->where('status', 'available')->firstOrFail();
+        $item = MenuItem::with('activeDiscounts')->where('id', $id)->where('status', 'available')->firstOrFail();
 
         $addOns = MenuItem::where('category', 'add_on')
             ->where('status', 'available')
@@ -59,6 +59,8 @@ class CustomerOrderController extends Controller
             'name' => $item->name,
             'description' => $item->description,
             'price' => number_format($item->price, 2),
+            'effective_price' => number_format($item->effective_price, 2),
+            'discount_percentage' => $item->discount_percentage,
             'category' => $item->category,
             'image' => $item->image,
         ];
@@ -71,7 +73,8 @@ class CustomerOrderController extends Controller
 
     public function menu(Request $request)
     {
-        $menuItems = MenuItem::where('status', 'available')
+        $menuItems = MenuItem::with('activeDiscounts')
+            ->where('status', 'available')
             ->where('category', '!=', 'add_on')
             ->orderBy('category')
             ->orderBy('name')
@@ -84,6 +87,8 @@ class CustomerOrderController extends Controller
                         'name' => $item->name,
                         'description' => $item->description,
                         'price' => number_format($item->price, 2),
+                        'effective_price' => number_format($item->effective_price, 2),
+                        'discount_percentage' => $item->discount_percentage,
                         'category' => $item->category,
                         'image' => $item->image,
                     ];
