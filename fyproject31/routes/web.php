@@ -576,18 +576,14 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('feedback');
 
     Route::get('/staff', function () {
-        $admins = Admin::all()->map(function ($u) {
-            return ['id' => 'admin_' . $u->id, 'name' => $u->name, 'username' => $u->username, 'email' => $u->email, 'role' => 'admin', 'phone' => $u->phone ?? '+60 12-345 6789', 'status' => ucfirst($u->status), 'model' => 'admin'];
-        });
         $staff = Staff::all()->map(function ($u) {
             return ['id' => 'staff_' . $u->id, 'name' => $u->name, 'username' => $u->username, 'email' => $u->email, 'role' => 'staff', 'phone' => $u->phone ?? '+60 12-345 6789', 'status' => ucfirst($u->status), 'model' => 'staff'];
         });
-        $allUsers = $admins->concat($staff)->sortBy('name')->values();
 
         return view('admin.staff', [
             'userName' => auth()->user()->name,
             'userRole' => 'admin',
-            'staff' => $allUsers,
+            'staff' => $staff,
         ]);
     })->name('staff');
 
@@ -633,14 +629,10 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $type = $parts[0];
         $realId = $parts[1] ?? $id;
 
-        if ($type === 'admin') {
-            $user = Admin::findOrFail($realId);
-            if (Admin::count() <= 1) {
-                return back()->withErrors(['error' => 'Cannot delete the last admin.']);
-            }
-        } else {
-            $user = Staff::findOrFail($realId);
+        if ($type !== 'staff') {
+            return back()->withErrors(['error' => 'Admins can only be managed via the database.']);
         }
+        $user = Staff::findOrFail($realId);
         $user->delete();
         return redirect()->route('admin.staff')->with('success', 'Staff deleted successfully!');
     })->name('staff.delete');
@@ -650,11 +642,10 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $type = $parts[0];
         $realId = $parts[1] ?? $id;
 
-        if ($type === 'admin') {
-            $user = Admin::findOrFail($realId);
-        } else {
-            $user = Staff::findOrFail($realId);
+        if ($type !== 'staff') {
+            return response()->json(['error' => 'Admins can only be managed via the database.'], 403);
         }
+        $user = Staff::findOrFail($realId);
 
         return response()->json([
             'name' => $user->name,
@@ -670,11 +661,10 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         $type = $parts[0];
         $realId = $parts[1] ?? $id;
 
-        if ($type === 'admin') {
-            $user = Admin::findOrFail($realId);
-        } else {
-            $user = Staff::findOrFail($realId);
+        if ($type !== 'staff') {
+            return back()->withErrors(['error' => 'Admins can only be managed via the database.']);
         }
+        $user = Staff::findOrFail($realId);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',

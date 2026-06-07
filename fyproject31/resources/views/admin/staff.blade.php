@@ -70,7 +70,6 @@
                 <th>Name</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Role</th>
                 <th>Phone</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -82,7 +81,6 @@
                 <td>{{ $s['name'] }}</td>
                 <td>{{ $s['username'] }}</td>
                 <td>{{ $s['email'] }}</td>
-                <td><span class="badge badge-{{ $s['role'] }}">{{ ucfirst($s['role']) }}</span></td>
                 <td>{{ $s['phone'] }}</td>
                 <td><span class="badge badge-{{ strtolower($s['status']) }}">{{ $s['status'] }}</span></td>
                 <td>
