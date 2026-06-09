@@ -123,20 +123,13 @@ https://matrock.shop/
 ### Administrator
 
 ```text
-Email:
-Password:
+Username: admin
+Password: password123
 ```
 
 ### Staff
 
 ```text
-Email:
-Password:
-```
-
-### Customer
-
-```text
-Email:
-Password:
+Username: ahmad
+Password: password123
 ```
