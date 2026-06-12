@@ -628,7 +628,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('feedback');
 
     Route::get('/staff', function () {
-        $staff = Staff::all()->map(function ($u) {
+        $staff = Staff::orderBy('username')->get()->map(function ($u) {
             return ['id' => 'staff_' . $u->id, 'name' => $u->name, 'username' => $u->username, 'email' => $u->email, 'role' => 'staff', 'phone' => $u->phone ?? '+60 12-345 6789', 'status' => ucfirst($u->status), 'model' => 'staff'];
         });
 
