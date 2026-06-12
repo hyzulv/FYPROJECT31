@@ -5,72 +5,132 @@
 
 @section('content')
 <div class="data-card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="margin: 0;">Menu Items</h3>
-        <button onclick="openAddModal()" class="btn-primary" style="padding: 8px 16px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add Item</button>
+    <div class="tab-nav" style="display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0;">
+        <button class="tab-btn" data-tab="menu-items" onclick="switchTab('menu-items')" style="padding: 10px 24px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: #666; transition: all 0.2s; margin-bottom: -2px;">
+            Menu Items
+        </button>
+        <button class="tab-btn" data-tab="discounts" onclick="switchTab('discounts')" style="padding: 10px 24px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: #666; transition: all 0.2s; margin-bottom: -2px;">
+            Discounts
+        </button>
     </div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Discount</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="menuTableBody">
-            @foreach($menuItems as $item)
-            <tr data-id="{{ $item->id }}">
-                <td>
-                    @if($item->category !== 'add_on')
-                        @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name); @endphp
-                        @if($imgFile)
-                            <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
-                        @elseif($item->image)
-                            <img src="{{ asset('images/menu/' . $item->image) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+
+    <div id="tab-menu-items" class="tab-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="margin: 0;">Menu Items</h3>
+            <button onclick="openAddModal()" class="btn-primary" style="padding: 8px 16px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add Item</button>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="menuTableBody">
+                @foreach($menuItems as $item)
+                <tr data-id="{{ $item->id }}">
+                    <td>
+                        @if($item->category !== 'add_on')
+                            @php $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name); @endphp
+                            @if($imgFile)
+                                <img src="{{ asset('images/menu/' . $imgFile) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                            @elseif($item->image)
+                                <img src="{{ asset('images/menu/' . $item->image) }}" alt="{{ $item->name }}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                            @else
+                                <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                            @endif
                         @else
-                            <img src="{{ asset('images/menu/ayam-goreng-kunyit.jpg') }}" alt="Food" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                            <span style="color:#999;font-size:0.85rem;">—</span>
                         @endif
-                    @else
-                        <span style="color:#999;font-size:0.85rem;">—</span>
-                    @endif
-                </td>
-                <td>{{ $item->name }}</td>
-                <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
-                <td>
-                    @php $effPrice = $item->effective_price; @endphp
-                    @if($effPrice < $item->price)
-                        <span style="text-decoration: line-through; color: #999;">RM {{ number_format($item->price, 2) }}</span>
-                        <span style="color: #dc3545; font-weight: 600;">RM {{ number_format($effPrice, 2) }}</span>
-                    @else
-                        RM {{ number_format($item->price, 2) }}
-                    @endif
-                </td>
-                <td>
-                    @php $discPct = $item->discount_percentage; @endphp
-                    @if($discPct > 0)
-                        <span style="background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;">-{{ $discPct }}%</span>
-                    @else
-                        <span style="color: #999; font-size: 0.85rem;">—</span>
-                    @endif
-                </td>
-                <td>
-                    <select onchange="toggleStatus('{{ $item->id }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
-                        <option value="available" {{ $item->status == 'available' ? 'selected' : '' }}>Available</option>
-                        <option value="unavailable" {{ $item->status == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                    </select>
-                </td>
-                <td>
-                    <button onclick="openEditModal('{{ $item->id }}')" style="background: #ffc107; color: #222; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 4px;">Edit</button>
-                    <button onclick="deleteMenuItem('{{ $item->id }}', '{{ $item->name }}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
+                    <td>
+                        @php $effPrice = $item->effective_price; @endphp
+                        @if($effPrice < $item->price)
+                            <span style="text-decoration: line-through; color: #999;">RM {{ number_format($item->price, 2) }}</span>
+                            <span style="color: #dc3545; font-weight: 600;">RM {{ number_format($effPrice, 2) }}</span>
+                        @else
+                            RM {{ number_format($item->price, 2) }}
+                        @endif
+                    </td>
+                    <td>
+                        @php $discPct = $item->discount_percentage; @endphp
+                        @if($discPct > 0)
+                            <span style="background: #28a745; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;">-{{ $discPct }}%</span>
+                        @else
+                            <span style="color: #999; font-size: 0.85rem;">—</span>
+                        @endif
+                    </td>
+                    <td>
+                        <select onchange="toggleStatus('{{ $item->id }}', this.value)" style="padding: 6px 10px; background: #f5f5f5; color: #222; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem;">
+                            <option value="available" {{ $item->status == 'available' ? 'selected' : '' }}>Available</option>
+                            <option value="unavailable" {{ $item->status == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button onclick="openEditModal('{{ $item->id }}')" style="background: #ffc107; color: #222; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 4px;">Edit</button>
+                        <button onclick="deleteMenuItem('{{ $item->id }}', '{{ $item->name }}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tab-discounts" class="tab-panel" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="margin: 0;">Discounts</h3>
+            <button onclick="openAddDiscountModal()" style="padding: 8px 16px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add Discount</button>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Percentage</th>
+                    <th>Applied To</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($discounts as $discount)
+                <tr>
+                    <td>{{ $discount->name }}</td>
+                    <td>{{ $discount->percentage }}%</td>
+                    <td style="max-width: 300px; white-space: normal;">
+                        @php $names = $discount->menuItems->pluck('name')->toArray(); @endphp
+                        @if(count($names) > 0)
+                            {{ implode(', ', $names) }}
+                        @else
+                            <span style="color: #999;">No items selected</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($discount->is_active)
+                            <span style="background: #28a745; color: #fff; padding: 2px 10px; border-radius: 10px; font-size: 0.8rem;">Active</span>
+                        @else
+                            <span style="background: #dc3545; color: #fff; padding: 2px 10px; border-radius: 10px; font-size: 0.8rem;">Inactive</span>
+                        @endif
+                    </td>
+                    <td>
+                        <button onclick="openEditDiscountModal({{ $discount->id }})" style="background: #ffc107; color: #222; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 4px;">Edit</button>
+                        <button onclick="deleteDiscount({{ $discount->id }}, '{{ $discount->name }}')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Delete</button>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #999; padding: 24px;">No discounts created yet.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div id="addMenuModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
@@ -177,11 +237,179 @@
         </form>
     </div>
 </div>
+
+<div id="addDiscountModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 24px; border-radius: 12px; width: 90%; max-width: 480px; border: 2px solid #420C09; max-height: 90vh; overflow-y: auto;">
+        <h3 style="margin-bottom: 16px; color: #420C09;">Add Discount</h3>
+        <form id="addDiscountForm" method="POST" action="{{ url('staff/discounts/add') }}">
+            @csrf
+            <input type="text" name="name" placeholder="Discount Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+            <div style="position: relative; margin-bottom: 12px;">
+                <input type="number" name="percentage" step="0.01" min="0" max="100" placeholder="Percentage" required style="width: 100%; padding: 10px; padding-right: 30px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888;">%</span>
+            </div>
+            <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Apply to Menu Items <span style="color: #888; font-weight: normal;">(excludes add-ons)</span></label>
+            <div style="margin-bottom: 6px;">
+                <label style="font-size: 0.85rem; color: #420C09; cursor: pointer; user-select: none;">
+                    <input type="checkbox" onchange="toggleDiscountCheckboxes(this, 'discountItemCheckboxes')"> Select All
+                </label>
+            </div>
+            <div id="discountItemCheckboxes" style="max-height: 200px; overflow-y: auto; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 12px;">
+                <span style="color: #999; font-size: 0.85rem;">Loading items...</span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeAddDiscountModal()" style="flex: 1; padding: 10px; background: #f0f0f0; color: #222; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Cancel</button>
+                <button type="submit" style="flex: 1; padding: 10px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Add Discount</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="editDiscountModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 24px; border-radius: 12px; width: 90%; max-width: 480px; border: 2px solid #420C09; max-height: 90vh; overflow-y: auto;">
+        <h3 style="margin-bottom: 16px; color: #420C09;">Edit Discount</h3>
+        <form id="editDiscountForm" method="POST">
+            @csrf
+            <input type="hidden" name="id" id="editDiscountId">
+            <input type="text" name="name" id="editDiscountName" placeholder="Discount Name" required style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+            <div style="position: relative; margin-bottom: 12px;">
+                <input type="number" name="percentage" id="editDiscountPercentage" step="0.01" min="0" max="100" placeholder="Percentage" required style="width: 100%; padding: 10px; padding-right: 30px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888;">%</span>
+            </div>
+            <select name="is_active" id="editDiscountStatus" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; color: #222;">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+            </select>
+            <label style="display: block; margin-bottom: 6px; font-size: 0.9rem; color: #555;">Apply to Menu Items <span style="color: #888; font-weight: normal;">(excludes add-ons)</span></label>
+            <div style="margin-bottom: 6px;">
+                <label style="font-size: 0.85rem; color: #420C09; cursor: pointer; user-select: none;">
+                    <input type="checkbox" onchange="toggleDiscountCheckboxes(this, 'editDiscountItemCheckboxes')"> Select All
+                </label>
+            </div>
+            <div id="editDiscountItemCheckboxes" style="max-height: 200px; overflow-y: auto; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 12px;">
+                <span style="color: #999; font-size: 0.85rem;">Loading items...</span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeEditDiscountModal()" style="flex: 1; padding: 10px; background: #f0f0f0; color: #222; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Cancel</button>
+                <button type="submit" style="flex: 1; padding: 10px; background: #420C09; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
 const csrfToken = '{{ csrf_token() }}';
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.style.color = '#666';
+        b.style.borderBottomColor = 'transparent';
+    });
+    document.getElementById('tab-' + tab).style.display = 'block';
+    const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+    if (btn) {
+        btn.style.color = '#420C09';
+        btn.style.borderBottomColor = '#420C09';
+    }
+    if (tab === 'discounts') {
+        loadDiscountItemCheckboxes();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab') || 'menu-items';
+    switchTab(tab);
+});
+
+function toggleDiscountCheckboxes(selectAll, containerId) {
+    document.querySelectorAll('#' + containerId + ' input[type="checkbox"]').forEach(cb => {
+        cb.checked = selectAll.checked;
+    });
+}
+
+function openAddDiscountModal() {
+    document.getElementById('addDiscountModal').style.display = 'flex';
+    loadDiscountItemCheckboxes();
+}
+
+function closeAddDiscountModal() {
+    document.getElementById('addDiscountModal').style.display = 'none';
+    document.getElementById('addDiscountForm').reset();
+}
+
+function loadDiscountItemCheckboxes() {
+    fetch('/api/menu/non-addons')
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('discountItemCheckboxes');
+            const editContainer = document.getElementById('editDiscountItemCheckboxes');
+            if (!data.items || data.items.length === 0) {
+                const msg = '<span style="color: #999; font-size: 0.85rem;">No menu items available (excluding add-ons).</span>';
+                container.innerHTML = msg;
+                editContainer.innerHTML = msg;
+                return;
+            }
+            let html = '';
+            data.items.forEach(item => {
+                const catName = item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                html += `<label style="display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; color: #222; cursor: pointer;">
+                    <input type="checkbox" name="menu_item_ids[]" value="${item.id}">
+                    ${item.name} <span style="color: #888; font-size: 0.8rem;">(${catName})</span>
+                </label>`;
+            });
+            container.innerHTML = html;
+            editContainer.innerHTML = html;
+        });
+}
+
+function openEditDiscountModal(id) {
+    fetch('/api/menu/non-addons')
+        .then(res => res.json())
+        .then(data => {
+            const editContainer = document.getElementById('editDiscountItemCheckboxes');
+            let html = '';
+            const selectedIds = @json($discounts->mapWithKeys(fn($d) => [$d->id => $d->menuItems->pluck('id')->toArray()]));
+            const selected = selectedIds[id] || [];
+
+            data.items.forEach(item => {
+                const catName = item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                const checked = selected.includes(item.id) ? 'checked' : '';
+                html += `<label style="display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; color: #222; cursor: pointer;">
+                    <input type="checkbox" name="menu_item_ids[]" value="${item.id}" ${checked}>
+                    ${item.name} <span style="color: #888; font-size: 0.8rem;">(${catName})</span>
+                </label>`;
+            });
+            editContainer.innerHTML = html;
+
+            const discount = @json($discounts->keyBy('id'));
+            const d = discount[id];
+            document.getElementById('editDiscountId').value = d.id;
+            document.getElementById('editDiscountName').value = d.name;
+            document.getElementById('editDiscountPercentage').value = d.percentage;
+            document.getElementById('editDiscountStatus').value = d.is_active ? '1' : '0';
+            document.getElementById('editDiscountForm').action = `{{ url('staff/discounts') }}/${id}/update`;
+            document.getElementById('editDiscountModal').style.display = 'flex';
+        });
+}
+
+function closeEditDiscountModal() {
+    document.getElementById('editDiscountModal').style.display = 'none';
+    document.getElementById('editDiscountForm').reset();
+}
+
+function deleteDiscount(id, name) {
+    if (!confirm(`Delete discount "${name}"?`)) return;
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `{{ url('staff/discounts') }}/${id}`;
+    form.innerHTML = `@csrf @method('DELETE')`;
+    document.body.appendChild(form);
+    form.submit();
+}
 
 function openAddModal() {
     const btn = document.querySelector('#addMenuForm button[type="submit"]');
