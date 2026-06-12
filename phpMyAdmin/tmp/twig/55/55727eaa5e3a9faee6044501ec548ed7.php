@@ -139,6 +139,6 @@ class __TwigTemplate_6d0fd75884701dac3fcdaf05e6344b5c extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "scripts.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\FYPROJECT31\\FYPROJECT31\\phpMyAdmin\\templates\\scripts.twig");
+        return new Source("", "scripts.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\phpMyAdmin\\templates\\scripts.twig");
     }
 }

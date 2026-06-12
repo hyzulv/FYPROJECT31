@@ -684,8 +684,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             }],
             'phone' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
-            'password' => 'nullable|min:6',
-            'password_confirmation' => 'required_with:password|same:password',
+            'password' => 'nullable|min:6|confirmed',
         ]);
 
         $data = [

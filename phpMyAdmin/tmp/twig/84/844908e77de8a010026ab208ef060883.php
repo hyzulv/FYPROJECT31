@@ -192,6 +192,6 @@ yield _gettext("Git information missing!");
 
     public function getSourceContext()
     {
-        return new Source("", "footer.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\FYPROJECT31\\FYPROJECT31\\phpMyAdmin\\templates\\footer.twig");
+        return new Source("", "footer.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\phpMyAdmin\\templates\\footer.twig");
     }
 }

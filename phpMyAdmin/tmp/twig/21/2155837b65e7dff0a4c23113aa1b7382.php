@@ -363,6 +363,6 @@ yield _gettext("Log in");
 
     public function getSourceContext()
     {
-        return new Source("", "login/form.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\FYPROJECT31\\FYPROJECT31\\phpMyAdmin\\templates\\login\\form.twig");
+        return new Source("", "login/form.twig", "C:\\Users\\User\\OneDrive\\Documents\\SEM 6\\Project\\Project Github\\FYPROJECT31\\phpMyAdmin\\templates\\login\\form.twig");
     }
 }
