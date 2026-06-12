@@ -306,13 +306,65 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
     Route::get('/menu', function () {
         $menuItems = MenuItem::orderBy('category')->orderBy('name')->get();
         $addOns = MenuItem::where('category', 'add_on')->orderBy('name')->get();
+        $discounts = Discount::with('menuItems')->orderBy('name')->get();
         return view('staff.menu', [
             'userName' => auth()->user()->name,
             'userRole' => 'staff',
             'menuItems' => $menuItems,
             'addOns' => $addOns,
+            'discounts' => $discounts,
         ]);
     })->name('menu');
+
+    Route::post('/discounts/add', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'percentage' => 'required|numeric|min:0|max:100',
+            'menu_item_ids' => 'nullable|array',
+            'menu_item_ids.*' => 'integer|exists:menu_items,id',
+        ]);
+
+        $discount = Discount::create([
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+            'is_active' => true,
+        ]);
+
+        if (!empty($validated['menu_item_ids'])) {
+            $discount->menuItems()->attach($validated['menu_item_ids']);
+        }
+
+        return redirect('staff/menu?tab=discounts')->with('success', 'Discount created successfully.');
+    })->name('discounts.add');
+
+    Route::post('/discounts/{id}/update', function (\Illuminate\Http\Request $request, $id) {
+        $discount = Discount::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'percentage' => 'required|numeric|min:0|max:100',
+            'is_active' => 'required|boolean',
+            'menu_item_ids' => 'nullable|array',
+            'menu_item_ids.*' => 'integer|exists:menu_items,id',
+        ]);
+
+        $discount->update([
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+            'is_active' => $validated['is_active'],
+        ]);
+
+        $discount->menuItems()->sync($validated['menu_item_ids'] ?? []);
+
+        return redirect('staff/menu?tab=discounts')->with('success', 'Discount updated successfully.');
+    })->name('discounts.update');
+
+    Route::delete('/discounts/{id}', function ($id) {
+        $discount = Discount::findOrFail($id);
+        $discount->menuItems()->detach();
+        $discount->delete();
+        return redirect('staff/menu?tab=discounts')->with('success', 'Discount deleted successfully.');
+    })->name('discounts.delete');
 
     Route::get('/feedback', function () {
         $rating = request()->query('rating');
