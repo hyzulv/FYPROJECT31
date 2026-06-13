@@ -42,6 +42,7 @@ class Staff extends Authenticatable implements MustVerifyEmailContract
             'user' => $this,
         ], function ($message) {
             $message->to($this->email)
+                ->from(config('mail.from.address'), 'MAT ROCK Restaurant')
                 ->subject('Verify Your Email - Mat Rock Restaurant');
         });
     }
@@ -54,6 +55,7 @@ class Staff extends Authenticatable implements MustVerifyEmailContract
             'user' => $this,
         ], function ($message) {
             $message->to($this->email)
+                ->from(config('mail.from.address'), 'MAT ROCK Restaurant')
                 ->subject('Reset Your Password');
         });
     }

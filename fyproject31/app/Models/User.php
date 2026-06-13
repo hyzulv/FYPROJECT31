@@ -38,6 +38,7 @@ class User extends Authenticatable
             'user' => $this,
         ], function ($message) {
             $message->to($this->email)
+                ->from(config('mail.from.address'), 'MAT ROCK Restaurant')
                 ->subject('Reset Your Password');
         });
     }
