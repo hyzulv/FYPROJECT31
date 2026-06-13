@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\ToyyibPayService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -144,7 +145,7 @@ class CustomerOrderController extends Controller
         ]);
 
         $order = Order::create([
-            'order_id' => $this->generateOrderId(),
+            'order_id' => '#MR-TEMP-' . Str::random(8),
             'table_number' => 'T' . $request->table_number,
             'items' => json_encode($request->items),
             'total' => $request->total,
@@ -152,6 +153,13 @@ class CustomerOrderController extends Controller
             'order_time' => now()->format('H:i:s'),
             'payment_status' => 'unpaid',
         ]);
+
+        $dailyKey = 'order_counter_' . now()->format('dm');
+        if (Cache::get($dailyKey) === null) {
+            Cache::forever($dailyKey, Order::whereDate('created_at', today())->count());
+        }
+        $nextNumber = Cache::increment($dailyKey) % 10000;
+        $order->update(['order_id' => '#MR-' . now()->format('dm') . '-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT)]);
 
         foreach ($request->items as $item) {
             OrderItem::create([
@@ -163,6 +171,7 @@ class CustomerOrderController extends Controller
             ]);
         }
 
+        $errorMessage = null;
         try {
             $itemNames = collect($request->items)->pluck('name')->take(3)->implode(', ');
             if (count($request->items) > 3) {
@@ -181,6 +190,8 @@ class CustomerOrderController extends Controller
 
             if (isset($bill['BillCode'])) {
                 $order->update(['bill_code' => $bill['BillCode']]);
+            } else {
+                $errorMessage = 'ToyyibPay did not return a bill code. Response: ' . json_encode($bill);
             }
         } catch (\Exception $e) {
             Log::error('ToyyibPay bill creation failed', [
@@ -188,6 +199,14 @@ class CustomerOrderController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
+            $errorMessage = 'Payment gateway error: ' . $e->getMessage();
+        }
+
+        if ($errorMessage) {
+            return response()->json([
+                'success' => false,
+                'message' => $errorMessage,
+            ], 500);
         }
 
         $paymentUrl = null;
@@ -310,11 +329,6 @@ class CustomerOrderController extends Controller
     {
         $order = Order::where('order_id', $orderId)->firstOrFail();
         return view('customer.order-success', ['order' => $order]);
-    }
-
-    private function generateOrderId(): string
-    {
-        return '#MR-' . now()->format('ymdHi') . strtoupper(Str::random(3));
     }
 
 }
