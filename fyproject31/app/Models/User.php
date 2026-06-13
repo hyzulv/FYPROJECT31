@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $mailer = $this->role === 'admin' ? 'smtp' : 'staff_smtp';
+        $mailer = 'smtp';
 
         Mail::mailer($mailer)->send('emails.password-reset', [
             'token' => $token,

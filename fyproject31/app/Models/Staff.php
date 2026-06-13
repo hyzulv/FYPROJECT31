@@ -37,7 +37,7 @@ class Staff extends Authenticatable implements MustVerifyEmailContract
             ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
         );
 
-        Mail::mailer('staff_smtp')->send('emails.staff-verify', [
+        Mail::mailer('smtp')->send('emails.staff-verify', [
             'url' => $url,
             'user' => $this,
         ], function ($message) {
@@ -49,7 +49,7 @@ class Staff extends Authenticatable implements MustVerifyEmailContract
 
     public function sendPasswordResetNotification($token)
     {
-        Mail::mailer('staff_smtp')->send('emails.password-reset', [
+        Mail::mailer('smtp')->send('emails.password-reset', [
             'token' => $token,
             'email' => $this->email,
             'user' => $this,
