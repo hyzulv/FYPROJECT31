@@ -615,4 +615,3 @@ function deleteDiscount(id, name) {
 
 setInterval(refreshMenu, 5000);
 </script>
-@endumpt
