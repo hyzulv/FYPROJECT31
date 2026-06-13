@@ -27,6 +27,10 @@ class ContactMail extends Mailable
     {
         return new Envelope(
             subject: 'New Contact Form Message - MAT ROCK Restaurant',
+            from: new \Illuminate\Mail\Mailables\Address(
+                config('mail.from.address'),
+                'MAT ROCK Restaurant'
+            ),
         );
     }
 
