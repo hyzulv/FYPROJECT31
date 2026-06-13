@@ -5,6 +5,7 @@
 @section('content')
 <div class="receipt-container">
     <div class="receipt-actions no-print">
+        @if($order->payment_status !== 'failed')
         <button class="action-btn" onclick="window.print()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
                 <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
@@ -12,6 +13,7 @@
             </svg>
             Print / Save PDF
         </button>
+        @endif
         <a href="{{ route('homepage') }}" class="action-btn secondary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
                 <path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/>
@@ -30,6 +32,24 @@
             <p class="receipt-order-id">Order {{ $order->order_id }}</p>
             <p class="receipt-table">Table: {{ $order->table_number }}</p>
             <p class="receipt-time">{{ now()->format('d/m/Y h:i A') }}</p>
+            @if($order->payment_status === 'paid')
+                <div class="payment-status paid" style="margin-top: 12px;">
+                    <span class="payment-badge paid">Paid</span>
+                    @if($order->transaction_id)
+                        <p style="margin: 4px 0 0; font-size: 12px;">Transaction: {{ $order->transaction_id }}</p>
+                    @endif
+                </div>
+            @elseif($order->payment_status === 'failed')
+                <div class="payment-status failed" style="margin-top: 12px;">
+                    <span class="payment-badge failed">Payment Failed</span>
+                    <p style="margin: 4px 0 0; font-size: 12px;">Please try again or pay at counter.</p>
+                </div>
+            @else
+                <div class="payment-status unpaid" style="margin-top: 12px;">
+                    <span class="payment-badge unpaid">Unpaid</span>
+                    <p style="margin: 4px 0 0; font-size: 12px;">Please complete your payment to confirm order.</p>
+                </div>
+            @endif
         </div>
 
         <div class="receipt-divider"></div>
@@ -80,31 +100,6 @@
         </div>
 
         <div class="receipt-divider"></div>
-
-        <div class="receipt-payment">
-            <h3>Payment Status</h3>
-            @if($order->payment_status === 'paid')
-                <div class="payment-status paid">
-                    <span class="payment-badge paid">Paid</span>
-                    @if($order->transaction_id)
-                        <p>Transaction: {{ $order->transaction_id }}</p>
-                    @endif
-                    @if($order->paid_at)
-                        <p>{{ $order->paid_at->format('d/m/Y h:i A') }}</p>
-                    @endif
-                </div>
-            @elseif($order->payment_status === 'failed')
-                <div class="payment-status failed">
-                    <span class="payment-badge failed">Payment Failed</span>
-                    <p>Please try again or pay at counter.</p>
-                </div>
-            @else
-                <div class="payment-status unpaid">
-                    <span class="payment-badge unpaid">Unpaid</span>
-                    <p>Please complete your payment to confirm order.</p>
-                </div>
-            @endif
-        </div>
 
         <div class="receipt-footer">
             <p>Thank you for dining with us!</p>
