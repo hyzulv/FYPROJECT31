@@ -8,7 +8,6 @@ use App\Models\OrderItem;
 use App\Services\ToyyibPayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class CustomerOrderController extends Controller
 {
@@ -314,7 +313,18 @@ class CustomerOrderController extends Controller
 
     private function generateOrderId(): string
     {
-        return '#MR-' . now()->format('ymdHi') . strtoupper(Str::random(3));
+        $lastOrder = Order::where('order_id', 'like', '#MR-%')
+            ->orderBy('order_id', 'desc')
+            ->first();
+
+        if ($lastOrder) {
+            $lastNumber = (int) substr($lastOrder->order_id, 4);
+            $nextNumber = ($lastNumber + 1) % 10000;
+        } else {
+            $nextNumber = 0;
+        }
+
+        return '#MR-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
     }
 
 }
