@@ -76,6 +76,9 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
 
     try {
         $adminEmail = Admin::value('email');
+        if (!$adminEmail) {
+            return back()->with('contact_error', 'Contact form is not configured yet. Please contact the restaurant directly.');
+        }
         \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactMail(
             $validated['name'],
             $validated['email'],
@@ -788,11 +791,9 @@ Route::get('/api/orders/recent', function () {
 // API Routes for Real-time Order Sync & Menu Management
 Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
-        static $lastCount = null;
-        $currentCount = Order::count();
-        $lastCount = $lastCount ?? $currentCount;
-        $hasNew = $currentCount > $lastCount;
-        $lastCount = $currentCount;
+        $lastCheck = cache('orders_last_check', now()->subMinutes(5));
+        $hasNew = Order::where('created_at', '>', $lastCheck)->exists();
+        cache(['orders_last_check' => now()], 60);
 
         $latestOrders = Order::orderBy('updated_at', 'desc')
             ->take(5)
