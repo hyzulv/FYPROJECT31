@@ -159,7 +159,7 @@ Route::delete('/feedback/{id}', function ($id) {
 Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'pending')->where('payment_status', '!=', 'failed')->count();
+        $pendingOrders = Order::where('status', 'pending')->count();
         $readyOrders = Order::where('status', 'ready')->count();
         $totalMenuItems = MenuItem::where('status', 'available')->count();
         $recentOrders = Order::orderBy('updated_at', 'desc')
@@ -402,7 +402,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'pending')->where('payment_status', '!=', 'failed')->count();
+        $pendingOrders = Order::where('status', 'pending')->count();
         $readyOrders = Order::where('status', 'ready')->count();
         $totalStaff = Staff::count();
         $recentOrders = Order::orderBy('updated_at', 'desc')
