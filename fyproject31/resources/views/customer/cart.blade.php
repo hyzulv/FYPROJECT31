@@ -32,7 +32,7 @@
         </div>
         <h3>Your cart is empty</h3>
         <p>Add some delicious items from our menu</p>
-        <a href="{{ route('customer.menu') }}" class="btn-primary">Browse Menu</a>
+        <button class="btn-primary" onclick="window.history.back()">Browse Menu</button>
     </div>
 
     <div class="cart-summary" id="cartSummary" style="display: none;">
