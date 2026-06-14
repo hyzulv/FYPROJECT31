@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             '/payment/callback',
+            '/api/session/heartbeat',
         ]);
         $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR |
             Request::HEADER_X_FORWARDED_HOST |
