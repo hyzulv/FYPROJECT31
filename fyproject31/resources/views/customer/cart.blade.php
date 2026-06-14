@@ -5,7 +5,7 @@
 @section('content')
 <div class="cart-container">
     <header class="cart-header">
-        <button class="back-btn" onclick="window.location.href='{{ route('customer.menu') }}'">
+        <button class="back-btn" onclick="window.history.back()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>

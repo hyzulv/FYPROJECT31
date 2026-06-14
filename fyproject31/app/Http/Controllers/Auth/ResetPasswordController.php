@@ -31,6 +31,13 @@ class ResetPasswordController extends Controller
             'token' => $request->token,
         ];
 
+        $user = \App\Models\Staff::where('email', $request->email)->first()
+            ?? \App\Models\Admin::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'New password cannot be the same as your current password.']);
+        }
+
         $callback = function ($user, $password) {
             $user->forceFill([
                 'password' => $password,

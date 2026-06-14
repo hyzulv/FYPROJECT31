@@ -51,8 +51,10 @@
                 <td>{{ $order['table'] }}</td>
                 <td>{{ $order['items'] }}</td>
                 <td>RM {{ $order['total'] }}</td>
-                    <td><span class="badge badge-{{ $order['payment_status'] === 'unpaid' ? 'unpaid' : $order['status'] }}">{{ $order['payment_status'] === 'unpaid' ? 'Invalid order' : ucfirst($order['status']) }}</span></td>
-                @endforeach
+                <td><span class="badge badge-{{ $order['payment_status'] === 'unpaid' ? 'unpaid' : $order['status'] }}">{{ $order['payment_status'] === 'unpaid' ? 'Invalid order' : ucfirst($order['status']) }}</span></td>
+                <td class="order-time" data-time="{{ $order['timestamp'] ?? '' }}">{{ $order['time'] }}</td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

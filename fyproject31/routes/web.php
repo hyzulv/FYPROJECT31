@@ -179,6 +179,7 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
                     'status' => $order->status,
                     'payment_status' => $order->payment_status,
                     'time' => $order->created_at?->diffForHumans(),
+                    'timestamp' => $order->created_at?->toISOString(),
                 ];
             });
 
@@ -248,6 +249,10 @@ Route::middleware('auth:staff')->prefix('staff')->name('staff.')->group(function
 
         if (!\Illuminate\Support\Facades\Hash::check($validated['current_password'], auth()->user()->password)) {
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        if (\Illuminate\Support\Facades\Hash::check($validated['password'], auth()->user()->password)) {
+            return back()->withErrors(['password' => 'New password cannot be the same as your current password.']);
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
@@ -417,6 +422,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
                     'status' => $order->status,
                     'payment_status' => $order->payment_status,
                     'time' => $order->created_at?->diffForHumans(),
+                    'timestamp' => $order->created_at?->toISOString(),
                 ];
             });
 
@@ -486,6 +492,10 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
         if (!\Illuminate\Support\Facades\Hash::check($validated['current_password'], auth()->user()->password)) {
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        if (\Illuminate\Support\Facades\Hash::check($validated['password'], auth()->user()->password)) {
+            return back()->withErrors(['password' => 'New password cannot be the same as your current password.']);
         }
 
         auth()->user()->update(['password' => \Illuminate\Support\Facades\Hash::make($validated['password'])]);
@@ -751,6 +761,9 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         ];
 
         if ($request->filled('password')) {
+            if (\Illuminate\Support\Facades\Hash::check($validated['password'], $user->password)) {
+                return back()->withErrors(['password' => 'New password cannot be the same as the current password.']);
+            }
             $data['password'] = \Illuminate\Support\Facades\Hash::make($validated['password']);
         }
 
