@@ -151,7 +151,7 @@ setInterval(updateTimes, 60000);
 updateTimes();
 
 if (!window._orderPolling) {
-    window._orderPolling = setInterval(checkNewOrders, 5000);
+    window._orderPolling = setInterval(checkNewOrders, 15000);
 }
 </script>
 @endpush

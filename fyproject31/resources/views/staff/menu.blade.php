@@ -612,6 +612,6 @@ function refreshAddOns() {
         });
 }
 
-setInterval(refreshMenu, 5000);
+setInterval(refreshMenu, 15000);
 </script>
 @endpush

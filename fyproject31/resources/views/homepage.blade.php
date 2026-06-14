@@ -948,7 +948,7 @@
         // Auto-fetch on load and poll every 5 seconds
         window.addEventListener('load', function() {
             fetchOrders();
-            setInterval(fetchOrders, 5000);
+            setInterval(fetchOrders, 15000);
         });
     </script>
     <footer class="site-footer">

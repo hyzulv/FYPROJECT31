@@ -613,5 +613,5 @@ function deleteDiscount(id, name) {
     form.submit();
 }
 
-setInterval(refreshMenu, 5000);
+setInterval(refreshMenu, 15000);
 </script>
