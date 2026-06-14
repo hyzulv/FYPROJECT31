@@ -904,6 +904,49 @@
             } catch(e) {}
         }
     </script>
+
+    <script>
+    var sessionModalShown = false;
+    var sessionCheckInterval = null;
+
+    function checkSession() {
+        fetch('{{ route("api.session.heartbeat") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (!data.valid && !sessionModalShown) {
+                sessionModalShown = true;
+                clearInterval(sessionCheckInterval);
+                showSessionExpiredModal();
+            }
+        })
+        .catch(function() {});
+    }
+
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) checkSession();
+    });
+
+    sessionCheckInterval = setInterval(checkSession, 120000);
+
+    function showSessionExpiredModal() {
+        var overlay = document.createElement('div');
+        overlay.id = 'sessionExpiredOverlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;';
+        overlay.innerHTML =
+            '<div style="background:#fff;padding:40px;border-radius:16px;text-align:center;max-width:420px;border:2px solid #420C09;box-shadow:0 20px 60px rgba(0,0,0,0.3);">' +
+            '<h2 style="color:#420C09;margin-bottom:12px;font-size:1.5rem;">Session Expired</h2>' +
+            '<p style="color:#666;margin-bottom:24px;font-size:0.95rem;line-height:1.5;">Your session has expired. Please log in again to continue.</p>' +
+            '<a href="{{ route('login') }}" style="display:inline-block;padding:12px 32px;background:#420C09;color:#fff;text-decoration:none;border-radius:10px;font-weight:700;font-size:1rem;transition:all 0.3s ease;" onmouseover="this.style.background=\'#300806\'" onmouseout="this.style.background=\'#420C09\'">Go to Login</a>' +
+            '</div>';
+        document.body.appendChild(overlay);
+    }
+    </script>
     @stack('scripts')
 </body>
 </html>
