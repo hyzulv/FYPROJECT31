@@ -47,16 +47,33 @@
         .sidebar-header {
             padding: 20px;
             border-bottom: 1px solid rgba(66, 12, 9, 0.2);
-            text-align: center;
         }
 
-        .sidebar-header h2 {
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand-text {
+            flex: 1;
+        }
+
+        .sidebar-brand-text h2 {
             color: var(--primary);
             font-size: 1.3rem;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
-        .sidebar-header p {
+        .sidebar-brand-text p {
             color: var(--text-muted);
             font-size: 0.85rem;
         }
@@ -649,6 +666,11 @@
 
             .sidebar-header {
                 padding: 14px;
+            }
+
+            .sidebar-logo {
+                width: 40px;
+                height: 40px;
             }
 
             .sidebar-header h2 {

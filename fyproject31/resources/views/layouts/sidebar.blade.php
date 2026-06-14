@@ -1,6 +1,11 @@
 <div class="sidebar-header">
-    <h2>MAT ROCK</h2>
-    <p>{{ ucfirst($userRole ?? 'staff') }} Dashboard</p>
+    <div class="sidebar-brand">
+        <img src="{{ asset('images/icons/logo-circle.png') }}" alt="MAT ROCK" class="sidebar-logo">
+        <div class="sidebar-brand-text">
+            <h2>MAT ROCK</h2>
+            <p>{{ ucfirst($userRole ?? 'staff') }} Dashboard</p>
+        </div>
+    </div>
 </div>
 
 <ul class="sidebar-menu">
