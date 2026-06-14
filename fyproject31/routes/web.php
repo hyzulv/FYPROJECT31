@@ -829,6 +829,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 // Session heartbeat for admin/staff pages
 Route::post('/api/session/heartbeat', function () {
     $valid = auth()->guard('admin')->check() || auth()->guard('staff')->check();
+    session_write_close();
     return response()->json(['valid' => $valid]);
 })->name('api.session.heartbeat');
 
