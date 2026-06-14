@@ -731,6 +731,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
         }
         $user = Staff::findOrFail($realId);
 
+        $oldEmail = $user->email;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'username' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) use ($user) {
@@ -752,6 +754,8 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'password' => 'nullable|min:6|confirmed',
         ]);
 
+        $emailChanged = strtolower($oldEmail) !== strtolower($validated['email']);
+
         $data = [
             'name' => $validated['name'],
             'username' => $validated['username'],
@@ -769,7 +773,37 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
         $user->update($data);
 
-        return redirect()->route('admin.staff')->with('success', 'Staff updated successfully!');
+        $successMsg = 'Staff updated successfully!';
+
+        if ($request->filled('password')) {
+            try {
+                \Illuminate\Support\Facades\Mail::mailer('smtp')->send('emails.staff-password-changed', [
+                    'user' => $user,
+                    'password' => $validated['password'],
+                ], function ($message) use ($user) {
+                    $message->to($user->email)
+                        ->from(config('mail.from.address'), 'MAT ROCK Restaurant')
+                        ->subject('Your Password Has Been Updated - Mat Rock Restaurant');
+                });
+                $successMsg .= ' A new password has been sent to ' . $user->email . '.';
+            } catch (\Exception $e) {
+                $successMsg .= ' However, the password email could not be sent. Please check SMTP settings.';
+            }
+        }
+
+        if ($emailChanged) {
+            $user->email_verified_at = null;
+            $user->save();
+
+            try {
+                $user->sendEmailVerificationNotification();
+                $successMsg .= ' A verification email has been sent to the new address.';
+            } catch (\Exception $e) {
+                $successMsg .= ' However, the verification email could not be sent to the new address.';
+            }
+        }
+
+        return redirect()->route('admin.staff')->with('success', $successMsg);
     })->name('staff.update');
 });
 
