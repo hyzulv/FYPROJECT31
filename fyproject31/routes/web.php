@@ -835,6 +835,7 @@ Route::post('/api/session/heartbeat', function () {
 
 // Public API - Recent orders for customer order status
 Route::get('/api/orders/recent', function () {
+    session_write_close();
     $orders = Order::where('payment_status', 'paid')
         ->where(function ($q) {
             $q->where('status', '!=', 'ready')
@@ -864,6 +865,7 @@ Route::get('/api/orders/recent', function () {
 // API Routes for Real-time Order Sync & Menu Management
 Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(function () {
     Route::get('/orders/check', function () {
+        session_write_close();
         $lastCheck = cache('orders_last_check', now()->subMinutes(5));
         $hasNew = Order::where('created_at', '>', $lastCheck)->exists();
         cache(['orders_last_check' => now()], 60);
@@ -920,6 +922,7 @@ Route::middleware('auth:staff,admin')->prefix('api')->name('api.')->group(functi
     })->name('menu.non-addons');
 
     Route::get('/menu/check', function () {
+        session_write_close();
         $menuItems = MenuItem::with('activeDiscounts')->orderBy('category')->orderBy('name')->get()->map(function ($item) {
             $imgFile = \App\Helpers\MenuImageHelper::getImageFilename($item->name);
             return [
