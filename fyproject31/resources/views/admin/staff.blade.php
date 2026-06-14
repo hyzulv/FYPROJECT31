@@ -213,6 +213,9 @@ function submitEditStaff(e) {
             res.json().then(r => {
                 if (r.errors) {
                     alert(Object.values(r.errors).flat().join('\n'));
+                } else if (r.success) {
+                    alert(r.success);
+                    window.location.href = r.redirect;
                 } else {
                     alert('Error updating staff.');
                 }

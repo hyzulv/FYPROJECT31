@@ -766,7 +766,9 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
         if ($request->filled('password')) {
             if (\Illuminate\Support\Facades\Hash::check($validated['password'], $user->password)) {
-                return back()->withErrors(['password' => 'New password cannot be the same as the current password.']);
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'password' => 'New password cannot be the same as the current password.',
+                ]);
             }
             $data['password'] = \Illuminate\Support\Facades\Hash::make($validated['password']);
         }
@@ -796,11 +798,28 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             $user->save();
 
             try {
-                $user->sendEmailVerificationNotification();
+                $url = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                    'staff.verification.verify',
+                    now()->addMinutes(60),
+                    ['id' => $user->getKey(), 'hash' => sha1($user->getEmailForVerification())]
+                );
+
+                \Illuminate\Support\Facades\Mail::mailer('smtp')->send('emails.staff-email-changed', [
+                    'url' => $url,
+                    'user' => $user,
+                ], function ($message) use ($user) {
+                    $message->to($user->email)
+                        ->from(config('mail.from.address'), 'MAT ROCK Restaurant')
+                        ->subject('Your Email Has Been Updated - Mat Rock Restaurant');
+                });
                 $successMsg .= ' A verification email has been sent to the new address.';
             } catch (\Exception $e) {
                 $successMsg .= ' However, the verification email could not be sent to the new address.';
             }
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => $successMsg, 'redirect' => route('admin.staff')]);
         }
 
         return redirect()->route('admin.staff')->with('success', $successMsg);
