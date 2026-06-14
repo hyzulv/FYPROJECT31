@@ -98,7 +98,7 @@
     <div class="item-detail-bottom">
         <div class="item-total-row">
             <span class="item-total-label">Total</span>
-            <span class="item-total-value" id="itemTotal">RM {{ $item['price'] }}</span>
+            <span class="item-total-value" id="itemTotal">RM {{ $item['effective_price'] }}</span>
         </div>
         <button class="btn-add-cart" onclick="addItemToCart()" style="width:100%;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
