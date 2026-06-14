@@ -826,6 +826,12 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     })->name('staff.update');
 });
 
+// Session heartbeat for admin/staff pages
+Route::post('/api/session/heartbeat', function () {
+    $valid = auth()->guard('admin')->check() || auth()->guard('staff')->check();
+    return response()->json(['valid' => $valid]);
+})->name('api.session.heartbeat');
+
 // Public API - Recent orders for customer order status
 Route::get('/api/orders/recent', function () {
     $orders = Order::where('payment_status', 'paid')
